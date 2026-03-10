@@ -63,6 +63,11 @@ function extractVariantColor(picker) {
   const selectedInputs = [...picker.querySelectorAll('fieldset input:checked')];
 
   for (const selectedInput of selectedInputs) {
+    const metaobjectColor = normalizeColor(selectedInput.dataset.metaobjectColor);
+    if (metaobjectColor) return metaobjectColor;
+  }
+
+  for (const selectedInput of selectedInputs) {
     const swatchColor = extractSwatchColor(selectedInput);
     if (swatchColor) return swatchColor;
   }
@@ -77,6 +82,11 @@ function extractVariantColor(picker) {
   const selectedOptions = [...picker.querySelectorAll('select')]
     .map((select) => select.selectedOptions?.[0])
     .filter((option) => option instanceof HTMLOptionElement);
+
+  for (const selectedOption of selectedOptions) {
+    const metaobjectColor = normalizeColor(selectedOption.dataset.metaobjectColor);
+    if (metaobjectColor) return metaobjectColor;
+  }
 
   for (const selectedOption of selectedOptions) {
     const normalized = normalizeColor(selectedOption.value);
@@ -103,6 +113,8 @@ function applyAccentFromPicker(picker) {
   if (accentTargets.length === 0) return;
 
   const color = extractVariantColor(picker);
+  applyHeaderAccent(color);
+
   if (!color) {
     accentTargets.forEach((target) => {
       target.removeAttribute('data-dynamic-accent');
@@ -120,6 +132,25 @@ function applyAccentFromPicker(picker) {
     target.style.setProperty('--product-accent-soft-color', `color-mix(in srgb, ${color} 14%, white)`);
     target.style.setProperty('--product-accent-foreground', getAccentForeground(color));
   });
+}
+
+
+function getHeaderTarget() {
+  return document.querySelector('#header-component');
+}
+
+function applyHeaderAccent(color) {
+  const header = getHeaderTarget();
+  if (!header) return;
+
+  if (!color) {
+    header.removeAttribute('data-dynamic-accent');
+    header.style.removeProperty('--dynamic-product-accent-color');
+    return;
+  }
+
+  header.dataset.dynamicAccent = 'true';
+  header.style.setProperty('--dynamic-product-accent-color', color);
 }
 
 function initializeProductAccents(scope = document) {
