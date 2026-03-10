@@ -60,17 +60,27 @@ function getAccentForeground(color) {
 }
 
 function extractVariantColor(picker) {
-  const selectedInput = picker.querySelector('fieldset input:checked');
-  const swatchColor = extractSwatchColor(selectedInput);
-  if (swatchColor) return swatchColor;
+  const selectedInputs = [...picker.querySelectorAll('fieldset input:checked')];
 
-  if (selectedInput instanceof HTMLInputElement) {
-    return normalizeColor(selectedInput.value);
+  for (const selectedInput of selectedInputs) {
+    const swatchColor = extractSwatchColor(selectedInput);
+    if (swatchColor) return swatchColor;
   }
 
-  const selectedOption = picker.querySelector('select option[selected]');
-  if (selectedOption instanceof HTMLOptionElement) {
-    return normalizeColor(selectedOption.value);
+  for (const selectedInput of selectedInputs) {
+    if (selectedInput instanceof HTMLInputElement) {
+      const normalized = normalizeColor(selectedInput.value);
+      if (normalized) return normalized;
+    }
+  }
+
+  const selectedOptions = [...picker.querySelectorAll('select')]
+    .map((select) => select.selectedOptions?.[0])
+    .filter((option) => option instanceof HTMLOptionElement);
+
+  for (const selectedOption of selectedOptions) {
+    const normalized = normalizeColor(selectedOption.value);
+    if (normalized) return normalized;
   }
 
   return '';
