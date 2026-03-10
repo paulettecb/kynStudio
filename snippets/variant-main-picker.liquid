@@ -81,6 +81,14 @@
               {%- endif %}
             </legend>
             {%- for product_option_value in product_option.values -%}
+              {% liquid
+                assign metafield_color_value = blank
+                assign metafield_color_reference = product_option_value.variant.metafields.custom.color.value
+
+                if metafield_color_reference != blank
+                  assign metafield_color_value = metafield_color_reference.color | default: metafield_color_reference.hex | default: metafield_color_reference
+                endif
+              %}
               {% if product_option_value.size > longest_value and option_id_attribute %}
                 {% assign longest_value = product_option_value.size %}
               {% endif %}
@@ -102,6 +110,9 @@
                   data-option-value-id="{{ product_option_value.id }}"
                   data-option-available="{{ product_option_value.available }}"
                   data-connected-product-url="{{ product_option_value.product_url }}"
+                  {% if metafield_color_value != blank %}
+                    data-metaobject-color="{{ metafield_color_value | escape }}"
+                  {% endif %}
                   {% if product_option_value.variant.id %}
                     data-variant-id="{{ product_option_value.variant.id }}"
                   {% endif %}
@@ -184,12 +195,23 @@
                 class="variant-option__select"
               >
                 {%- for product_option_value in product_option.values -%}
+                  {% liquid
+                    assign metafield_color_value = blank
+                    assign metafield_color_reference = product_option_value.variant.metafields.custom.color.value
+
+                    if metafield_color_reference != blank
+                      assign metafield_color_value = metafield_color_reference.color | default: metafield_color_reference.hex | default: metafield_color_reference
+                    endif
+                  %}
                   <option
                     value="{{ product_option_value | escape }}"
                     data-input-id="{{ product_option.position }}-{{ forloop.index0 }}"
                     data-option-value-id="{{ product_option_value.id }}"
                     data-variant-id="{{ product_option_value.variant.id }}"
                     data-connected-product-url="{{ product_option_value.product_url }}"
+                    {% if metafield_color_value != blank %}
+                      data-metaobject-color="{{ metafield_color_value | escape }}"
+                    {% endif %}
                     {% if product_option_value.selected %}
                       selected="selected"
                     {% endif %}
