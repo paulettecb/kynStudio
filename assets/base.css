@@ -4956,7 +4956,7 @@ product-recommendations:has([data-has-recommendations='false']) {
   display: grid;
   gap: clamp(24px, 4vw, 72px);
   grid-template-columns: 1fr;
-  align-items: center;
+  align-items: start;
 }
 
 @media screen and (min-width: 990px) {
