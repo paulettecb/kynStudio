@@ -1,0 +1,23 @@
+{
+  "sections": {
+    "main": {
+      "type": "infographic-with-text",
+      "settings": {
+        "subtitle": "Materiales & Herrajes",
+        "title": "¿Por qué latón sólido?",
+        "rich_text": "<p><strong>Resistencia real donde más importa.</strong></p><p>El latón sólido no es solo un acabado bonito.</p><p>Es una aleación confiable para piezas que trabajan todos los días.</p><p>No se pela como un baño superficial.</p><p>No pierde integridad con el uso frecuente.</p><p>Y envejece con carácter, no con debilidad.</p><p>Elegimos latón sólido porque los herrajes deben acompañar cada paseo con la misma firmeza del primer día.</p>",
+        "image": "shopify://shop_images/1.png",
+        "image_position": "left",
+        "max_width": 1560,
+        "background_color": "#f6f3ee",
+        "padding-block-start": 80,
+        "padding-block-end": 80,
+        "padding-inline-start": 0,
+        "padding-inline-end": 0
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
