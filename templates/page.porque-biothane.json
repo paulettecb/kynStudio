@@ -13,8 +13,8 @@
       "type": "infographic-with-text",
       "settings": {
         "subtitle": "Materiales & Rendimiento",
-        "title": "¿Por qué Biothane®?",
-        "rich_text": "<p><strong>No es tendencia. Es decisión.</strong></p><p>El Biothane® es un material técnico que puede parecer cuero, pero fue creado para algo muy distinto: <strong>funcionar mejor.</strong></p><p>No absorbe olores. No se agrieta. No se debilita con el agua, el sol o el uso constante.</p><p>Está hecho para <strong>vivir aventuras</strong>, no para quedarse guardado.</p><p>Se limpia en segundos, no retiene humedad y mantiene su forma incluso después de años de uso.</p><p>Funciona en la ciudad. Funciona en el bosque. Funciona cuando el paseo se vuelve entrenamiento.</p><p><strong>Elegancia y versatilidad sin fragilidad.</strong></p><p>Cuando tu vida con tu perro no tiene límites, el material que te acompaña tampoco debería tenerlos.</p>",
+        "title": "{{ page.title }}",
+        "rich_text": "{{ page.content }}",
         "image": "shopify://shop_images/1.png",
         "image_position": "right",
         "max_width": 1560,
