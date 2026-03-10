@@ -4956,12 +4956,16 @@ product-recommendations:has([data-has-recommendations='false']) {
   display: grid;
   gap: clamp(24px, 4vw, 72px);
   grid-template-columns: 1fr;
-  align-items: center;
+  align-items: start;
 }
 
 @media screen and (min-width: 990px) {
   .infographic-with-text__inner {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+  }
+
+  .infographic-with-text__content {
+    max-width: 70ch;
   }
 
   .infographic-with-text__inner--image-left .infographic-with-text__content {
@@ -4990,7 +4994,7 @@ product-recommendations:has([data-has-recommendations='false']) {
 
 .infographic-with-text__rte {
   margin-top: clamp(16px, 2.2vw, 28px);
-  max-width: 62ch;
+  max-width: 70ch;
   font-size: clamp(1rem, 1.2vw, 1.125rem);
   line-height: 1.7;
 }
