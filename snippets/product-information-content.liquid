@@ -115,29 +115,53 @@
 {% stylesheet %}
   .product-information {
     gap: var(--gap) 0;
-    --product-accent: var(--color-primary-button-background);
-    --product-accent-soft: color-mix(in srgb, var(--product-accent) 14%, white);
-  }
-
-  .product-information[data-dynamic-accent='true'] {
-    --product-accent: var(--dynamic-accent);
-    --product-accent-soft: var(--dynamic-accent-soft);
+    --product-accent-color: var(--color-primary-button-background);
+    --product-accent-soft-color: color-mix(in srgb, var(--product-accent-color) 14%, white);
+    --product-accent-foreground: rgb(var(--color-primary-button-text-rgb));
+    --active-thumbnail-border-color: color-mix(in srgb, var(--product-accent-color) 45%, rgb(var(--color-border-rgb)));
   }
 
   .product-information .button,
   .product-information button.shopify-payment-button__button--unbranded {
-    --button-background-color: var(--product-accent);
-    --button-border-color: var(--product-accent);
+    --button-background-color: var(--product-accent-color);
+    --button-border-color: var(--product-accent-color);
+    --button-text-color: var(--product-accent-foreground);
   }
 
   .product-information .button:hover,
-  .product-information button.shopify-payment-button__button--unbranded:hover:not([disabled]) {
-    --button-background-color: color-mix(in srgb, var(--product-accent) 88%, black);
-    --button-border-color: color-mix(in srgb, var(--product-accent) 88%, black);
+  .product-information .button:focus-visible,
+  .product-information button.shopify-payment-button__button--unbranded:hover:not([disabled]),
+  .product-information button.shopify-payment-button__button--unbranded:focus-visible:not([disabled]) {
+    --button-background-color: color-mix(in srgb, var(--product-accent-color) 88%, black);
+    --button-border-color: color-mix(in srgb, var(--product-accent-color) 88%, black);
   }
 
   .product-information .variant-option__button-label:has(:checked) .variant-option__button-label__pill {
-    background: var(--product-accent-soft);
+    background: var(--product-accent-soft-color);
+  }
+
+  .product-information .slideshow-controls__thumbnail:is([aria-selected='true']) {
+    border-color: var(--active-thumbnail-border-color);
+  }
+
+  .product-information .product-inventory__status {
+    background: var(--product-accent-soft-color);
+    border: 1px solid color-mix(in srgb, var(--product-accent-color) 35%, rgb(var(--color-border-rgb)));
+    border-radius: var(--style-border-radius-xs);
+    padding: calc(var(--padding-2xs) * 0.8) var(--padding-sm);
+  }
+
+  .product-information .product-inventory__icon {
+    color: var(--product-accent-color);
+  }
+
+  .product-information .quantity-rules__item:not(:last-child)::after,
+  .product-information .volume-pricing__title {
+    color: color-mix(in srgb, var(--product-accent-color) 72%, rgb(var(--color-foreground-rgb)));
+  }
+
+  .product-information .volume-pricing__row--even {
+    background: color-mix(in srgb, var(--product-accent-color) 10%, rgb(var(--color-background-rgb)));
   }
 
   /* Base grid layout */

@@ -1,37 +1,70 @@
 import { ThemeEvents } from '@theme/events';
 
-const COLOR_MAP = {
-  periwinkle: 'rgb(195 205 255)',
-};
+const DEFAULT_ACCENT = 'var(--color-primary-button-background)';
 
 function normalizeColor(value) {
   if (!value) return '';
-  const lowered = value.trim().toLowerCase();
-  if (COLOR_MAP[lowered]) return COLOR_MAP[lowered];
 
   const sample = document.createElement('span');
   sample.style.color = value;
   if (!sample.style.color) return '';
+
   sample.style.display = 'none';
   document.body.append(sample);
   const parsed = getComputedStyle(sample).color;
   sample.remove();
+
   return parsed;
+}
+
+function extractSwatchColor(input) {
+  if (!(input instanceof HTMLInputElement)) return '';
+
+  const label = input.closest('label');
+  const swatch = label?.querySelector('.swatch');
+  if (!swatch) return '';
+
+  const swatchColor = getComputedStyle(swatch).backgroundColor;
+  if (!swatchColor || swatchColor === 'rgba(0, 0, 0, 0)' || swatchColor === 'transparent') {
+    return '';
+  }
+
+  return swatchColor;
+}
+
+function colorToRgb(color) {
+  const sample = document.createElement('span');
+  sample.style.color = color;
+  sample.style.display = 'none';
+  document.body.append(sample);
+  const parsed = getComputedStyle(sample).color;
+  sample.remove();
+
+  const matches = parsed.match(/\d+(?:\.\d+)?/g);
+  if (!matches || matches.length < 3) return null;
+
+  return matches.slice(0, 3).map((value) => Number.parseFloat(value));
+}
+
+function getAccentForeground(color) {
+  const rgb = colorToRgb(color);
+  if (!rgb) return 'rgb(var(--color-primary-button-text-rgb))';
+
+  const [r, g, b] = rgb.map((channel) => {
+    const normalized = channel / 255;
+    return normalized <= 0.03928 ? normalized / 12.92 : ((normalized + 0.055) / 1.055) ** 2.4;
+  });
+
+  const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  return luminance > 0.42 ? 'rgb(var(--color-background-rgb))' : 'rgb(var(--color-foreground-rgb))';
 }
 
 function extractVariantColor(picker) {
   const selectedInput = picker.querySelector('fieldset input:checked');
+  const swatchColor = extractSwatchColor(selectedInput);
+  if (swatchColor) return swatchColor;
+
   if (selectedInput instanceof HTMLInputElement) {
-    const label = selectedInput.closest('label');
-    const swatch = label?.querySelector('.swatch');
-
-    if (swatch) {
-      const swatchColor = getComputedStyle(swatch).backgroundColor;
-      if (swatchColor && swatchColor !== 'rgba(0, 0, 0, 0)' && swatchColor !== 'transparent') {
-        return swatchColor;
-      }
-    }
-
     return normalizeColor(selectedInput.value);
   }
 
@@ -50,14 +83,16 @@ function applyAccentFromPicker(picker) {
   const color = extractVariantColor(picker);
   if (!color) {
     productSection.removeAttribute('data-dynamic-accent');
-    productSection.style.removeProperty('--dynamic-accent');
-    productSection.style.removeProperty('--dynamic-accent-soft');
+    productSection.style.setProperty('--product-accent-color', DEFAULT_ACCENT);
+    productSection.style.setProperty('--product-accent-soft-color', 'color-mix(in srgb, var(--product-accent-color) 14%, white)');
+    productSection.style.setProperty('--product-accent-foreground', 'rgb(var(--color-primary-button-text-rgb))');
     return;
   }
 
   productSection.dataset.dynamicAccent = 'true';
-  productSection.style.setProperty('--dynamic-accent', color);
-  productSection.style.setProperty('--dynamic-accent-soft', `color-mix(in srgb, ${color} 16%, white)`);
+  productSection.style.setProperty('--product-accent-color', color);
+  productSection.style.setProperty('--product-accent-soft-color', `color-mix(in srgb, ${color} 14%, white)`);
+  productSection.style.setProperty('--product-accent-foreground', getAccentForeground(color));
 }
 
 function initializeProductAccents(scope = document) {
