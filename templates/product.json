@@ -237,147 +237,17 @@
               }
             },
             "accordion_NKWPiW": {
-              "type": "accordion",
-              "name": "t:names.accordion",
+              "type": "product-tabs",
+              "name": "Product tabs",
               "settings": {
-                "icon": "caret",
-                "dividers": true,
-                "type_preset": "h6",
-                "inherit_color_scheme": true,
-                "color_scheme": "",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "tab_1_label": "Uso previsto",
+                "tab_1_content": "<p>El Traffic Handle está diseñado para momentos donde necesitas mantener a tu perro cerca de forma inmediata.</p><p>Cruzar calles, moverte entre gente, entrar o salir del coche, o simplemente recuperar control rápido durante el paseo.</p><p>Su longitud corta permite una conexión directa con tu perro sin enrollar la correa ni reducir una correa larga.</p><p>Simple, inmediato y siempre listo.</p>",
+                "tab_2_label": "Materiales",
+                "tab_2_content": "<p><strong>Biothane® impermeable</strong><br/>Cinta técnica de poliéster recubierta con polímero sellado. No absorbe humedad, no retiene olores y se limpia en segundos.</p><p><strong>Latón sólido</strong><br/>Herrajes fabricados en latón macizo. No dependen de recubrimientos y desarrollan una pátina natural con el uso.</p><p>Diseñado para durar años en uso real.</p>",
+                "tab_3_label": "Construcción",
+                "tab_3_content": "<p>• Biothane® de alto desempeño<br/>• Herrajes de latón sólido<br/>• Chicago screws para mantenimiento sencillo<br/>• Compatible con el sistema modular KYN</p>"
               },
-              "blocks": {
-                "accordion_row_NdBezV": {
-                  "type": "_accordion-row",
-                  "settings": {
-                    "heading": "Uso previsto",
-                    "open_by_default": false,
-                    "icon": "none",
-                    "width": 20
-                  },
-                  "blocks": {
-                    "text_n7A9da": {
-                      "type": "text",
-                      "settings": {
-                        "text": "<p>El Traffic Handle está diseñado para momentos donde necesitas mantener a tu perro cerca de forma inmediata.</p><p>Cruzar calles, moverte entre gente, entrar o salir del coche, o simplemente recuperar control rápido durante el paseo.</p><p>Su longitud corta permite una conexión directa con tu perro sin enrollar la correa ni reducir una correa larga.</p><p>Simple, inmediato y siempre listo.</p>",
-                        "width": "100%",
-                        "max_width": "normal",
-                        "alignment": "left",
-                        "type_preset": "custom",
-                        "font": "var(--font-secondary--family)",
-                        "font_size": "var(--font-size--body-lg)",
-                        "line_height": "normal",
-                        "letter_spacing": "normal",
-                        "case": "none",
-                        "wrap": "pretty",
-                        "color": "",
-                        "background": false,
-                        "background_color": "#00000026",
-                        "corner_radius": 0,
-                        "padding-block-start": 12,
-                        "padding-block-end": 0,
-                        "padding-inline-start": 0,
-                        "padding-inline-end": 0
-                      },
-                      "blocks": {}
-                    }
-                  },
-                  "block_order": [
-                    "text_n7A9da"
-                  ]
-                },
-                "accordion_row_iJM37V": {
-                  "type": "_accordion-row",
-                  "settings": {
-                    "heading": "Materiales",
-                    "open_by_default": false,
-                    "icon": "none",
-                    "width": 20
-                  },
-                  "blocks": {
-                    "text_VdG98J": {
-                      "type": "text",
-                      "settings": {
-                        "text": "<p><strong>Biothane® impermeable</strong><br/>Cinta técnica de poliéster recubierta con polímero sellado. No absorbe humedad, no retiene olores y se limpia en segundos.</p><p><strong>Latón sólido</strong><br/>Herrajes fabricados en latón macizo. No dependen de recubrimientos y desarrollan una pátina natural con el uso.</p><p>Diseñado para durar años en uso real.</p>",
-                        "width": "100%",
-                        "max_width": "normal",
-                        "alignment": "left",
-                        "type_preset": "custom",
-                        "font": "var(--font-secondary--family)",
-                        "font_size": "var(--font-size--body-lg)",
-                        "line_height": "normal",
-                        "letter_spacing": "normal",
-                        "case": "none",
-                        "wrap": "pretty",
-                        "color": "",
-                        "background": false,
-                        "background_color": "#00000026",
-                        "corner_radius": 0,
-                        "padding-block-start": 12,
-                        "padding-block-end": 0,
-                        "padding-inline-start": 0,
-                        "padding-inline-end": 0
-                      },
-                      "blocks": {}
-                    }
-                  },
-                  "block_order": [
-                    "text_VdG98J"
-                  ]
-                },
-                "accordion_row_pLFDcD": {
-                  "type": "_accordion-row",
-                  "settings": {
-                    "heading": "Construcción",
-                    "open_by_default": false,
-                    "icon": "none",
-                    "width": 20
-                  },
-                  "blocks": {
-                    "text_qLGEN9": {
-                      "type": "text",
-                      "settings": {
-                        "text": "<p>• Biothane® de alto desempeño<br/>• Herrajes de latón sólido<br/>• Chicago screws para mantenimiento sencillo<br/>• Compatible con el sistema modular KYN</p>",
-                        "width": "100%",
-                        "max_width": "normal",
-                        "alignment": "left",
-                        "type_preset": "custom",
-                        "font": "var(--font-secondary--family)",
-                        "font_size": "var(--font-size--body-lg)",
-                        "line_height": "normal",
-                        "letter_spacing": "normal",
-                        "case": "none",
-                        "wrap": "pretty",
-                        "color": "",
-                        "background": false,
-                        "background_color": "#00000026",
-                        "corner_radius": 0,
-                        "padding-block-start": 12,
-                        "padding-block-end": 0,
-                        "padding-inline-start": 0,
-                        "padding-inline-end": 0
-                      },
-                      "blocks": {}
-                    }
-                  },
-                  "block_order": [
-                    "text_qLGEN9"
-                  ]
-                }
-              },
-              "block_order": [
-                "accordion_row_NdBezV",
-                "accordion_row_iJM37V",
-                "accordion_row_pLFDcD"
-              ]
+              "blocks": {}
             }
           },
           "block_order": [

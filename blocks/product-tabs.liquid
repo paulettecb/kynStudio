@@ -1,0 +1,228 @@
+{% assign block_settings = block.settings %}
+
+<div class="product-tabs spacing-style" {{ block.shopify_attributes }}>
+  <div class="product-tabs__tablist" role="tablist" aria-label="Detalles del producto">
+    <button
+      class="product-tabs__tab"
+      id="product-tab-{{ block.id }}-1"
+      type="button"
+      role="tab"
+      aria-selected="true"
+      aria-controls="product-panel-{{ block.id }}-1"
+      data-tab-target="product-panel-{{ block.id }}-1"
+      tabindex="0"
+    >
+      {{ block_settings.tab_1_label }}
+    </button>
+    <button
+      class="product-tabs__tab"
+      id="product-tab-{{ block.id }}-2"
+      type="button"
+      role="tab"
+      aria-selected="false"
+      aria-controls="product-panel-{{ block.id }}-2"
+      data-tab-target="product-panel-{{ block.id }}-2"
+      tabindex="-1"
+    >
+      {{ block_settings.tab_2_label }}
+    </button>
+    <button
+      class="product-tabs__tab"
+      id="product-tab-{{ block.id }}-3"
+      type="button"
+      role="tab"
+      aria-selected="false"
+      aria-controls="product-panel-{{ block.id }}-3"
+      data-tab-target="product-panel-{{ block.id }}-3"
+      tabindex="-1"
+    >
+      {{ block_settings.tab_3_label }}
+    </button>
+  </div>
+
+  <div
+    class="product-tabs__panel"
+    id="product-panel-{{ block.id }}-1"
+    role="tabpanel"
+    aria-labelledby="product-tab-{{ block.id }}-1"
+  >
+    {{ block_settings.tab_1_content }}
+  </div>
+  <div
+    class="product-tabs__panel"
+    id="product-panel-{{ block.id }}-2"
+    role="tabpanel"
+    aria-labelledby="product-tab-{{ block.id }}-2"
+    hidden
+  >
+    {{ block_settings.tab_2_content }}
+  </div>
+  <div
+    class="product-tabs__panel"
+    id="product-panel-{{ block.id }}-3"
+    role="tabpanel"
+    aria-labelledby="product-tab-{{ block.id }}-3"
+    hidden
+  >
+    {{ block_settings.tab_3_content }}
+  </div>
+</div>
+
+<script>
+  (() => {
+    const tabsComponent = document.currentScript?.previousElementSibling;
+    if (!tabsComponent || tabsComponent.dataset.tabsInitialized === 'true') return;
+
+    tabsComponent.dataset.tabsInitialized = 'true';
+
+    const tabs = [...tabsComponent.querySelectorAll('[role="tab"]')];
+    const panels = [...tabsComponent.querySelectorAll('[role="tabpanel"]')];
+
+    const activateTab = (tab) => {
+      tabs.forEach((item) => {
+        const selected = item === tab;
+        item.setAttribute('aria-selected', selected);
+        item.tabIndex = selected ? 0 : -1;
+      });
+
+      panels.forEach((panel) => {
+        panel.hidden = panel.id !== tab.dataset.tabTarget;
+      });
+    };
+
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => activateTab(tab));
+      tab.addEventListener('keydown', (event) => {
+        if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft' && event.key !== 'Home' && event.key !== 'End') return;
+
+        event.preventDefault();
+
+        if (event.key === 'Home') {
+          tabs[0].focus();
+          activateTab(tabs[0]);
+          return;
+        }
+
+        if (event.key === 'End') {
+          tabs[tabs.length - 1].focus();
+          activateTab(tabs[tabs.length - 1]);
+          return;
+        }
+
+        const direction = event.key === 'ArrowRight' ? 1 : -1;
+        const nextIndex = (index + direction + tabs.length) % tabs.length;
+        tabs[nextIndex].focus();
+        activateTab(tabs[nextIndex]);
+      });
+    });
+  })();
+</script>
+
+{% stylesheet %}
+  .product-tabs {
+    width: 100%;
+    --product-tabs-accent: var(--product-accent-color, rgb(var(--color-foreground-rgb)));
+    --product-tabs-separator: color-mix(in srgb, var(--product-tabs-accent) 22%, rgb(var(--color-border-rgb)));
+  }
+
+  .product-tabs__tablist {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--padding-xs);
+    border-block-end: 1px solid var(--product-tabs-separator);
+    margin-block-end: var(--padding-md);
+  }
+
+  .product-tabs__tab {
+    appearance: none;
+    border: 0;
+    border-block-end: 1px solid transparent;
+    background: transparent;
+    color: color-mix(in srgb, rgb(var(--color-foreground-rgb)) 70%, transparent);
+    cursor: pointer;
+    font: inherit;
+    line-height: 1.4;
+    letter-spacing: 0.01em;
+    padding: 0 0 var(--padding-xs);
+    margin-block-end: -1px;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .product-tabs__tab[aria-selected='true'] {
+    color: var(--product-tabs-accent);
+    border-color: color-mix(in srgb, var(--product-tabs-accent) 70%, transparent);
+  }
+
+  .product-tabs__tab:focus-visible {
+    outline: 1px solid color-mix(in srgb, var(--product-tabs-accent) 60%, transparent);
+    outline-offset: 3px;
+  }
+
+  .product-tabs__panel {
+    animation: product-tab-fade-in 0.2s ease;
+  }
+
+  .product-tabs__panel :first-child {
+    margin-block-start: 0;
+  }
+
+  @keyframes product-tab-fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Product tabs",
+  "tag": null,
+  "class": "product-tabs-block",
+  "settings": [
+    {
+      "type": "text",
+      "id": "tab_1_label",
+      "label": "Tab 1 label",
+      "default": "Uso previsto"
+    },
+    {
+      "type": "richtext",
+      "id": "tab_1_content",
+      "label": "Tab 1 content",
+      "default": "<p>Comparte el uso previsto aquí.</p>"
+    },
+    {
+      "type": "text",
+      "id": "tab_2_label",
+      "label": "Tab 2 label",
+      "default": "Materiales"
+    },
+    {
+      "type": "richtext",
+      "id": "tab_2_content",
+      "label": "Tab 2 content",
+      "default": "<p>Comparte los materiales aquí.</p>"
+    },
+    {
+      "type": "text",
+      "id": "tab_3_label",
+      "label": "Tab 3 label",
+      "default": "Construcción"
+    },
+    {
+      "type": "richtext",
+      "id": "tab_3_content",
+      "label": "Tab 3 content",
+      "default": "<p>Comparte detalles de construcción aquí.</p>"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product tabs"
+    }
+  ]
+}
+{% endschema %}
