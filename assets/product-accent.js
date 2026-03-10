@@ -86,23 +86,40 @@ function extractVariantColor(picker) {
   return '';
 }
 
-function applyAccentFromPicker(picker) {
+function getAccentTargets(picker) {
   const productSection = picker.closest('.product-information');
-  if (!productSection) return;
+  if (!productSection) return [];
+
+  const targets = [productSection];
+  const stickyAddToCart = picker.closest('.shopify-section')?.querySelector('sticky-add-to-cart');
+
+  if (stickyAddToCart) targets.push(stickyAddToCart);
+
+  return targets;
+}
+
+function applyAccentFromPicker(picker) {
+  const accentTargets = getAccentTargets(picker);
+  if (accentTargets.length === 0) return;
 
   const color = extractVariantColor(picker);
   if (!color) {
-    productSection.removeAttribute('data-dynamic-accent');
-    productSection.style.setProperty('--product-accent-color', DEFAULT_ACCENT);
-    productSection.style.setProperty('--product-accent-soft-color', 'color-mix(in srgb, var(--product-accent-color) 14%, white)');
-    productSection.style.setProperty('--product-accent-foreground', 'rgb(var(--color-primary-button-text-rgb))');
+    accentTargets.forEach((target) => {
+      target.removeAttribute('data-dynamic-accent');
+      target.style.setProperty('--product-accent-color', DEFAULT_ACCENT);
+      target.style.setProperty('--product-accent-soft-color', 'color-mix(in srgb, var(--product-accent-color) 14%, white)');
+      target.style.setProperty('--product-accent-foreground', 'rgb(var(--color-primary-button-text-rgb))');
+    });
+
     return;
   }
 
-  productSection.dataset.dynamicAccent = 'true';
-  productSection.style.setProperty('--product-accent-color', color);
-  productSection.style.setProperty('--product-accent-soft-color', `color-mix(in srgb, ${color} 14%, white)`);
-  productSection.style.setProperty('--product-accent-foreground', getAccentForeground(color));
+  accentTargets.forEach((target) => {
+    target.dataset.dynamicAccent = 'true';
+    target.style.setProperty('--product-accent-color', color);
+    target.style.setProperty('--product-accent-soft-color', `color-mix(in srgb, ${color} 14%, white)`);
+    target.style.setProperty('--product-accent-foreground', getAccentForeground(color));
+  });
 }
 
 function initializeProductAccents(scope = document) {

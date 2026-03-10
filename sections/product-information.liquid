@@ -279,8 +279,25 @@
   }
 
   .sticky-add-to-cart__button {
+    --button-background-color: var(--product-accent-color, var(--color-primary-button-background));
+    --button-border-color: var(--product-accent-color, var(--color-primary-button-background));
+    --button-text-color: var(--product-accent-foreground, rgb(var(--color-primary-button-text-rgb)));
     height: var(--height-buy-buttons);
     position: relative;
+  }
+
+  .sticky-add-to-cart__button:hover,
+  .sticky-add-to-cart__button:focus-visible {
+    --button-background-color: color-mix(
+      in srgb,
+      var(--product-accent-color, var(--color-primary-button-background)) 88%,
+      black
+    );
+    --button-border-color: color-mix(
+      in srgb,
+      var(--product-accent-color, var(--color-primary-button-background)) 88%,
+      black
+    );
   }
 
   /* Mobile adjustments */
