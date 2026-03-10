@@ -4944,3 +4944,68 @@ product-recommendations:has([data-has-recommendations='false']) {
     translate: 0px var(--atc-destination, 0px);
   }
 }
+
+/* Infographic with text section */
+.infographic-with-text {
+  isolation: isolate;
+}
+
+.infographic-with-text__inner {
+  width: min(100% - (var(--page-margin) * 2), var(--infographic-max-width));
+  margin-inline: auto;
+  display: grid;
+  gap: clamp(24px, 4vw, 72px);
+  grid-template-columns: 1fr;
+  align-items: center;
+}
+
+@media screen and (min-width: 990px) {
+  .infographic-with-text__inner {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .infographic-with-text__inner--image-left .infographic-with-text__content {
+    order: 2;
+  }
+
+  .infographic-with-text__inner--image-left .infographic-with-text__media {
+    order: 1;
+  }
+}
+
+.infographic-with-text__subtitle {
+  margin: 0 0 0.75rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+.infographic-with-text__title {
+  margin: 0;
+  font-size: clamp(1.8rem, 3.2vw, 3rem);
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+.infographic-with-text__rte {
+  margin-top: clamp(16px, 2.2vw, 28px);
+  max-width: 62ch;
+  font-size: clamp(1rem, 1.2vw, 1.125rem);
+  line-height: 1.7;
+}
+
+.infographic-with-text__media {
+  width: 100%;
+}
+
+.infographic-with-text__image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 14px;
+}
+
+.infographic-with-text__image--placeholder {
+  background: color-mix(in srgb, var(--infographic-background-color), #000 6%);
+}
