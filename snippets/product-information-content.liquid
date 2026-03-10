@@ -115,6 +115,29 @@
 {% stylesheet %}
   .product-information {
     gap: var(--gap) 0;
+    --product-accent: var(--color-primary-button-background);
+    --product-accent-soft: color-mix(in srgb, var(--product-accent) 14%, white);
+  }
+
+  .product-information[data-dynamic-accent='true'] {
+    --product-accent: var(--dynamic-accent);
+    --product-accent-soft: var(--dynamic-accent-soft);
+  }
+
+  .product-information .button,
+  .product-information button.shopify-payment-button__button--unbranded {
+    --button-background-color: var(--product-accent);
+    --button-border-color: var(--product-accent);
+  }
+
+  .product-information .button:hover,
+  .product-information button.shopify-payment-button__button--unbranded:hover:not([disabled]) {
+    --button-background-color: color-mix(in srgb, var(--product-accent) 88%, black);
+    --button-border-color: color-mix(in srgb, var(--product-accent) 88%, black);
+  }
+
+  .product-information .variant-option__button-label:has(:checked) .variant-option__button-label__pill {
+    background: var(--product-accent-soft);
   }
 
   /* Base grid layout */
@@ -169,7 +192,7 @@
     .product-information__grid:not(.product-information--media-none) {
       /* Media on the left side */
       &.product-information--media-left {
-        grid-template-columns: 1fr min(50vw, var(--sidebar-width));
+        grid-template-columns: minmax(0, 0.92fr) min(44vw, var(--sidebar-width));
 
         .product-information__media {
           padding-right: calc(var(--gap, 0) / 2);
@@ -186,7 +209,7 @@
 
       /* Media on the right side */
       &.product-information--media-right {
-        grid-template-columns: min(50vw, var(--sidebar-width)) 1fr;
+        grid-template-columns: min(44vw, var(--sidebar-width)) minmax(0, 0.92fr);
 
         .product-information__media {
           padding-left: calc(var(--gap, 0) / 2);
@@ -288,14 +311,14 @@
         .product-information__grid--half,
         .product-information--media-none
       ).product-information--media-left {
-      grid-template-columns: 2fr 1fr;
+      grid-template-columns: 1.45fr 1fr;
     }
 
     .product-information__grid:not(
         .product-information__grid--half,
         .product-information--media-none
       ).product-information--media-right {
-      grid-template-columns: 1fr 2fr;
+      grid-template-columns: 1fr 1.45fr;
     }
   }
 

@@ -738,6 +738,24 @@
         }
       }
     }
+
+    .media-gallery--carousel:not(.media-gallery--hint) {
+      --slideshow-gap: var(--gap-xs);
+
+      :not(.dialog-zoomed-gallery) > .product-media-container:not(:only-child) {
+        width: 91%;
+      }
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    .media-gallery--carousel {
+      --slideshow-gap: var(--gap-sm);
+
+      :not(.dialog-zoomed-gallery) > .product-media-container:not(:only-child) {
+        width: 94%;
+      }
+    }
   }
 
   .dialog-zoomed-gallery__close-button {
