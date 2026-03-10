@@ -17,7 +17,7 @@
         "rich_text": "{{ page.content }}",
         "image": "shopify://shop_images/2Documento_A4_Marketing_Empresas_Organico_Rosa.svg",
         "image_position": "left",
-        "max_width": 1560,
+        "max_width": 1960,
         "background_color": "#f6f3ee",
         "padding-block-start": 80,
         "padding-block-end": 80,
