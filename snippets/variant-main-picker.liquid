@@ -52,7 +52,8 @@
             assign longest_value = 0
           endif
 
-          if product_option.name | downcase == 'color'
+          assign product_option_name_downcase = product_option.name | downcase
+          if product_option_name_downcase == 'color'
             assign product_option_display_name = 'Finish'
           else
             assign product_option_display_name = product_option.name
