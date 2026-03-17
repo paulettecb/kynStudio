@@ -43,8 +43,9 @@
         "text_tzGazA"
       ],
       "settings": {
-        "media_type_1": "image",
+        "media_type_1": "video",
         "image_1": "shopify://shop_images/186FB42A-7E5B-4F72-BCBA-5A6E8982BF63.png",
+        "video_1": "shopify://files/videos/Whisk_m2n3ymnlbznmljz40iykjgotitm0qtl1mgn40so.mp4",
         "media_type_2": "image",
         "stack_media_on_mobile": false,
         "custom_mobile_media": false,
