@@ -90,10 +90,16 @@
             {%- for product_option_value in product_option.values -%}
               {% liquid
                 assign metafield_color_value = blank
+                assign metafield_secondary_color_value = blank
                 assign metafield_color_reference = product_option_value.variant.metafields.custom.color.value
+                assign metafield_secondary_color_reference = product_option_value.variant.metafields.custom.secondary_color.value
 
                 if metafield_color_reference != blank
                   assign metafield_color_value = metafield_color_reference.color | default: metafield_color_reference.hex | default: metafield_color_reference
+                endif
+
+                if metafield_secondary_color_reference != blank
+                  assign metafield_secondary_color_value = metafield_secondary_color_reference.color | default: metafield_secondary_color_reference.hex | default: metafield_secondary_color_reference
                 endif
               %}
               {% if product_option_value.size > longest_value and option_id_attribute %}
@@ -120,6 +126,9 @@
                   {% if metafield_color_value != blank %}
                     data-metaobject-color="{{ metafield_color_value | escape }}"
                   {% endif %}
+                  {% if metafield_secondary_color_value != blank %}
+                    data-metaobject-secondary-color="{{ metafield_secondary_color_value | escape }}"
+                  {% endif %}
                   {% if product_option_value.variant.id %}
                     data-variant-id="{{ product_option_value.variant.id }}"
                   {% endif %}
@@ -144,6 +153,7 @@
                   {% render 'swatch',
                     swatch: product_option_value.swatch,
                     variant_image: featured_media,
+                    secondary_color: metafield_secondary_color_value,
                     mode: 'unscaled'
                   %}
                 {% else %}
@@ -204,10 +214,16 @@
                 {%- for product_option_value in product_option.values -%}
                   {% liquid
                     assign metafield_color_value = blank
+                    assign metafield_secondary_color_value = blank
                     assign metafield_color_reference = product_option_value.variant.metafields.custom.color.value
+                    assign metafield_secondary_color_reference = product_option_value.variant.metafields.custom.secondary_color.value
 
                     if metafield_color_reference != blank
                       assign metafield_color_value = metafield_color_reference.color | default: metafield_color_reference.hex | default: metafield_color_reference
+                    endif
+
+                    if metafield_secondary_color_reference != blank
+                      assign metafield_secondary_color_value = metafield_secondary_color_reference.color | default: metafield_secondary_color_reference.hex | default: metafield_secondary_color_reference
                     endif
                   %}
                   <option
@@ -218,6 +234,9 @@
                     data-connected-product-url="{{ product_option_value.product_url }}"
                     {% if metafield_color_value != blank %}
                       data-metaobject-color="{{ metafield_color_value | escape }}"
+                    {% endif %}
+                    {% if metafield_secondary_color_value != blank %}
+                      data-metaobject-secondary-color="{{ metafield_secondary_color_value | escape }}"
                     {% endif %}
                     {% if product_option_value.selected %}
                       selected="selected"
