@@ -565,28 +565,38 @@
     min-height: 600px;
   }
 
-  @keyframes hero-homepage-sync-color {
+  @property --hero-homepage-video-color {
+    syntax: '<color>';
+    initial-value: #686f9a;
+    inherits: false;
+  }
+
+  @keyframes hero-homepage-sync-gradient {
     0%,
     100% {
-      background-color: #686f9a;
+      --hero-homepage-video-color: #686f9a;
     }
 
     25% {
-      background-color: #5a6190;
+      --hero-homepage-video-color: #5a6190;
     }
 
     62.5% {
-      background-color: #a7afcf;
+      --hero-homepage-video-color: #a7afcf;
     }
 
     87.5% {
-      background-color: #bac3d3;
+      --hero-homepage-video-color: #bac3d3;
     }
   }
 
   body:has(.hero--homepage-immersive) {
-    animation: hero-homepage-sync-color 8s ease-in-out infinite;
-    transition: background-color 0.5s ease;
+    --hero-homepage-video-color: #686f9a;
+    background:
+      radial-gradient(circle at 50% 50%, var(--hero-homepage-video-color) 0%, #bac3d3 100%);
+    animation: hero-homepage-sync-gradient 8s ease-in-out infinite;
+    min-height: 100vh;
+    transition: --hero-homepage-video-color 0.8s ease;
   }
 
   body:has(.hero--homepage-immersive) .shopify-section:not(.header-section) .section-background {
