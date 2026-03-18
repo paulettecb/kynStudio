@@ -596,13 +596,20 @@
 
   body:has(.hero--homepage-immersive) {
     --hero-homepage-video-color: #686f9a;
+    --hero-homepage-gradient-center-y: 72vh;
     background:
       radial-gradient(
-        ellipse 42% 30% at 50% 50%,
+        ellipse 58% 18rem at 50% var(--hero-homepage-gradient-center-y),
+        #f2ede4 0%,
+        #ece5da 16%,
+        rgb(236 229 218 / 45%) 34%,
+        rgb(236 229 218 / 0%) 62%
+      ),
+      radial-gradient(
+        ellipse 76% 34rem at 50% calc(var(--hero-homepage-gradient-center-y) - 2rem),
         var(--hero-homepage-video-color) 0%,
-        var(--hero-homepage-video-color) 18%,
-        #8f99bb 40%,
-        #bac3d3 62%,
+        #9ea7c5 30%,
+        #bac3d3 64%,
         #bac3d3 100%
       );
     animation: hero-homepage-sync-gradient 8s ease-in-out infinite;
@@ -855,8 +862,18 @@
 
     const getActiveVideo = () => videos.find(isVisible) || videos[0];
 
+    const syncGradientPosition = () => {
+      const heroRect = hero.getBoundingClientRect();
+      const heroBottom = heroRect.bottom + window.scrollY;
+      const spotlightOffset = Math.min(heroRect.height * 0.12, 72);
+
+      body.style.setProperty('--hero-homepage-gradient-center-y', `${Math.round(heroBottom - spotlightOffset)}px`);
+    };
+
     const syncAnimation = (video) => {
       if (!video) return;
+
+      syncGradientPosition();
 
       if (Number.isFinite(video.duration) && video.duration > 0) {
         body.style.animationDuration = `${video.duration}s`;
@@ -893,6 +910,7 @@
 
     window.addEventListener('resize', updatePlaybackState);
     document.addEventListener('visibilitychange', updatePlaybackState);
+    syncGradientPosition();
     updatePlaybackState();
   })();
 {% endjavascript %}
