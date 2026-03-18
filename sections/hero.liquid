@@ -866,7 +866,7 @@
       const heroRect = hero.getBoundingClientRect();
       const heroBottom = heroRect.bottom + window.scrollY;
       const spotlightOffset = Math.min(heroRect.height * 0.12, 72);
-      const spotlightNudge = 18;
+      const spotlightNudge = 50;
 
       body.style.setProperty('--hero-homepage-gradient-center-y', `${Math.round(heroBottom - spotlightOffset + spotlightNudge)}px`);
     };
