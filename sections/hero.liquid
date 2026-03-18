@@ -630,7 +630,7 @@
     isolation: isolate;
   }
 
-  body:has(.hero--homepage-immersive) #header-component[transparent] .header__row,
+  body:has(.hero--homepage-immersive) #header-component[transparent]:not([data-sticky-state='active']) .header__row,
   body:has(.hero--homepage-immersive) .shopify-section-group-footer-group,
   body:has(.hero--homepage-immersive) .ui-test-collection-list:first-of-type .group-block .text-block {
     color: white;
@@ -866,8 +866,9 @@
       const heroRect = hero.getBoundingClientRect();
       const heroBottom = heroRect.bottom + window.scrollY;
       const spotlightOffset = Math.min(heroRect.height * 0.12, 72);
+      const spotlightNudge = 18;
 
-      body.style.setProperty('--hero-homepage-gradient-center-y', `${Math.round(heroBottom - spotlightOffset)}px`);
+      body.style.setProperty('--hero-homepage-gradient-center-y', `${Math.round(heroBottom - spotlightOffset + spotlightNudge)}px`);
     };
 
     const syncAnimation = (video) => {
