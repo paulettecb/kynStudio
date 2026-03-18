@@ -180,6 +180,7 @@
           controls: false,
           muted: true,
           class: 'hero__media',
+          data-homepage-video: is_homepage_video_hero,
           data-testid: 'hero-desktop-video-1'
       }}
     </div>
@@ -216,6 +217,7 @@
             controls: false,
             muted: true,
             class: 'hero__media',
+            data-homepage-video: is_homepage_video_hero,
             data-testid: 'hero-mobile-video-1'
         }}
       </div>
@@ -284,6 +286,7 @@
           controls: false,
           muted: true,
           class: 'hero__media',
+          data-homepage-video: is_homepage_video_hero,
           data-testid: 'hero-desktop-video-2'
       }}
     </div>
@@ -320,6 +323,7 @@
             controls: false,
             muted: true,
             class: 'hero__media',
+            data-homepage-video: is_homepage_video_hero,
             data-testid: 'hero-mobile-video-2'
         }}
       </div>
@@ -592,11 +596,30 @@
 
   body:has(.hero--homepage-immersive) {
     --hero-homepage-video-color: #686f9a;
+    --hero-homepage-gradient-center-y: 72vh;
     background:
-      radial-gradient(circle at 50% 50%, var(--hero-homepage-video-color) 0%, #bac3d3 100%);
+      radial-gradient(
+        ellipse 58% 18rem at 50% var(--hero-homepage-gradient-center-y),
+        #f2ede4 0%,
+        #ece5da 16%,
+        rgb(236 229 218 / 45%) 34%,
+        rgb(236 229 218 / 0%) 62%
+      ),
+      radial-gradient(
+        ellipse 76% 34rem at 50% calc(var(--hero-homepage-gradient-center-y) - 2rem),
+        var(--hero-homepage-video-color) 0%,
+        #9ea7c5 30%,
+        #bac3d3 64%,
+        #bac3d3 100%
+      );
     animation: hero-homepage-sync-gradient 8s ease-in-out infinite;
+    animation-play-state: paused;
     min-height: 100vh;
     transition: --hero-homepage-video-color 0.8s ease;
+  }
+
+  body:has(.hero--homepage-immersive).hero-homepage-video-ready {
+    animation-play-state: running;
   }
 
   body:has(.hero--homepage-immersive) .shopify-section:not(.header-section) .section-background {
@@ -607,7 +630,7 @@
     isolation: isolate;
   }
 
-  body:has(.hero--homepage-immersive) #header-component[transparent] .header__row,
+  body:has(.hero--homepage-immersive) #header-component[transparent]:not([data-sticky-state='active']) .header__row,
   body:has(.hero--homepage-immersive) .shopify-section-group-footer-group,
   body:has(.hero--homepage-immersive) .ui-test-collection-list:first-of-type .group-block .text-block {
     color: white;
@@ -809,6 +832,89 @@
     }
   }
 {% endstylesheet %}
+
+
+{% javascript %}
+  (() => {
+    const heroSelector = '.hero--homepage-immersive';
+    const readyClass = 'hero-homepage-video-ready';
+    const body = document.body;
+
+    const isVisible = (element) => {
+      if (!element) return false;
+
+      const wrapper = element.closest('.hero__media-wrapper');
+
+      if (wrapper && getComputedStyle(wrapper).display === 'none') {
+        return false;
+      }
+
+      return element.getClientRects().length > 0;
+    };
+
+    const hero = document.querySelector(heroSelector);
+
+    if (!hero) return;
+
+    const videos = Array.from(hero.querySelectorAll('video[data-homepage-video="true"]'));
+
+    if (!videos.length) return;
+
+    const getActiveVideo = () => videos.find(isVisible) || videos[0];
+
+    const syncGradientPosition = () => {
+      const heroRect = hero.getBoundingClientRect();
+      const heroBottom = heroRect.bottom + window.scrollY;
+      const spotlightOffset = Math.min(heroRect.height * 0.12, 72);
+      const spotlightNudge = 18;
+
+      body.style.setProperty('--hero-homepage-gradient-center-y', `${Math.round(heroBottom - spotlightOffset + spotlightNudge)}px`);
+    };
+
+    const syncAnimation = (video) => {
+      if (!video) return;
+
+      syncGradientPosition();
+
+      if (Number.isFinite(video.duration) && video.duration > 0) {
+        body.style.animationDuration = `${video.duration}s`;
+      }
+
+      body.style.animationDelay = `-${video.currentTime}s`;
+    };
+
+    const updatePlaybackState = () => {
+      const activeVideo = getActiveVideo();
+      const isPlaying = activeVideo && !activeVideo.paused && !activeVideo.ended && activeVideo.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA;
+
+      if (isPlaying) {
+        syncAnimation(activeVideo);
+        body.classList.add(readyClass);
+        return;
+      }
+
+      body.classList.remove(readyClass);
+    };
+
+    videos.forEach((video) => {
+      ['loadedmetadata', 'playing', 'timeupdate', 'seeked'].forEach((eventName) => {
+        video.addEventListener(eventName, () => {
+          syncAnimation(video);
+          updatePlaybackState();
+        });
+      });
+
+      ['pause', 'waiting', 'stalled', 'ended'].forEach((eventName) => {
+        video.addEventListener(eventName, updatePlaybackState);
+      });
+    });
+
+    window.addEventListener('resize', updatePlaybackState);
+    document.addEventListener('visibilitychange', updatePlaybackState);
+    syncGradientPosition();
+    updatePlaybackState();
+  })();
+{% endjavascript %}
 
 {% schema %}
 {
