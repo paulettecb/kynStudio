@@ -597,7 +597,14 @@
   body:has(.hero--homepage-immersive) {
     --hero-homepage-video-color: #686f9a;
     background:
-      radial-gradient(circle at 50% 50%, var(--hero-homepage-video-color) 0%, #bac3d3 68%, #bac3d3 100%);
+      radial-gradient(
+        ellipse 42% 30% at 50% 50%,
+        var(--hero-homepage-video-color) 0%,
+        var(--hero-homepage-video-color) 18%,
+        #8f99bb 40%,
+        #bac3d3 62%,
+        #bac3d3 100%
+      );
     animation: hero-homepage-sync-gradient 8s ease-in-out infinite;
     animation-play-state: paused;
     min-height: 100vh;
