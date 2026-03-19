@@ -1,6 +1,511 @@
+{% doc %}
+  @prompt
+    I need a variant picker, BUT variants from all levels, include images that need to be displayed instead of labels
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-variant-picker-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+  }
+
+  .ai-variant-picker__container-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: {{ block.settings.spacing_between_options }}px;
+  }
+
+  .ai-variant-picker__option-group-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .ai-variant-picker__label-{{ ai_gen_id }} {
+    font-size: {{ block.settings.label_font_size }}px;
+    font-weight: 600;
+    color: {{ block.settings.label_color }};
+    text-transform: {{ block.settings.label_text_transform }};
+  }
+
+  .ai-variant-picker__options-{{ ai_gen_id }} {
+    display: flex;
+    flex-wrap: wrap;
+    gap: {{ block.settings.spacing_between_variants }}px;
+  }
+
+  .ai-variant-picker__option-{{ ai_gen_id }} {
+    position: relative;
+    cursor: pointer;
+    border: {{ block.settings.border_width }}px solid {{ block.settings.border_color }};
+    border-radius: {{ block.settings.border_radius }}px;
+    overflow: hidden;
+    transition: all 0.2s ease;
+    background-color: {{ block.settings.background_color }};
+  }
+
+  .ai-variant-picker__option-{{ ai_gen_id }}:hover {
+    border-color: {{ block.settings.hover_border_color }};
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .ai-variant-picker__option-{{ ai_gen_id }}.selected {
+    border-color: {{ block.settings.selected_border_color }};
+    border-width: {{ block.settings.selected_border_width }}px;
+    box-shadow: 0 0 0 1px {{ block.settings.selected_border_color }};
+  }
+
+  .ai-variant-picker__option-{{ ai_gen_id }}.unavailable {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .ai-variant-picker__option-{{ ai_gen_id }}.unavailable:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .ai-variant-picker__input-{{ ai_gen_id }} {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .ai-variant-picker__image-wrapper-{{ ai_gen_id }} {
+    width: {{ block.settings.image_width }}px;
+    height: {{ block.settings.image_height }}px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .ai-variant-picker__image-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ai-variant-picker__placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-size: 12px;
+    text-align: center;
+    padding: 8px;
+  }
+
+  .ai-variant-picker__unavailable-overlay-{{ ai_gen_id }} {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 2px;
+    background-color: {{ block.settings.unavailable_line_color }};
+    transform-origin: center;
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-variant-picker__image-wrapper-{{ ai_gen_id }} {
+      width: {{ block.settings.image_width | times: 0.8 }}px;
+      height: {{ block.settings.image_height | times: 0.8 }}px;
+    }
+  }
+{% endstyle %}
+
+<variant-picker-{{ ai_gen_id }}
+  class="ai-variant-picker-{{ ai_gen_id }}"
+  data-product-url="{{ product.url }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-variant-picker__container-{{ ai_gen_id }}">
+    {% for option in product.options_with_values %}
+      <div class="ai-variant-picker__option-group-{{ ai_gen_id }}">
+        <label class="ai-variant-picker__label-{{ ai_gen_id }}">
+          {{ option.name }}
+        </label>
+        <div class="ai-variant-picker__options-{{ ai_gen_id }}">
+          {% for value in option.values %}
+            {% liquid
+              assign option_index = option.position | minus: 1
+              assign is_selected = false
+              if product.selected_or_first_available_variant.options[option_index] == value
+                assign is_selected = true
+              endif
+
+              assign is_available = false
+              for variant in product.variants
+                if variant.options[option_index] == value and variant.available
+                  assign is_available = true
+                  break
+                endif
+              endfor
+
+              assign variant_image = null
+              for variant in product.variants
+                if variant.options[option_index] == value
+                  if variant.featured_image
+                    assign variant_image = variant.featured_image
+                    break
+                  elsif variant.image
+                    assign variant_image = variant.image
+                    break
+                  endif
+                endif
+              endfor
+            %}
+
+            <label
+              class="ai-variant-picker__option-{{ ai_gen_id }} {% if is_selected %}selected{% endif %} {% unless is_available %}unavailable{% endunless %}"
+              data-option-position="{{ option.position }}"
+              data-option-value="{{ value | escape }}"
+            >
+              <input
+                type="radio"
+                name="options[{{ option.name | escape }}]"
+                value="{{ value | escape }}"
+                class="ai-variant-picker__input-{{ ai_gen_id }}"
+                {% if is_selected %}checked{% endif %}
+                {% unless is_available %}disabled{% endunless %}
+              >
+              <div class="ai-variant-picker__image-wrapper-{{ ai_gen_id }}">
+                {% if variant_image %}
+                  <img
+                    src="{{ variant_image | image_url: width: 200 }}"
+                    alt="{{ value | escape }}"
+                    class="ai-variant-picker__image-{{ ai_gen_id }}"
+                    loading="lazy"
+                    width="200"
+                    height="200"
+                  >
+                {% else %}
+                  <div class="ai-variant-picker__placeholder-{{ ai_gen_id }}">
+                    {{ value }}
+                  </div>
+                {% endif %}
+              </div>
+              {% unless is_available %}
+                <div class="ai-variant-picker__unavailable-overlay-{{ ai_gen_id }}"></div>
+              {% endunless %}
+            </label>
+          {% endfor %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</variant-picker-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class VariantPicker{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.productUrl = this.dataset.productUrl;
+      }
+
+      connectedCallback() {
+        this.options = this.querySelectorAll('.ai-variant-picker__option-{{ ai_gen_id }}');
+        this.inputs = this.querySelectorAll('.ai-variant-picker__input-{{ ai_gen_id }}');
+        this.setupEventListeners();
+      }
+
+      setupEventListeners() {
+        this.options.forEach((option) => {
+          option.addEventListener('click', (e) => {
+            if (option.classList.contains('unavailable')) {
+              e.preventDefault();
+              return;
+            }
+
+            const input = option.querySelector('.ai-variant-picker__input-{{ ai_gen_id }}');
+            const optionPosition = option.dataset.optionPosition;
+            const optionValue = option.dataset.optionValue;
+
+            this.querySelectorAll(`[data-option-position="${optionPosition}"]`).forEach((opt) => {
+              opt.classList.remove('selected');
+            });
+
+            option.classList.add('selected');
+            input.checked = true;
+
+            this.updateVariant();
+          });
+        });
+      }
+
+      updateVariant() {
+        const selectedOptions = [];
+        const optionGroups = this.querySelectorAll('.ai-variant-picker__option-group-{{ ai_gen_id }}');
+
+        optionGroups.forEach((group) => {
+          const selectedInput = group.querySelector('.ai-variant-picker__input-{{ ai_gen_id }}:checked');
+          if (selectedInput) {
+            selectedOptions.push(selectedInput.value);
+          }
+        });
+
+        const matchingVariant = this.findMatchingVariant(selectedOptions);
+
+        if (matchingVariant) {
+          this.updateURL(matchingVariant.id);
+          this.updateAvailability(selectedOptions);
+          this.dispatchVariantChangeEvent(matchingVariant);
+        }
+      }
+
+      findMatchingVariant(selectedOptions) {
+        const productData = this.getProductData();
+        if (!productData || !productData.variants) return null;
+
+        return productData.variants.find((variant) => {
+          return variant.options.every((option, index) => {
+            return option === selectedOptions[index];
+          });
+        });
+      }
+
+      updateAvailability(selectedOptions) {
+        const productData = this.getProductData();
+        if (!productData) return;
+
+        this.options.forEach((option) => {
+          const position = parseInt(option.dataset.optionPosition) - 1;
+          const value = option.dataset.optionValue;
+
+          const testOptions = [...selectedOptions];
+          testOptions[position] = value;
+
+          const matchingVariant = productData.variants.find((variant) => {
+            return variant.options.every((opt, idx) => {
+              return opt === testOptions[idx];
+            });
+          });
+
+          if (matchingVariant && matchingVariant.available) {
+            option.classList.remove('unavailable');
+            option.querySelector('.ai-variant-picker__input-{{ ai_gen_id }}').disabled = false;
+          } else {
+            option.classList.add('unavailable');
+            option.querySelector('.ai-variant-picker__input-{{ ai_gen_id }}').disabled = true;
+          }
+        });
+      }
+
+      updateURL(variantId) {
+        const url = new URL(window.location.href);
+        url.searchParams.set('variant', variantId);
+        window.history.replaceState({}, '', url);
+      }
+
+      dispatchVariantChangeEvent(variant) {
+        this.dispatchEvent(
+          new CustomEvent('variant-change', {
+            detail: { variant },
+            bubbles: true,
+          })
+        );
+      }
+
+      getProductData() {
+        const productScript = document.querySelector('script[type="application/json"][data-product-json]');
+        if (!productScript) return null;
+        try {
+          return JSON.parse(productScript.textContent);
+        } catch (e) {
+          return null;
+        }
+      }
+    }
+
+    customElements.define('variant-picker-{{ ai_gen_id }}', VariantPicker{{ ai_gen_id }});
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Image variant picker",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "spacing_between_options",
+      "label": "Spacing between option groups",
+      "min": 8,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "spacing_between_variants",
+      "label": "Spacing between variants",
+      "min": 4,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "range",
+      "id": "image_width",
+      "label": "Width",
+      "min": 40,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "image_height",
+      "label": "Height",
+      "min": 40,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Label"
+    },
+    {
+      "type": "range",
+      "id": "label_font_size",
+      "label": "Font size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "label_text_transform",
+      "label": "Text transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Variant style"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border",
+      "default": "#e6e6e6"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "Border width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "hover_border_color",
+      "label": "Hover border",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Selected variant"
+    },
+    {
+      "type": "color",
+      "id": "selected_border_color",
+      "label": "Border",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "selected_border_width",
+      "label": "Border width",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 2
+    },
+    {
+      "type": "header",
+      "content": "Unavailable variant"
+    },
+    {
+      "type": "color",
+      "id": "unavailable_line_color",
+      "label": "Strike-through line",
+      "default": "#ff0000"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image variant picker"
+    }
+  ]
+}
 {% endschema %}
