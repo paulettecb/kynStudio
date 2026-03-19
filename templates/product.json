@@ -180,8 +180,31 @@
               },
               "blocks": {}
             },
+            "ai_gen_block_53a9d41_zjqAhT": {
+              "type": "ai_gen_block_53a9d41",
+              "settings": {
+                "desktop_width_percent": 100,
+                "spacing_between_options": 32,
+                "spacing_between_variants": 12,
+                "image_width": 70,
+                "image_height": 90,
+                "border_radius": 40,
+                "label_font_size": 11,
+                "label_text_transform": "uppercase",
+                "label_color": "#1b3957",
+                "background_color": "#ffffff",
+                "border_color": "#e6e6e6",
+                "border_width": 0,
+                "hover_border_color": "#000000",
+                "selected_border_color": "#000000",
+                "selected_border_width": 1,
+                "unavailable_line_color": "#ff0000"
+              },
+              "blocks": {}
+            },
             "variant_picker_R3rGDr": {
               "type": "variant-picker",
+              "disabled": true,
               "settings": {
                 "variant_style": "buttons",
                 "show_swatches": true,
@@ -256,6 +279,7 @@
             "text_g6NmDq",
             "text_gYk6wE",
             "divider_HrJgFt",
+            "ai_gen_block_53a9d41_zjqAhT",
             "variant_picker_R3rGDr",
             "accordion_NKWPiW",
             "buy_buttons_eYQEYi",
