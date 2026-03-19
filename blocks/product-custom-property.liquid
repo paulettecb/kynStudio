@@ -19,6 +19,8 @@
   else
     assign actual_input_type = block_settings.input_type
   endif
+
+  assign select_options = block_settings.select_options | newline_to_br | split: '<br />'
 -%}
 
 {% capture character_count_label %}
@@ -92,6 +94,28 @@
         required: block_settings.required,
         formId: product_form_id
       %}
+    {% elsif actual_input_type == 'select' %}
+      <div class="__input-wrapper">
+        <select
+          id="{{ element_id }}"
+          name="{{ property_name }}"
+          class="field__input custom-property__input"
+          form="{{ product_form_id }}"
+          {% if block_settings.required %}
+            required aria-required="true"
+          {% endif %}
+        >
+          {% unless block_settings.required %}
+            <option value="">{{ block_settings.select_placeholder | escape }}</option>
+          {% endunless %}
+          {% for option in select_options %}
+            {% assign option_value = option | strip %}
+            {% if option_value != blank %}
+              <option value="{{ option_value | escape }}">{{ option_value | escape }}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+      </div>
     {% else %}
       <div class="__input-wrapper">
         <input
@@ -251,6 +275,10 @@
         {
           "value": "checkbox",
           "label": "t:settings.product_custom_property.input_type_checkbox"
+        },
+        {
+          "value": "select",
+          "label": "Dropdown"
         }
       ],
       "default": "text"
@@ -271,6 +299,20 @@
       "label": "t:settings.product_custom_property.checkbox_label",
       "default": "t:settings.product_custom_property.default_checkbox_label",
       "visible_if": "{{ block.settings.input_type == \"checkbox\" }}"
+    },
+    {
+      "type": "textarea",
+      "id": "select_options",
+      "label": "Dropdown options",
+      "info": "Enter one option per line.",
+      "visible_if": "{{ block.settings.input_type == \"select\" }}"
+    },
+    {
+      "type": "text",
+      "id": "select_placeholder",
+      "label": "Dropdown placeholder",
+      "default": "Choose an option",
+      "visible_if": "{{ block.settings.input_type == \"select\" and block.settings.required == false }}"
     },
     {
       "type": "checkbox",
