@@ -1,8 +1,8 @@
-{% doc %}
-  @prompt
-    Create a variant picker block for a product page that works identically to the default color/variant picker, but with one key difference: each variant option displays its corresponding variant image as a thumbnail that the customer can click to select that variant. The variant options and their data should be built from the product's metafields (not hardcoded). When a variant is selected, the main product image should update to show that variant's image and its label, just as the original one. Keep the same behavior and structure as the default variant picker — the only addition is showing the variant's image on each selectable option., It shows as one long selection list, I wanted it as a builder, each section separated and its customizable menu please
-{% enddoc %}
 {% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+{% assign primary_finish_option_name = 'Primary Finish' %}
+{% assign secondary_finish_option_name = 'Secondary Finish' %}
+{% assign primary_finish_metafield = product.metafields.shopify['color-pattern'].value %}
+{% assign secondary_finish_metafield = product.metafields.custom['secomdary-finish'].value %}
 
 {% style %}
   .ai-variant-picker-{{ ai_gen_id }} {
@@ -41,6 +41,9 @@
     overflow: hidden;
     transition: all 0.3s ease;
     aspect-ratio: 1;
+    background: #ffffff;
+    padding: 0;
+    appearance: none;
   }
 
   .ai-variant-option-{{ ai_gen_id }}:hover {
@@ -52,6 +55,10 @@
   .ai-variant-option-{{ ai_gen_id }}.selected {
     border-color: {{ block.settings.selected_border_color }};
     border-width: {{ block.settings.selected_border_width }}px;
+  }
+
+  .ai-variant-option-{{ ai_gen_id }}.is-unavailable {
+    opacity: 0.45;
   }
 
   .ai-variant-option-image-{{ ai_gen_id }} {
@@ -75,10 +82,7 @@
     transition: opacity 0.3s ease;
   }
 
-  .ai-variant-option-{{ ai_gen_id }}:hover .ai-variant-option-name-{{ ai_gen_id }} {
-    opacity: 1;
-  }
-
+  .ai-variant-option-{{ ai_gen_id }}:hover .ai-variant-option-name-{{ ai_gen_id }},
   .ai-variant-option-{{ ai_gen_id }}.selected .ai-variant-option-name-{{ ai_gen_id }} {
     opacity: 1;
   }
@@ -96,6 +100,7 @@
     justify-content: center;
     opacity: 0;
     transition: opacity 0.3s ease;
+    pointer-events: none;
   }
 
   .ai-variant-option-{{ ai_gen_id }}.selected .ai-variant-option-checkmark-{{ ai_gen_id }} {
@@ -108,6 +113,15 @@
     fill: {{ block.settings.checkmark_color }};
   }
 
+  .ai-variant-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5f5f5;
+  }
+
   @media screen and (max-width: 749px) {
     .ai-variant-options-grid-{{ ai_gen_id }} {
       grid-template-columns: repeat(auto-fill, minmax({{ block.settings.mobile_thumbnail_size }}px, 1fr));
@@ -115,70 +129,191 @@
   }
 {% endstyle %}
 
+<script type="application/json" id="ProductData-{{ ai_gen_id }}">
+  {{ product | json }}
+</script>
+
 <variant-picker-{{ ai_gen_id }} class="ai-variant-picker-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
   {% for option in product.options_with_values %}
-    <div class="ai-variant-option-group-{{ ai_gen_id }}">
+    <div
+      class="ai-variant-option-group-{{ ai_gen_id }}"
+      data-option-name="{{ option.name | escape }}"
+      data-option-position="{{ option.position }}"
+    >
       <label class="ai-variant-option-label-{{ ai_gen_id }}">
-        {{ option.name }}: <span class="ai-selected-value-{{ ai_gen_id }}">{{ option.selected_value }}</span>
+        {{ option.name }}:
+        <span class="ai-selected-value-{{ ai_gen_id }}" data-selected-label="{{ option.position }}">
+          {{ option.selected_value }}
+        </span>
       </label>
-      
+
       <div class="ai-variant-options-grid-{{ ai_gen_id }}">
-        {% for value in option.values %}
+        {% if option.name == primary_finish_option_name and primary_finish_metafield != blank %}
+          {% for entry in primary_finish_metafield %}
+            {% assign entry_label = entry.label | default: entry.name | default: entry.title | default: entry.system.handle %}
+            {% assign option_values_joined = option.values | join: '||' | downcase %}
+            {% assign entry_label_downcase = entry_label | downcase %}
+
+            {% if option_values_joined contains entry_label_downcase %}
+              <button
+                type="button"
+                class="ai-variant-option-{{ ai_gen_id }}{% if entry_label == option.selected_value %} selected{% endif %}"
+                data-option-position="{{ option.position }}"
+                data-option-name="{{ option.name | escape }}"
+                data-option-value="{{ entry_label | escape }}"
+                aria-pressed="{% if entry_label == option.selected_value %}true{% else %}false{% endif %}"
+              >
+                {% if entry.image %}
+                  <img
+                    src="{{ entry.image | image_url: width: 400 }}"
+                    alt="{{ entry_label | escape }}"
+                    class="ai-variant-option-image-{{ ai_gen_id }}"
+                    loading="lazy"
+                    width="400"
+                    height="400"
+                  >
+                {% elsif product.featured_image %}
+                  <img
+                    src="{{ product.featured_image | image_url: width: 400 }}"
+                    alt="{{ entry_label | escape }}"
+                    class="ai-variant-option-image-{{ ai_gen_id }}"
+                    loading="lazy"
+                    width="400"
+                    height="400"
+                  >
+                {% else %}
+                  <div class="ai-variant-placeholder-{{ ai_gen_id }}">
+                    {{ 'product-1' | placeholder_svg_tag }}
+                  </div>
+                {% endif %}
+
+                <div class="ai-variant-option-name-{{ ai_gen_id }}">
+                  {{ entry_label }}
+                </div>
+
+                {% if block.settings.show_checkmark %}
+                  <div class="ai-variant-option-checkmark-{{ ai_gen_id }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"></path>
+                    </svg>
+                  </div>
+                {% endif %}
+              </button>
+            {% endif %}
+          {% endfor %}
+
+        {% elsif option.name == secondary_finish_option_name and secondary_finish_metafield != blank %}
+          {% for entry in secondary_finish_metafield %}
+            {% assign entry_label = entry.label | default: entry.name | default: entry.title | default: entry.system.handle %}
+            {% assign option_values_joined = option.values | join: '||' | downcase %}
+            {% assign entry_label_downcase = entry_label | downcase %}
+
+            {% if option_values_joined contains entry_label_downcase %}
+              <button
+                type="button"
+                class="ai-variant-option-{{ ai_gen_id }}{% if entry_label == option.selected_value %} selected{% endif %}"
+                data-option-position="{{ option.position }}"
+                data-option-name="{{ option.name | escape }}"
+                data-option-value="{{ entry_label | escape }}"
+                aria-pressed="{% if entry_label == option.selected_value %}true{% else %}false{% endif %}"
+              >
+                {% if entry.image %}
+                  <img
+                    src="{{ entry.image | image_url: width: 400 }}"
+                    alt="{{ entry_label | escape }}"
+                    class="ai-variant-option-image-{{ ai_gen_id }}"
+                    loading="lazy"
+                    width="400"
+                    height="400"
+                  >
+                {% elsif product.featured_image %}
+                  <img
+                    src="{{ product.featured_image | image_url: width: 400 }}"
+                    alt="{{ entry_label | escape }}"
+                    class="ai-variant-option-image-{{ ai_gen_id }}"
+                    loading="lazy"
+                    width="400"
+                    height="400"
+                  >
+                {% else %}
+                  <div class="ai-variant-placeholder-{{ ai_gen_id }}">
+                    {{ 'product-1' | placeholder_svg_tag }}
+                  </div>
+                {% endif %}
+
+                <div class="ai-variant-option-name-{{ ai_gen_id }}">
+                  {{ entry_label }}
+                </div>
+
+                {% if block.settings.show_checkmark %}
+                  <div class="ai-variant-option-checkmark-{{ ai_gen_id }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"></path>
+                    </svg>
+                  </div>
+                {% endif %}
+              </button>
+            {% endif %}
+          {% endfor %}
+
+        {% else %}
           {% assign option_index = option.position | minus: 1 %}
-          {% assign matching_variant = product.variants | where: option.name, value | first %}
-          
-          <div 
-            class="ai-variant-option-{{ ai_gen_id }} {% if value == option.selected_value %}selected{% endif %}"
-            data-option-position="{{ option.position }}"
-            data-option-value="{{ value | escape }}"
-            data-variant-id="{% if matching_variant %}{{ matching_variant.id }}{% endif %}"
-          >
-            {% if matching_variant.image %}
-              <img 
-                src="{{ matching_variant.image | image_url: width: 400 }}" 
-                alt="{{ value | escape }}"
-                class="ai-variant-option-image-{{ ai_gen_id }}"
-                loading="lazy"
-                width="400"
-                height="400"
-              >
-            {% elsif matching_variant.featured_image %}
-              <img 
-                src="{{ matching_variant.featured_image | image_url: width: 400 }}" 
-                alt="{{ value | escape }}"
-                class="ai-variant-option-image-{{ ai_gen_id }}"
-                loading="lazy"
-                width="400"
-                height="400"
-              >
-            {% elsif product.featured_image %}
-              <img 
-                src="{{ product.featured_image | image_url: width: 400 }}" 
-                alt="{{ value | escape }}"
-                class="ai-variant-option-image-{{ ai_gen_id }}"
-                loading="lazy"
-                width="400"
-                height="400"
-              >
-            {% else %}
-              <div class="ai-variant-placeholder-{{ ai_gen_id }}">
-                {{ 'product-1' | placeholder_svg_tag }}
+          {% for value in option.values %}
+            {% assign matching_variant = nil %}
+            {% for variant in product.variants %}
+              {% assign variant_option_value = variant.options[option_index] %}
+              {% if variant_option_value == value %}
+                {% assign matching_variant = variant %}
+                {% break %}
+              {% endif %}
+            {% endfor %}
+
+            <button
+              type="button"
+              class="ai-variant-option-{{ ai_gen_id }}{% if value == option.selected_value %} selected{% endif %}"
+              data-option-position="{{ option.position }}"
+              data-option-name="{{ option.name | escape }}"
+              data-option-value="{{ value | escape }}"
+              aria-pressed="{% if value == option.selected_value %}true{% else %}false{% endif %}"
+            >
+              {% if matching_variant and matching_variant.featured_image %}
+                <img
+                  src="{{ matching_variant.featured_image | image_url: width: 400 }}"
+                  alt="{{ value | escape }}"
+                  class="ai-variant-option-image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="400"
+                  height="400"
+                >
+              {% elsif product.featured_image %}
+                <img
+                  src="{{ product.featured_image | image_url: width: 400 }}"
+                  alt="{{ value | escape }}"
+                  class="ai-variant-option-image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="400"
+                  height="400"
+                >
+              {% else %}
+                <div class="ai-variant-placeholder-{{ ai_gen_id }}">
+                  {{ 'product-1' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+
+              <div class="ai-variant-option-name-{{ ai_gen_id }}">
+                {{ value }}
               </div>
-            {% endif %}
-            
-            <div class="ai-variant-option-name-{{ ai_gen_id }}">
-              {{ value }}
-            </div>
-            
-            {% if block.settings.show_checkmark %}
-              <div class="ai-variant-option-checkmark-{{ ai_gen_id }}">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
-                </svg>
-              </div>
-            {% endif %}
-          </div>
-        {% endfor %}
+
+              {% if block.settings.show_checkmark %}
+                <div class="ai-variant-option-checkmark-{{ ai_gen_id }}">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"></path>
+                  </svg>
+                </div>
+              {% endif %}
+            </button>
+          {% endfor %}
+        {% endif %}
       </div>
     </div>
   {% endfor %}
@@ -186,108 +321,193 @@
 
 <script>
   (function() {
-    class VariantPicker{{ ai_gen_id }} extends HTMLElement {
+    class VariantPicker extends HTMLElement {
       constructor() {
         super();
-        this.product = {{ product | json }};
+        this.product = null;
         this.selectedOptions = [];
       }
 
       connectedCallback() {
+        var productDataEl = document.getElementById('ProductData-{{ ai_gen_id }}');
+        if (!productDataEl) return;
+
+        this.product = JSON.parse(productDataEl.textContent);
+
         this.initializeSelectedOptions();
         this.attachEventListeners();
+        this.updateUI();
+        this.syncNativeVariantInput();
+        this.updateMainImage();
       }
 
       initializeSelectedOptions() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const variantParam = urlParams.get('variant');
-        
+        var urlParams = new URLSearchParams(window.location.search);
+        var variantParam = urlParams.get('variant');
+
         if (variantParam) {
-          const variant = this.product.variants.find(v => v.id == variantParam);
-          if (variant) {
-            this.selectedOptions = [...variant.options];
-            this.updateUI();
+          var variantFromUrl = this.product.variants.find(function(v) {
+            return String(v.id) === String(variantParam);
+          });
+
+          if (variantFromUrl) {
+            this.selectedOptions = variantFromUrl.options.slice();
             return;
           }
         }
-        
-        this.selectedOptions = this.product.options.map(option => option.values[0]);
+
+        var selectedVariant =
+          this.product.variants.find(function(variant) {
+            return variant.id === (this.product.selected_or_first_available_variant && this.product.selected_or_first_available_variant.id);
+          }.bind(this)) ||
+          this.product.variants.find(function(variant) {
+            return variant.available;
+          }) ||
+          this.product.variants[0];
+
+        this.selectedOptions = selectedVariant ? selectedVariant.options.slice() : [];
       }
 
       attachEventListeners() {
-        const options = this.querySelectorAll('.ai-variant-option-{{ ai_gen_id }}');
-        
-        options.forEach(option => {
-          option.addEventListener('click', (e) => {
-            const position = parseInt(option.dataset.optionPosition);
-            const value = option.dataset.optionValue;
-            
+        var options = this.querySelectorAll('.ai-variant-option-{{ ai_gen_id }}');
+
+        options.forEach(function(optionEl) {
+          optionEl.addEventListener('click', function() {
+            var position = parseInt(optionEl.dataset.optionPosition, 10);
+            var value = optionEl.dataset.optionValue;
+
             this.selectedOptions[position - 1] = value;
+
+            var variant = this.getCurrentVariant();
+            if (!variant) {
+              variant = this.getClosestAvailableVariant(position - 1, value);
+            }
+
+            if (variant) {
+              this.selectedOptions = variant.options.slice();
+            }
+
             this.updateUI();
             this.updateURL();
+            this.syncNativeVariantInput();
             this.updateMainImage();
             this.dispatchVariantChange();
-          });
+          }.bind(this));
+        }.bind(this));
+      }
+
+      getCurrentVariant() {
+        return this.product.variants.find(function(variant) {
+          return variant.options.every(function(optionValue, index) {
+            return optionValue === this.selectedOptions[index];
+          }.bind(this));
+        }.bind(this));
+      }
+
+      getClosestAvailableVariant(changedIndex, changedValue) {
+        return this.product.variants.find(function(variant) {
+          return variant.available && variant.options[changedIndex] === changedValue;
         });
       }
 
       updateUI() {
-        this.querySelectorAll('.ai-variant-option-{{ ai_gen_id }}').forEach(option => {
-          const position = parseInt(option.dataset.optionPosition);
-          const value = option.dataset.optionValue;
-          
-          if (this.selectedOptions[position - 1] === value) {
-            option.classList.add('selected');
-          } else {
-            option.classList.remove('selected');
-          }
-        });
+        var matchingVariant = this.getCurrentVariant();
 
-        this.querySelectorAll('.ai-selected-value-{{ ai_gen_id }}').forEach((span, index) => {
-          span.textContent = this.selectedOptions[index];
-        });
-      }
+        this.querySelectorAll('.ai-variant-option-{{ ai_gen_id }}').forEach(function(optionEl) {
+          var position = parseInt(optionEl.dataset.optionPosition, 10);
+          var value = optionEl.dataset.optionValue;
+          var isSelected = this.selectedOptions[position - 1] === value;
 
-      getCurrentVariant() {
-        return this.product.variants.find(variant => {
-          return variant.options.every((option, index) => {
-            return option === this.selectedOptions[index];
+          optionEl.classList.toggle('selected', isSelected);
+          optionEl.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
+
+          var testOptions = this.selectedOptions.slice();
+          testOptions[position - 1] = value;
+
+          var availableCombination = this.product.variants.some(function(variant) {
+            if (!variant.available) return false;
+
+            return variant.options.every(function(variantOption, index) {
+              return testOptions[index] === variantOption;
+            });
           });
-        });
-      }
 
-      updateURL() {
-        const variant = this.getCurrentVariant();
-        if (variant) {
-          const url = new URL(window.location.href);
-          url.searchParams.set('variant', variant.id);
-          window.history.replaceState({}, '', url);
+          optionEl.classList.toggle('is-unavailable', !availableCombination);
+        }.bind(this));
+
+        this.querySelectorAll('.ai-selected-value-{{ ai_gen_id }}').forEach(function(span, index) {
+          span.textContent = this.selectedOptions[index] || '';
+        }.bind(this));
+
+        if (matchingVariant) {
+          this.dataset.currentVariantId = matchingVariant.id;
         }
       }
 
+      updateURL() {
+        var variant = this.getCurrentVariant();
+        if (!variant) return;
+
+        var url = new URL(window.location.href);
+        url.searchParams.set('variant', variant.id);
+        window.history.replaceState({}, '', url);
+      }
+
+      syncNativeVariantInput() {
+        var variant = this.getCurrentVariant();
+        if (!variant) return;
+
+        var productForm =
+          this.closest('section, product-info, main, .shopify-section') &&
+          this.closest('section, product-info, main, .shopify-section').querySelector('form[action*="/cart/add"]');
+
+        if (!productForm) {
+          productForm = document.querySelector('form[action*="/cart/add"]');
+        }
+
+        if (!productForm) return;
+
+        var variantInput = productForm.querySelector('input[name="id"]');
+        if (!variantInput) return;
+
+        variantInput.value = variant.id;
+        variantInput.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+
       updateMainImage() {
-        const variant = this.getCurrentVariant();
-        if (variant && variant.featured_media) {
-          const mainImage = document.querySelector('.product__media-item[data-media-id="' + variant.featured_media.id + '"]');
-          if (mainImage) {
-            mainImage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-          }
+        var variant = this.getCurrentVariant();
+        if (!variant || !variant.featured_media) return;
+
+        var mediaId = String(variant.featured_media.id);
+        var mediaItem =
+          document.querySelector('[data-media-id="' + mediaId + '"]') ||
+          document.querySelector('[data-media-id$="' + mediaId + '"]');
+
+        if (mediaItem) {
+          mediaItem.dispatchEvent(new Event('click', { bubbles: true }));
+          mediaItem.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
         }
       }
 
       dispatchVariantChange() {
-        const variant = this.getCurrentVariant();
-        if (variant) {
-          this.dispatchEvent(new CustomEvent('variant-change', {
-            detail: { variant: variant },
-            bubbles: true,
-            composed: true
-          }));
-        }
+        var variant = this.getCurrentVariant();
+        if (!variant) return;
+
+        this.dispatchEvent(new CustomEvent('variant-change', {
+          detail: { variant: variant },
+          bubbles: true,
+          composed: true
+        }));
+
+        document.dispatchEvent(new CustomEvent('variant:changed', {
+          detail: { variant: variant }
+        }));
       }
     }
 
-    customElements.define('variant-picker-{{ ai_gen_id }}', VariantPicker{{ ai_gen_id }});
+    if (!customElements.get('variant-picker-{{ ai_gen_id }}')) {
+      customElements.define('variant-picker-{{ ai_gen_id }}', VariantPicker);
+    }
   })();
 </script>
 
@@ -359,22 +579,10 @@
       "id": "label_font_weight",
       "label": "Font weight",
       "options": [
-        {
-          "value": "400",
-          "label": "Normal"
-        },
-        {
-          "value": "500",
-          "label": "Medium"
-        },
-        {
-          "value": "600",
-          "label": "Semi-bold"
-        },
-        {
-          "value": "700",
-          "label": "Bold"
-        }
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-bold" },
+        { "value": "700", "label": "Bold" }
       ],
       "default": "600"
     },
@@ -498,7 +706,7 @@
       "type": "color",
       "id": "overlay_background",
       "label": "Overlay background",
-      "default": "rgba(0, 0, 0, 0.7)"
+      "default": "#000000"
     },
     {
       "type": "color",
