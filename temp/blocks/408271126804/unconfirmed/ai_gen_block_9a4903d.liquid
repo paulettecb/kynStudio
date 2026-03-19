@@ -1,6 +1,522 @@
+{% doc %}
+  @prompt
+    I created a meta object called make your own, and I want to display it as a color selector, since it has 2 colors for each combination
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-color-selector-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    padding: {{ block.settings.padding }}px;
+    background-color: {{ block.settings.background_color }};
+    border-radius: {{ block.settings.border_radius }}px;
+  }
+
+  .ai-color-selector__heading-{{ ai_gen_id }} {
+    margin: 0 0 {{ block.settings.spacing }}px 0;
+    color: {{ block.settings.text_color }};
+    font-size: {{ block.settings.heading_size }}px;
+  }
+
+  .ai-color-selector__description-{{ ai_gen_id }} {
+    margin: 0 0 {{ block.settings.spacing }}px 0;
+    color: {{ block.settings.text_color }};
+    font-size: {{ block.settings.description_size }}px;
+  }
+
+  .ai-color-selector__options-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax({{ block.settings.option_width }}px, 1fr));
+    gap: {{ block.settings.gap }}px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .ai-color-selector__option-{{ ai_gen_id }} {
+    position: relative;
+    aspect-ratio: 1;
+    cursor: pointer;
+    border-radius: {{ block.settings.option_border_radius }}px;
+    overflow: hidden;
+    border: {{ block.settings.border_width }}px solid {{ block.settings.border_color }};
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .ai-color-selector__option-{{ ai_gen_id }}:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .ai-color-selector__option-{{ ai_gen_id }}.selected {
+    border-color: {{ block.settings.selected_border_color }};
+    border-width: {{ block.settings.selected_border_width }}px;
+    box-shadow: 0 0 0 2px {{ block.settings.selected_border_color }};
+  }
+
+  .ai-color-selector__color-split-{{ ai_gen_id }} {
+    display: flex;
+    width: 100%;
+    height: 100%;
+  }
+
+  .ai-color-selector__color-half-{{ ai_gen_id }} {
+    flex: 1;
+    height: 100%;
+  }
+
+  .ai-color-selector__label-{{ ai_gen_id }} {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 8px;
+    background: {{ block.settings.label_background }};
+    color: {{ block.settings.label_text_color }};
+    font-size: {{ block.settings.label_size }}px;
+    text-align: center;
+    text-transform: {{ block.settings.label_text_transform }};
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .ai-color-selector__option-{{ ai_gen_id }}:hover .ai-color-selector__label-{{ ai_gen_id }} {
+    opacity: 1;
+  }
+
+  .ai-color-selector__selected-info-{{ ai_gen_id }} {
+    margin-top: {{ block.settings.spacing }}px;
+    padding: {{ block.settings.info_padding }}px;
+    background-color: {{ block.settings.info_background }};
+    border-radius: {{ block.settings.info_border_radius }}px;
+    color: {{ block.settings.text_color }};
+    font-size: {{ block.settings.info_text_size }}px;
+  }
+
+  .ai-color-selector__selected-title-{{ ai_gen_id }} {
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .ai-color-selector__empty-state-{{ ai_gen_id }} {
+    padding: 40px 20px;
+    text-align: center;
+    color: #999;
+    font-style: italic;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-color-selector-{{ ai_gen_id }} {
+      width: 100%;
+    }
+
+    .ai-color-selector__options-{{ ai_gen_id }} {
+      grid-template-columns: repeat(auto-fill, minmax({{ block.settings.option_width | times: 0.8 }}px, 1fr));
+    }
+  }
+{% endstyle %}
+
+<color-selector-{{ ai_gen_id }}
+  class="ai-color-selector-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+>
+  {% if block.settings.heading != blank %}
+    <h3 class="ai-color-selector__heading-{{ ai_gen_id }}">{{ block.settings.heading }}</h3>
+  {% endif %}
+
+  {% if block.settings.description != blank %}
+    <div class="ai-color-selector__description-{{ ai_gen_id }}">{{ block.settings.description }}</div>
+  {% endif %}
+
+  {% if block.settings.metaobject_list != blank %}
+    <ul class="ai-color-selector__options-{{ ai_gen_id }}">
+      {% for metaobject_item in block.settings.metaobject_list %}
+        {% assign metaobject = metaobjects[metaobject_item] %}
+        {% if metaobject %}
+          <li
+            class="ai-color-selector__option-{{ ai_gen_id }}"
+            data-option-id="{{ metaobject.id }}"
+            data-option-name="{{ metaobject.system.handle }}"
+          >
+            <div class="ai-color-selector__color-split-{{ ai_gen_id }}">
+              <div
+                class="ai-color-selector__color-half-{{ ai_gen_id }}"
+                style="background-color: {{ metaobject.color_1.value }};"
+              ></div>
+              <div
+                class="ai-color-selector__color-half-{{ ai_gen_id }}"
+                style="background-color: {{ metaobject.color_2.value }};"
+              ></div>
+            </div>
+            {% if block.settings.show_labels %}
+              <div class="ai-color-selector__label-{{ ai_gen_id }}">
+                {{ metaobject.system.handle | replace: '-', ' ' | capitalize }}
+              </div>
+            {% endif %}
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+
+    {% if block.settings.show_selected_info %}
+      <div
+        class="ai-color-selector__selected-info-{{ ai_gen_id }}"
+        style="display: none;"
+        data-selected-info
+      >
+        <div class="ai-color-selector__selected-title-{{ ai_gen_id }}">
+          Selected: <span data-selected-name></span>
+        </div>
+      </div>
+    {% endif %}
+  {% else %}
+    <div class="ai-color-selector__empty-state-{{ ai_gen_id }}">
+      Next, select your metaobject list to display color combinations
+    </div>
+  {% endif %}
+</color-selector-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class ColorSelector{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.options = [];
+        this.selectedOption = null;
+      }
+
+      connectedCallback() {
+        this.options = this.querySelectorAll('.ai-color-selector__option-{{ ai_gen_id }}');
+        this.selectedInfo = this.querySelector('[data-selected-info]');
+        this.selectedNameEl = this.querySelector('[data-selected-name]');
+        this.setupEventListeners();
+      }
+
+      setupEventListeners() {
+        this.options.forEach((option) => {
+          option.addEventListener('click', () => {
+            this.selectOption(option);
+          });
+
+          option.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              this.selectOption(option);
+            }
+          });
+        });
+      }
+
+      selectOption(option) {
+        this.options.forEach((opt) => opt.classList.remove('selected'));
+        option.classList.add('selected');
+
+        const optionName = option.getAttribute('data-option-name');
+        const optionId = option.getAttribute('data-option-id');
+
+        this.selectedOption = {
+          id: optionId,
+          name: optionName
+        };
+
+        if (this.selectedInfo && this.selectedNameEl) {
+          this.selectedNameEl.textContent = optionName.replace(/-/g, ' ');
+          this.selectedInfo.style.display = 'block';
+        }
+
+        this.dispatchEvent(new CustomEvent('color-selected', {
+          detail: this.selectedOption,
+          bubbles: true
+        }));
+      }
+    }
+
+    customElements.define('color-selector-{{ ai_gen_id }}', ColorSelector{{ ai_gen_id }});
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Color selector",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Choose your color combination"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "Select from our custom color combinations"
+    },
+    {
+      "type": "metaobject_list",
+      "id": "metaobject_list",
+      "label": "Metaobject list",
+      "metaobject_type": "make_your_own"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding",
+      "label": "Padding",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "spacing",
+      "label": "Spacing",
+      "min": 8,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Gap between options",
+      "min": 4,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Container border radius",
+      "min": 0,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Color options"
+    },
+    {
+      "type": "range",
+      "id": "option_width",
+      "label": "Option width",
+      "min": 40,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "option_border_radius",
+      "label": "Option border radius",
+      "min": 0,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "Border width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#e6e6e6"
+    },
+    {
+      "type": "range",
+      "id": "selected_border_width",
+      "label": "Selected border width",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "unit": "px",
+      "default": 2
+    },
+    {
+      "type": "color",
+      "id": "selected_border_color",
+      "label": "Selected border color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Labels"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_labels",
+      "label": "Show labels on hover",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "label_size",
+      "label": "Label text size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "select",
+      "id": "label_text_transform",
+      "label": "Label text case",
+      "options": [
+        {
+          "value": "none",
+          "label": "Default"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        }
+      ],
+      "default": "capitalize"
+    },
+    {
+      "type": "color",
+      "id": "label_background",
+      "label": "Label background",
+      "default": "rgba(0, 0, 0, 0.8)"
+    },
+    {
+      "type": "color",
+      "id": "label_text_color",
+      "label": "Label text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Selected info"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_selected_info",
+      "label": "Show selected info",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "info_padding",
+      "label": "Info padding",
+      "min": 8,
+      "max": 32,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "info_border_radius",
+      "label": "Info border radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "info_background",
+      "label": "Info background",
+      "default": "#f2f2f2"
+    },
+    {
+      "type": "range",
+      "id": "info_text_size",
+      "label": "Info text size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 16,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "label": "Description size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    }
+  ],
+  "presets": [
+    {
+      "name": "Color selector"
+    }
+  ]
+}
 {% endschema %}
