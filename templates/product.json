@@ -182,6 +182,7 @@
             },
             "ai_gen_block_21d728f_TPTRaz": {
               "type": "ai_gen_block_21d728f",
+              "disabled": true,
               "settings": {
                 "thumbnail_size": 100,
                 "mobile_thumbnail_size": 80,
@@ -235,9 +236,8 @@
             },
             "variant_picker_R3rGDr": {
               "type": "variant-picker",
-              "disabled": true,
               "settings": {
-                "variant_style": "buttons",
+                "variant_style": "swatches",
                 "show_swatches": true,
                 "alignment": "left",
                 "padding-block-start": 12,
