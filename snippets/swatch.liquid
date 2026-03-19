@@ -5,6 +5,7 @@
   @param {object} [variant_image] - an alternate image when there is no swatch value
   @param {string} [secondary_color] - optional second color for split swatches
   @param {string} [mode] - one of 'unscaled', 'filter', 'pill'
+  @param {boolean} [force_variant_image] - force usage of variant_image even if theme setting is disabled
 
   @example
   {% render 'swatch', swatch: swatch, variant_image: variant_image, mode: 'unscaled' %}
@@ -14,7 +15,15 @@
   assign swatch_value = null
   assign extra_classes = ''
   assign secondary_swatch_color = secondary_color | default: blank
-  if settings.show_variant_image and variant_image
+  assign use_variant_image = false
+
+  if force_variant_image and variant_image
+    assign use_variant_image = true
+  elsif settings.show_variant_image and variant_image
+    assign use_variant_image = true
+  endif
+
+  if use_variant_image
     assign swatch_image_width = settings.variant_swatch_width | times: 2
     assign swatch_image_url = variant_image | image_url: width: swatch_image_width
     assign swatch_value = 'url(' | append: swatch_image_url | append: ')'
@@ -57,7 +66,7 @@
   "
   style="
     --swatch-background: {{ swatch_value }};
-    {% if swatch.image and settings.show_variant_image == false %} --swatch-focal-point: {{ swatch.image.presentation.focal_point }};{% endif %}
+    {% if swatch.image and use_variant_image == false %} --swatch-focal-point: {{ swatch.image.presentation.focal_point }};{% endif %}
   "
 >
 </span>
