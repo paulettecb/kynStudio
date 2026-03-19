@@ -170,7 +170,7 @@
           assign selected_value = product.selected_or_first_available_variant.options[option_index]
           assign option_name_downcase = option.name | downcase
           assign shows_color_chip = false
-          if option_name_downcase contains 'color' or option_name_downcase contains 'colour' or option_name_downcase contains 'secondary finish'
+          if option_name_downcase contains 'color' or option_name_downcase contains 'colour' or option_name_downcase contains 'sec finish'
             assign shows_color_chip = true
           endif
         %}
