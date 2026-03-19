@@ -24,10 +24,41 @@
   }
 
   .ai-variant-picker__label-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
     font-size: {{ block.settings.label_font_size }}px;
     font-weight: 600;
     color: {{ block.settings.label_color }};
     text-transform: {{ block.settings.label_text_transform }};
+  }
+
+  .ai-variant-picker__selected-value-{{ ai_gen_id }} {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: {{ block.settings.selected_label_background_color }};
+    color: {{ block.settings.selected_label_text_color }};
+    font-size: calc({{ block.settings.label_font_size }}px * 0.9);
+    font-weight: 500;
+    text-transform: none;
+  }
+
+  .ai-variant-picker__selected-swatch-{{ ai_gen_id }} {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    background: var(--ai-selected-swatch-color, transparent);
+    display: none;
+    flex-shrink: 0;
+  }
+
+  .ai-variant-picker__selected-value-{{ ai_gen_id }}.has-swatch .ai-variant-picker__selected-swatch-{{ ai_gen_id }} {
+    display: inline-block;
   }
 
   .ai-variant-picker__options-{{ ai_gen_id }} {
@@ -129,9 +160,30 @@
 >
   <div class="ai-variant-picker__container-{{ ai_gen_id }}">
     {% for option in product.options_with_values %}
-      <div class="ai-variant-picker__option-group-{{ ai_gen_id }}">
+      <div
+        class="ai-variant-picker__option-group-{{ ai_gen_id }}"
+        data-option-name="{{ option.name | escape }}"
+        data-option-position="{{ option.position }}"
+      >
+        {% liquid
+          assign option_index = option.position | minus: 1
+          assign selected_value = product.selected_or_first_available_variant.options[option_index]
+          assign option_name_downcase = option.name | downcase
+          assign shows_color_chip = false
+          if option_name_downcase contains 'color' or option_name_downcase contains 'colour' or option_name_downcase contains 'secondary finish'
+            assign shows_color_chip = true
+          endif
+        %}
         <label class="ai-variant-picker__label-{{ ai_gen_id }}">
-          {{ option.name }}
+          <span>{{ option.name }}</span>
+          <span
+            class="ai-variant-picker__selected-value-{{ ai_gen_id }}{% if shows_color_chip %} has-swatch{% endif %}"
+            data-selected-value-label
+            {% if shows_color_chip %}style="--ai-selected-swatch-color: {{ selected_value | escape }};"{% endif %}
+          >
+            <span class="ai-variant-picker__selected-swatch-{{ ai_gen_id }}" aria-hidden="true"></span>
+            <span data-selected-value-text>{{ selected_value }}</span>
+          </span>
         </label>
         <div class="ai-variant-picker__options-{{ ai_gen_id }}">
           {% for value in option.values %}
@@ -215,7 +267,9 @@
       connectedCallback() {
         this.options = this.querySelectorAll('.ai-variant-picker__option-{{ ai_gen_id }}');
         this.inputs = this.querySelectorAll('.ai-variant-picker__input-{{ ai_gen_id }}');
+        this.optionGroups = this.querySelectorAll('.ai-variant-picker__option-group-{{ ai_gen_id }}');
         this.setupEventListeners();
+        this.updateSelectedValueLabels();
       }
 
       setupEventListeners() {
@@ -244,7 +298,7 @@
 
       updateVariant() {
         const selectedOptions = [];
-        const optionGroups = this.querySelectorAll('.ai-variant-picker__option-group-{{ ai_gen_id }}');
+        const optionGroups = this.optionGroups || this.querySelectorAll('.ai-variant-picker__option-group-{{ ai_gen_id }}');
 
         optionGroups.forEach((group) => {
           const selectedInput = group.querySelector('.ai-variant-picker__input-{{ ai_gen_id }}:checked');
@@ -258,8 +312,28 @@
         if (matchingVariant) {
           this.updateURL(matchingVariant.id);
           this.updateAvailability(selectedOptions);
+          this.updateSelectedValueLabels();
           this.dispatchVariantChangeEvent(matchingVariant);
         }
+      }
+
+      updateSelectedValueLabels() {
+        const optionGroups = this.optionGroups || this.querySelectorAll('.ai-variant-picker__option-group-{{ ai_gen_id }}');
+
+        optionGroups.forEach((group) => {
+          const selectedInput = group.querySelector('.ai-variant-picker__input-{{ ai_gen_id }}:checked');
+          const selectedValueText = group.querySelector('[data-selected-value-text]');
+          const selectedValueLabel = group.querySelector('[data-selected-value-label]');
+
+          if (!selectedInput || !selectedValueText || !selectedValueLabel) return;
+
+          const selectedValue = selectedInput.value;
+          selectedValueText.textContent = selectedValue;
+
+          if (selectedValueLabel.classList.contains('has-swatch')) {
+            selectedValueLabel.style.setProperty('--ai-selected-swatch-color', selectedValue);
+          }
+        });
       }
 
       findMatchingVariant(selectedOptions) {
@@ -416,6 +490,18 @@
       "step": 1,
       "unit": "px",
       "default": 14
+    },
+    {
+      "type": "color",
+      "id": "selected_label_background_color",
+      "label": "Selected value background",
+      "default": "#f3f4f6"
+    },
+    {
+      "type": "color",
+      "id": "selected_label_text_color",
+      "label": "Selected value text",
+      "default": "#111827"
     },
     {
       "type": "select",
