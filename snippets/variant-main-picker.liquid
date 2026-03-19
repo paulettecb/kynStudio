@@ -165,9 +165,7 @@
                     secondary_color: metafield_secondary_color_value,
                     mode: 'unscaled'
                   %}
-                  <span class="visually-hidden">
-                    {{- product_option_value | escape -}}
-                  </span>
+                  <span class="visually-hidden">{{- product_option_value | escape -}}</span>
                 {% else %}
                   {% if product_option_value.available == true %}
                     <span
