@@ -54,6 +54,10 @@
 
           assign product_option_name_downcase = product_option.name | downcase
           assign product_option_key = 'option' | append: product_option.position
+          assign option_uses_secondary_finish = false
+          if product_option_name_downcase contains 'secondary' or product_option_name_downcase contains 'accent'
+            assign option_uses_secondary_finish = true
+          endif
           if product_option_name_downcase == 'color'
             assign product_option_display_name = 'Finish'
           else
@@ -96,6 +100,7 @@
                 assign metafield_swatch_image = blank
                 assign metafield_color_reference = blank
                 assign metafield_secondary_color_reference = blank
+                assign metafield_display_reference = blank
                 assign metafield_image_reference = blank
 
                 if option_value_variant == blank
@@ -112,9 +117,15 @@
                   assign metafield_secondary_color_reference = option_value_variant.metafields.custom.accent_color.value | default: metafield_color_reference
                 endif
 
-                if metafield_color_reference != blank
-                  assign metafield_color_value = metafield_color_reference.color | default: metafield_color_reference.hex | default: metafield_color_reference
-                  assign metafield_image_reference = metafield_color_reference.image.value | default: metafield_color_reference.image | default: metafield_color_reference.swatch_image.value | default: metafield_color_reference.swatch_image | default: metafield_color_reference.variant_image.value | default: metafield_color_reference.variant_image
+                if option_uses_secondary_finish and metafield_secondary_color_reference != blank
+                  assign metafield_display_reference = metafield_secondary_color_reference
+                else
+                  assign metafield_display_reference = metafield_color_reference
+                endif
+
+                if metafield_display_reference != blank
+                  assign metafield_color_value = metafield_display_reference.color | default: metafield_display_reference.hex | default: metafield_display_reference
+                  assign metafield_image_reference = metafield_display_reference.image.value | default: metafield_display_reference.image | default: metafield_display_reference.swatch_image.value | default: metafield_display_reference.swatch_image | default: metafield_display_reference.variant_image.value | default: metafield_display_reference.variant_image
                   assign metafield_swatch_image = metafield_image_reference
                 endif
 
