@@ -185,7 +185,8 @@
                     swatch: product_option_value.swatch,
                     variant_image: featured_media,
                     secondary_color: metafield_secondary_color_value,
-                    mode: 'unscaled'
+                    mode: 'unscaled',
+                    force_variant_image: metafield_swatch_image != blank
                   %}
                   <span class="visually-hidden">{{- product_option_value | escape -}}</span>
                 {% else %}
