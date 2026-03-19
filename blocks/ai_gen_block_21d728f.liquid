@@ -730,7 +730,7 @@
         <br>{{ option.name }}: {{ option.values | join: ', ' }}
       {% endfor %}
     </p>
-    <p><b>Selected variant (Liquid):</b> {{ product.selected_variant.id | default: 'none' }}</p>
+    <p><b>Selected variant (Liquid):</b> {{ product.selected_value.id | default: 'none' }}</p>
     <p><b>Selected options:</b>
       {% for option in product.selected_or_first_available_variant.options %}
         {{ option }}{% unless forloop.last %}, {% endunless %}
