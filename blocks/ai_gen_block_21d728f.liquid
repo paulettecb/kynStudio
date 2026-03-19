@@ -213,17 +213,25 @@
         {% elsif option.name == secondary_finish_option_name and secondary_finish_metafield != blank %}
           {% for entry in secondary_finish_metafield %}
             {% assign entry_label = entry.label | default: entry.name | default: entry.title | default: entry.system.handle %}
-            {% assign option_values_joined = option.values | join: '||' | downcase %}
-            {% assign entry_label_downcase = entry_label | downcase %}
+            {% assign matched_option_value = blank %}
+            {% assign entry_label_downcase = entry_label | strip | downcase %}
 
-            {% if option_values_joined contains entry_label_downcase %}
+            {% for option_value in option.values %}
+              {% assign option_value_downcase = option_value | strip | downcase %}
+              {% if option_value_downcase == entry_label_downcase %}
+                {% assign matched_option_value = option_value %}
+                {% break %}
+              {% endif %}
+            {% endfor %}
+
+            {% if matched_option_value != blank %}
               <button
                 type="button"
-                class="ai-variant-option-{{ ai_gen_id }}{% if entry_label == option.selected_value %} selected{% endif %}"
+                class="ai-variant-option-{{ ai_gen_id }}{% if matched_option_value == option.selected_value %} selected{% endif %}"
                 data-option-position="{{ option.position }}"
                 data-option-name="{{ option.name | escape }}"
-                data-option-value="{{ entry_label | escape }}"
-                aria-pressed="{% if entry_label == option.selected_value %}true{% else %}false{% endif %}"
+                data-option-value="{{ matched_option_value | escape }}"
+                aria-pressed="{% if matched_option_value == option.selected_value %}true{% else %}false{% endif %}"
               >
                 {% if entry.image %}
                   <img
