@@ -395,14 +395,16 @@
             this.selectedOptions[position - 1] = value;
 
             var variant = this.getCurrentVariant();
+
+            this.updateUI();
+
             if (!variant) {
-              variant = this.getClosestAvailableVariant(position - 1, value);
+              console.warn('No exact variant match for selected options:', this.selectedOptions);
+              return;
             }
 
-            if (variant) {
-              this.selectedOptions = variant.options.slice();
-            }
-
+            this.dataset.currentVariantId = variant.id;
+            this.selectedOptions = variant.options.slice();
             this.updateUI();
             this.updateURL();
             this.syncNativeVariantInput();
@@ -420,11 +422,6 @@
         }.bind(this));
       }
 
-      getClosestAvailableVariant(changedIndex, changedValue) {
-        return this.product.variants.find(function(variant) {
-          return variant.available && variant.options[changedIndex] === changedValue;
-        });
-      }
 
       updateUI() {
         var matchingVariant = this.getCurrentVariant();
@@ -746,7 +743,7 @@
         <br>{{ option.name }}: {{ option.values | join: ', ' }}
       {% endfor %}
     </p>
-    <p><b>Selected variant (Liquid):</b> {{ product.selected_value.id | default: 'none' }}</p>
+    <p><b>Selected variant (Liquid):</b> {{ product.selected_or_first_available_variant.id | default: 'none' }}</p>
     <p><b>Selected options:</b>
       {% for option in product.selected_or_first_available_variant.options %}
         {{ option }}{% unless forloop.last %}, {% endunless %}
