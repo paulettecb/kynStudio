@@ -92,7 +92,7 @@
                 assign metafield_color_value = blank
                 assign metafield_secondary_color_value = blank
                 assign metafield_color_reference = product_option_value.variant.metafields.custom.color.value
-                assign metafield_secondary_color_reference = product_option_value.variant.metafields.custom.secondary_color.value
+                assign metafield_secondary_color_reference = product_option_value.variant.metafields.custom.accent_color.value | default: metafield_color_reference
 
                 if metafield_color_reference != blank
                   assign metafield_color_value = metafield_color_reference.color | default: metafield_color_reference.hex | default: metafield_color_reference
@@ -216,7 +216,7 @@
                     assign metafield_color_value = blank
                     assign metafield_secondary_color_value = blank
                     assign metafield_color_reference = product_option_value.variant.metafields.custom.color.value
-                    assign metafield_secondary_color_reference = product_option_value.variant.metafields.custom.secondary_color.value
+                    assign metafield_secondary_color_reference = product_option_value.variant.metafields.custom.accent_color.value | default: metafield_color_reference
 
                     if metafield_color_reference != blank
                       assign metafield_color_value = metafield_color_reference.color | default: metafield_color_reference.hex | default: metafield_color_reference
