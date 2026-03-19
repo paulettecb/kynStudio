@@ -62,11 +62,13 @@
     "product_corner_radius": 0,
     "card_corner_radius": 0,
     "card_title_case": "uppercase",
-    "variant_swatch_width": 18,
-    "variant_swatch_height": 18,
-    "variant_swatch_radius": 0,
-    "variant_button_radius": 0,
-    "variant_button_width": "default-width-buttons",
+    "show_variant_image": false,
+    "variant_swatch_width": 62,
+    "variant_swatch_height": 85,
+    "variant_swatch_radius": 34,
+    "variant_swatch_border_style": "none",
+    "variant_button_radius": 17,
+    "variant_button_width": "equal-width-buttons",
     "content_for_index": [],
     "blocks": {
       "13768625480086291342": {
