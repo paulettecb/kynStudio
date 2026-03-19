@@ -1,8 +1,8 @@
 {% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
 {% assign primary_finish_option_name = 'Primary Finish' %}
-{% assign secondary_finish_option_name = 'Secondary Finish' %}
+{% assign secomdary_finish_option_name = 'Secondary Finish' %}
 {% assign primary_finish_metafield = product.metafields.shopify['color-pattern'].value %}
-{% assign secondary_finish_metafield = product.metafields.custom['secomdary-finish'].value %}
+{% assign secomdary_finish_metafield = product.metafields.custom['secomdary-finish'].value %}
 
 {% style %}
   .ai-variant-picker-{{ ai_gen_id }} {
@@ -220,8 +220,8 @@
             {% endif %}
           {% endfor %}
 
-        {% elsif option.name == secondary_finish_option_name and secondary_finish_metafield != blank %}
-          {% for entry in secondary_finish_metafield %}
+        {% elsif option.name == secomdary_finish_option_name and secomdary_finish_metafield != blank %}
+          {% for entry in secomdary_finish_metafield %}
             {% assign entry_label = entry.label | default: entry.name | default: entry.title | default: entry.system.handle %}
             {% assign matched_option_value = blank %}
             {% assign entry_label_downcase = entry_label | strip | downcase %}
@@ -586,7 +586,7 @@
       {% endfor %}
     </p>
     <p><b>Primary metafield count:</b> {{ primary_finish_metafield.size | default: 0 }}</p>
-    <p><b>Secondary metafield count:</b> {{ secondary_finish_metafield.size | default: 0 }}</p>
+    <p><b>Secondary metafield count:</b> {{ secomdary_finish_metafield.size | default: 0 }}</p>
     <p><b>Cart form variant ID (live):</b> <span id="debug-cart-id-{{ ai_gen_id }}">checking...</span></p>
   </div>
 
