@@ -192,7 +192,7 @@
                 "label_font_size": 11,
                 "label_text_transform": "uppercase",
                 "label_color": "#1b3957",
-                "background_color": "#ffffff",
+                "background_color": "#1a1a1a",
                 "border_color": "#e6e6e6",
                 "border_width": 0,
                 "hover_border_color": "#000000",
