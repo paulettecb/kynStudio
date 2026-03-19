@@ -323,20 +323,25 @@
       }
 
       updateSelectedValueLabels() {
+
         const optionGroups = this.optionGroups || this.querySelectorAll('.ai-variant-picker__option-group-{{ ai_gen_id }}');
 
         optionGroups.forEach((group) => {
-          const selectedInput = group.querySelector('.ai-variant-picker__input-{{ ai_gen_id }}:checked');
-          const selectedValueText = group.querySelector('[data-selected-value-text]');
-          const selectedValueLabel = group.querySelector('[data-selected-value-label]');
-
-          if (!selectedInput || !selectedValueText || !selectedValueLabel) return;
-
-          const selectedValue = selectedInput.value;
+          const checkedInput = group.querySelector('.ai-variant-picker__input-{{ ai_gen_id }}:checked');
+          const selectedValue = checkedInput ? checkedInput.value : '';
           selectedValueText.textContent = selectedValue;
 
-          if (selectedValueLabel.classList.contains('has-swatch')) {
-            selectedValueLabel.style.setProperty('--ai-selected-swatch-color', selectedValue);
+          const selectedInput = group.querySelector('.ai-variant-picker__input-{{ ai_gen_id }}:checked');
+          const selectedValueText_ = group.querySelector('[data-selected-value-text]');
+          const selectedValueLabel = group.querySelector('[data-selected-value-label]');
+
+          if (!checkedInput || !selectedValue || !selectedValueText) return;
+
+          const selectedValue = checkedInput.value;
+          selectedValue.textContent = selectedValue;
+
+          if (selectedValueText.classList.contains('has-swatch')) {
+            selectedValueText.style.setProperty('--ai-selected-swatch-color', selectedValue);
           }
         });
       }
