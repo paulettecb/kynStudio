@@ -203,17 +203,26 @@
               endfor
 
               assign variant_image = null
-              for variant in product.variants
-                if variant.options[option_index] == value
-                  if variant.featured_image
-                    assign variant_image = variant.featured_image
-                    break
-                  elsif variant.image
-                    assign variant_image = variant.image
+              assign metafield_key = null
+              if option.position == 1
+                assign metafield_key = 'color-pattern'
+                for ov in option.values
+                  if ov == value
+                    assign linked_metaobject = product.metafields.shopify.color-pattern
+                    assign variant_image = linked_metaobject.value.image.value
                     break
                   endif
-                endif
-              endfor
+                endfor
+              elsif option.position == 2
+                for ov in option.values
+                  if ov == value
+                    assign linked_metaobject = product.metafields.custom.secomdary_finish
+                    assign variant_image = linked_metaobject.value.image.value
+                    break
+                  endif
+                endfor
+              endif
+
             %}
 
             <label
