@@ -2,7 +2,7 @@
 {% assign primary_finish_option_name = 'Primary Finish' %}
 {% assign secondary_finish_option_name = 'Secondary Finish' %}
 {% assign primary_finish_metafield = product.metafields.shopify['color-pattern'].value %}
-{% assign secondary_finish_metafield = product.metafields.custom['secomdary-finish'].value %}
+{% assign secondary_finish_metafield = product.metafields.custom['secondary-finish'].value %}
 
 {% style %}
   .ai-variant-picker-{{ ai_gen_id }} {
@@ -120,6 +120,16 @@
     align-items: center;
     justify-content: center;
     background: #f5f5f5;
+  }
+
+  .ai-variant-debug-{{ ai_gen_id }} {
+    margin-top: 20px;
+    padding: 12px;
+    background: #f4f4f4;
+    border: 1px solid #ccc;
+    font-family: monospace;
+    font-size: 12px;
+    border-radius: 6px;
   }
 
   @media screen and (max-width: 749px) {
@@ -353,8 +363,8 @@
         this.initializeSelectedOptions();
         this.attachEventListeners();
         this.updateUI();
+        this.syncNativeOptionInputs();
         this.syncNativeVariantInput();
-        this.updateMainImage();
       }
 
       initializeSelectedOptions() {
@@ -373,9 +383,7 @@
         }
 
         var selectedVariant =
-          this.product.variants.find(function(variant) {
-            return variant.id === (this.product.selected_or_first_available_variant && this.product.selected_or_first_available_variant.id);
-          }.bind(this)) ||
+          this.product.selected_or_first_available_variant ||
           this.product.variants.find(function(variant) {
             return variant.available;
           }) ||
@@ -403,13 +411,15 @@
               return;
             }
 
-            this.dataset.currentVariantId = variant.id;
             this.selectedOptions = variant.options.slice();
+            this.dataset.currentVariantId = variant.id;
+
             this.updateUI();
-            this.updateURL();
+            this.syncNativeOptionInputs();
             this.syncNativeVariantInput();
+            this.updateURL();
             this.updateMainImage();
-            this.dispatchVariantChange();
+            this.dispatchVariantChange(variant);
           }.bind(this));
         }.bind(this));
       }
@@ -421,7 +431,6 @@
           }.bind(this));
         }.bind(this));
       }
-
 
       updateUI() {
         var matchingVariant = this.getCurrentVariant();
@@ -457,6 +466,67 @@
         }
       }
 
+      getProductForm() {
+        var closestSection = this.closest('section, product-info, main, .shopify-section');
+        if (closestSection) {
+          var localForm = closestSection.querySelector('form[action*="/cart/add"]');
+          if (localForm) return localForm;
+        }
+
+        return document.querySelector('form[action*="/cart/add"]');
+      }
+
+      syncNativeOptionInputs() {
+        var productForm = this.getProductForm();
+        if (!productForm) return;
+
+        this.selectedOptions.forEach(function(value, index) {
+          var optionIndex = index + 1;
+
+          var radioCandidates = productForm.querySelectorAll(
+            'input[type="radio"][name^="options["], input[type="radio"][name="options[' + optionIndex + ']"]'
+          );
+
+          radioCandidates.forEach(function(radio) {
+            if (radio.value === value) {
+              radio.checked = true;
+              radio.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+          });
+
+          var selects = productForm.querySelectorAll('select[name^="options["], select[data-option-position]');
+          selects.forEach(function(select) {
+            var matchesByPosition = select.getAttribute('data-option-position') === String(optionIndex);
+            var matchesByName = select.name === 'options[' + optionIndex + ']';
+
+            if (matchesByPosition || matchesByName || selects.length === this.selectedOptions.length) {
+              Array.from(select.options).forEach(function(opt) {
+                if (opt.value === value) {
+                  select.value = value;
+                  select.dispatchEvent(new Event('change', { bubbles: true }));
+                }
+              });
+            }
+          }.bind(this));
+        }.bind(this));
+      }
+
+      syncNativeVariantInput() {
+        var variant = this.getCurrentVariant();
+        if (!variant) return;
+
+        var productForm = this.getProductForm();
+        if (!productForm) return;
+
+        var variantInput = productForm.querySelector('input[name="id"]');
+        if (!variantInput) return;
+
+        variantInput.value = variant.id;
+        variantInput.setAttribute('value', variant.id);
+        variantInput.dispatchEvent(new Event('input', { bubbles: true }));
+        variantInput.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+
       updateURL() {
         var variant = this.getCurrentVariant();
         if (!variant) return;
@@ -464,27 +534,6 @@
         var url = new URL(window.location.href);
         url.searchParams.set('variant', variant.id);
         window.history.replaceState({}, '', url);
-      }
-
-      syncNativeVariantInput() {
-        var variant = this.getCurrentVariant();
-        if (!variant) return;
-
-        var productForm =
-          this.closest('section, product-info, main, .shopify-section') &&
-          this.closest('section, product-info, main, .shopify-section').querySelector('form[action*="/cart/add"]');
-
-        if (!productForm) {
-          productForm = document.querySelector('form[action*="/cart/add"]');
-        }
-
-        if (!productForm) return;
-
-        var variantInput = productForm.querySelector('input[name="id"]');
-        if (!variantInput) return;
-
-        variantInput.value = variant.id;
-        variantInput.dispatchEvent(new Event('change', { bubbles: true }));
       }
 
       updateMainImage() {
@@ -501,8 +550,7 @@
         }
       }
 
-      dispatchVariantChange() {
-        var variant = this.getCurrentVariant();
+      dispatchVariantChange(variant) {
         if (!variant) return;
 
         this.dispatchEvent(new CustomEvent('variant-change', {
@@ -522,6 +570,50 @@
     }
   })();
 </script>
+
+{% if request.design_mode %}
+  <div class="ai-variant-debug-{{ ai_gen_id }}">
+    <strong>🛠 Debug Panel</strong>
+    <p><b>Product options:</b>
+      {% for option in product.options_with_values %}
+        <br>{{ option.name }}: {{ option.values | join: ', ' }}
+      {% endfor %}
+    </p>
+    <p><b>Selected variant (Liquid):</b> {{ product.selected_or_first_available_variant.id | default: 'none' }}</p>
+    <p><b>Selected options:</b>
+      {% for option_value in product.selected_or_first_available_variant.options %}
+        {{ option_value }}{% unless forloop.last %}, {% endunless %}
+      {% endfor %}
+    </p>
+    <p><b>Primary metafield count:</b> {{ primary_finish_metafield.size | default: 0 }}</p>
+    <p><b>Secondary metafield count:</b> {{ secondary_finish_metafield.size | default: 0 }}</p>
+    <p><b>Cart form variant ID (live):</b> <span id="debug-cart-id-{{ ai_gen_id }}">checking...</span></p>
+  </div>
+
+  <script>
+    (function() {
+      function updateDebug() {
+        var input = document.querySelector('form[action*="/cart/add"] [name="id"]');
+        var el = document.getElementById('debug-cart-id-{{ ai_gen_id }}');
+        if (el) el.textContent = input ? input.value : 'not found';
+      }
+
+      updateDebug();
+      document.addEventListener('change', updateDebug);
+      document.addEventListener('variant:changed', updateDebug);
+
+      var form = document.querySelector('form[action*="/cart/add"]');
+      if (form) {
+        var obs = new MutationObserver(updateDebug);
+        obs.observe(form, {
+          subtree: true,
+          attributes: true,
+          attributeFilter: ['value']
+        });
+      }
+    })();
+  </script>
+{% endif %}
 
 {% schema %}
 {
@@ -734,35 +826,3 @@
   ]
 }
 {% endschema %}
-
-{% if request.design_mode %}
-  <div id="variant-debug-panel" style="margin-top:20px;padding:12px;background:#f4f4f4;border:1px solid #ccc;font-family:monospace;font-size:12px;border-radius:6px;">
-    <strong>🛠 Debug Panel</strong>
-    <p><b>Product options:</b>
-      {% for option in product.options_with_values %}
-        <br>{{ option.name }}: {{ option.values | join: ', ' }}
-      {% endfor %}
-    </p>
-    <p><b>Selected variant (Liquid):</b> {{ product.selected_or_first_available_variant.id | default: 'none' }}</p>
-    <p><b>Selected options:</b>
-      {% for option in product.selected_or_first_available_variant.options %}
-        {{ option }}{% unless forloop.last %}, {% endunless %}
-      {% endfor %}
-    </p>
-    <p><b>Cart form variant ID (live):</b> <span id="debug-cart-id">checking...</span></p>
-  </div>
-  <script>
-    (function() {
-      function updateDebug() {
-        var input = document.querySelector('form[action="/cart/add"] [name="id"]');
-        var el = document.getElementById('debug-cart-id');
-        if (el) el.textContent = input ? input.value : 'not found';
-      }
-      updateDebug();
-      document.addEventListener('change', updateDebug);
-      var obs = new MutationObserver(updateDebug);
-      var form = document.querySelector('form[action="/cart/add"]');
-      if (form) obs.observe(form, { subtree: true, attributes: true, attributeFilter: ['value'] });
-    })();
-  </script>
-{% endif %}
