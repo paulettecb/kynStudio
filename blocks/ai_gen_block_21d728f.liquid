@@ -484,7 +484,6 @@
           document.querySelector('[data-media-id$="' + mediaId + '"]');
 
         if (mediaItem) {
-          mediaItem.dispatchEvent(new Event('click', { bubbles: true }));
           mediaItem.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
         }
       }
