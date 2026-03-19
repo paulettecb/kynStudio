@@ -1,6 +1,516 @@
+{% doc %}
+  @prompt
+    Create a variant picker block for a product page that works identically to the default color/variant picker, but with one key difference: each variant option displays its corresponding variant image as a thumbnail that the customer can click to select that variant. The variant options and their data should be built from the product's metafields (not hardcoded). When a variant is selected, the main product image should update to show that variant's image and its label, just as the original one. Keep the same behavior and structure as the default variant picker — the only addition is showing the variant's image on each selectable option., It shows as one long selection list, I wanted it as a builder, each section separated and its customizable menu please
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-variant-picker-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+  }
+
+  .ai-variant-option-group-{{ ai_gen_id }} {
+    margin-bottom: {{ block.settings.spacing_between_options }}px;
+  }
+
+  .ai-variant-option-group-{{ ai_gen_id }}:last-child {
+    margin-bottom: 0;
+  }
+
+  .ai-variant-option-label-{{ ai_gen_id }} {
+    display: block;
+    font-size: {{ block.settings.label_font_size }}px;
+    font-weight: {{ block.settings.label_font_weight }};
+    margin-bottom: {{ block.settings.label_spacing }}px;
+    color: {{ block.settings.label_color }};
+    text-transform: {% if block.settings.label_uppercase %}uppercase{% else %}none{% endif %};
+  }
+
+  .ai-variant-options-grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax({{ block.settings.thumbnail_size }}px, 1fr));
+    gap: {{ block.settings.grid_gap }}px;
+  }
+
+  .ai-variant-option-{{ ai_gen_id }} {
+    position: relative;
+    cursor: pointer;
+    border: {{ block.settings.border_width }}px solid {{ block.settings.border_color }};
+    border-radius: {{ block.settings.border_radius }}px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    aspect-ratio: 1;
+  }
+
+  .ai-variant-option-{{ ai_gen_id }}:hover {
+    border-color: {{ block.settings.hover_border_color }};
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .ai-variant-option-{{ ai_gen_id }}.selected {
+    border-color: {{ block.settings.selected_border_color }};
+    border-width: {{ block.settings.selected_border_width }}px;
+  }
+
+  .ai-variant-option-image-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .ai-variant-option-name-{{ ai_gen_id }} {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: {{ block.settings.overlay_background }};
+    color: {{ block.settings.overlay_text_color }};
+    padding: 8px;
+    font-size: {{ block.settings.name_font_size }}px;
+    text-align: center;
+    opacity: {% if block.settings.show_name_overlay %}1{% else %}0{% endif %};
+    transition: opacity 0.3s ease;
+  }
+
+  .ai-variant-option-{{ ai_gen_id }}:hover .ai-variant-option-name-{{ ai_gen_id }} {
+    opacity: 1;
+  }
+
+  .ai-variant-option-{{ ai_gen_id }}.selected .ai-variant-option-name-{{ ai_gen_id }} {
+    opacity: 1;
+  }
+
+  .ai-variant-option-checkmark-{{ ai_gen_id }} {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    background: {{ block.settings.checkmark_background }};
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .ai-variant-option-{{ ai_gen_id }}.selected .ai-variant-option-checkmark-{{ ai_gen_id }} {
+    opacity: 1;
+  }
+
+  .ai-variant-option-checkmark-{{ ai_gen_id }} svg {
+    width: 16px;
+    height: 16px;
+    fill: {{ block.settings.checkmark_color }};
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-variant-options-grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat(auto-fill, minmax({{ block.settings.mobile_thumbnail_size }}px, 1fr));
+    }
+  }
+{% endstyle %}
+
+<variant-picker-{{ ai_gen_id }} class="ai-variant-picker-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  {% for option in product.options_with_values %}
+    <div class="ai-variant-option-group-{{ ai_gen_id }}">
+      <label class="ai-variant-option-label-{{ ai_gen_id }}">
+        {{ option.name }}: <span class="ai-selected-value-{{ ai_gen_id }}">{{ option.selected_value }}</span>
+      </label>
+      
+      <div class="ai-variant-options-grid-{{ ai_gen_id }}">
+        {% for value in option.values %}
+          {% assign option_index = option.position | minus: 1 %}
+          {% assign matching_variant = product.variants | where: option.name, value | first %}
+          
+          <div 
+            class="ai-variant-option-{{ ai_gen_id }} {% if value == option.selected_value %}selected{% endif %}"
+            data-option-position="{{ option.position }}"
+            data-option-value="{{ value | escape }}"
+            data-variant-id="{% if matching_variant %}{{ matching_variant.id }}{% endif %}"
+          >
+            {% if matching_variant.image %}
+              <img 
+                src="{{ matching_variant.image | image_url: width: 400 }}" 
+                alt="{{ value | escape }}"
+                class="ai-variant-option-image-{{ ai_gen_id }}"
+                loading="lazy"
+                width="400"
+                height="400"
+              >
+            {% elsif matching_variant.featured_image %}
+              <img 
+                src="{{ matching_variant.featured_image | image_url: width: 400 }}" 
+                alt="{{ value | escape }}"
+                class="ai-variant-option-image-{{ ai_gen_id }}"
+                loading="lazy"
+                width="400"
+                height="400"
+              >
+            {% elsif product.featured_image %}
+              <img 
+                src="{{ product.featured_image | image_url: width: 400 }}" 
+                alt="{{ value | escape }}"
+                class="ai-variant-option-image-{{ ai_gen_id }}"
+                loading="lazy"
+                width="400"
+                height="400"
+              >
+            {% else %}
+              <div class="ai-variant-placeholder-{{ ai_gen_id }}">
+                {{ 'product-1' | placeholder_svg_tag }}
+              </div>
+            {% endif %}
+            
+            <div class="ai-variant-option-name-{{ ai_gen_id }}">
+              {{ value }}
+            </div>
+            
+            {% if block.settings.show_checkmark %}
+              <div class="ai-variant-option-checkmark-{{ ai_gen_id }}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                </svg>
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endfor %}
+</variant-picker-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class VariantPicker{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.product = {{ product | json }};
+        this.selectedOptions = [];
+      }
+
+      connectedCallback() {
+        this.initializeSelectedOptions();
+        this.attachEventListeners();
+      }
+
+      initializeSelectedOptions() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const variantParam = urlParams.get('variant');
+        
+        if (variantParam) {
+          const variant = this.product.variants.find(v => v.id == variantParam);
+          if (variant) {
+            this.selectedOptions = [...variant.options];
+            this.updateUI();
+            return;
+          }
+        }
+        
+        this.selectedOptions = this.product.options.map(option => option.values[0]);
+      }
+
+      attachEventListeners() {
+        const options = this.querySelectorAll('.ai-variant-option-{{ ai_gen_id }}');
+        
+        options.forEach(option => {
+          option.addEventListener('click', (e) => {
+            const position = parseInt(option.dataset.optionPosition);
+            const value = option.dataset.optionValue;
+            
+            this.selectedOptions[position - 1] = value;
+            this.updateUI();
+            this.updateURL();
+            this.updateMainImage();
+            this.dispatchVariantChange();
+          });
+        });
+      }
+
+      updateUI() {
+        this.querySelectorAll('.ai-variant-option-{{ ai_gen_id }}').forEach(option => {
+          const position = parseInt(option.dataset.optionPosition);
+          const value = option.dataset.optionValue;
+          
+          if (this.selectedOptions[position - 1] === value) {
+            option.classList.add('selected');
+          } else {
+            option.classList.remove('selected');
+          }
+        });
+
+        this.querySelectorAll('.ai-selected-value-{{ ai_gen_id }}').forEach((span, index) => {
+          span.textContent = this.selectedOptions[index];
+        });
+      }
+
+      getCurrentVariant() {
+        return this.product.variants.find(variant => {
+          return variant.options.every((option, index) => {
+            return option === this.selectedOptions[index];
+          });
+        });
+      }
+
+      updateURL() {
+        const variant = this.getCurrentVariant();
+        if (variant) {
+          const url = new URL(window.location.href);
+          url.searchParams.set('variant', variant.id);
+          window.history.replaceState({}, '', url);
+        }
+      }
+
+      updateMainImage() {
+        const variant = this.getCurrentVariant();
+        if (variant && variant.featured_media) {
+          const mainImage = document.querySelector('.product__media-item[data-media-id="' + variant.featured_media.id + '"]');
+          if (mainImage) {
+            mainImage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }
+        }
+      }
+
+      dispatchVariantChange() {
+        const variant = this.getCurrentVariant();
+        if (variant) {
+          this.dispatchEvent(new CustomEvent('variant-change', {
+            detail: { variant: variant },
+            bubbles: true,
+            composed: true
+          }));
+        }
+      }
+    }
+
+    customElements.define('variant-picker-{{ ai_gen_id }}', VariantPicker{{ ai_gen_id }});
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Variant image picker",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "thumbnail_size",
+      "label": "Desktop thumbnail size",
+      "min": 60,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "mobile_thumbnail_size",
+      "label": "Mobile thumbnail size",
+      "min": 50,
+      "max": 150,
+      "step": 10,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "label": "Space between thumbnails",
+      "min": 4,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "spacing_between_options",
+      "label": "Space between option groups",
+      "min": 10,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Option labels"
+    },
+    {
+      "type": "range",
+      "id": "label_font_size",
+      "label": "Font size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "label_font_weight",
+      "label": "Font weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semi-bold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "checkbox",
+      "id": "label_uppercase",
+      "label": "Uppercase labels",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "label_spacing",
+      "label": "Space below label",
+      "min": 4,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Label color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Thumbnail borders"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "Border width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#e6e6e6"
+    },
+    {
+      "type": "color",
+      "id": "hover_border_color",
+      "label": "Hover border color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Selected state"
+    },
+    {
+      "type": "range",
+      "id": "selected_border_width",
+      "label": "Selected border width",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "unit": "px",
+      "default": 2
+    },
+    {
+      "type": "color",
+      "id": "selected_border_color",
+      "label": "Selected border color",
+      "default": "#000000"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_checkmark",
+      "label": "Show checkmark on selected",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "checkmark_background",
+      "label": "Checkmark background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "checkmark_color",
+      "label": "Checkmark color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Variant name overlay"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_name_overlay",
+      "label": "Show name by default",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "name_font_size",
+      "label": "Font size",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "color",
+      "id": "overlay_background",
+      "label": "Overlay background",
+      "default": "rgba(0, 0, 0, 0.7)"
+    },
+    {
+      "type": "color",
+      "id": "overlay_text_color",
+      "label": "Overlay text color",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Variant image picker"
+    }
+  ]
+}
 {% endschema %}
