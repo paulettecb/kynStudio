@@ -91,11 +91,20 @@
               {% liquid
                 assign metafield_color_value = blank
                 assign metafield_secondary_color_value = blank
+                assign metafield_swatch_image = blank
                 assign metafield_color_reference = product_option_value.variant.metafields.custom.color.value
                 assign metafield_secondary_color_reference = product_option_value.variant.metafields.custom.accent_color.value | default: metafield_color_reference
+                assign metafield_image_reference = blank
 
                 if metafield_color_reference != blank
                   assign metafield_color_value = metafield_color_reference.color | default: metafield_color_reference.hex | default: metafield_color_reference
+                  assign metafield_image_reference = metafield_color_reference.image | default: metafield_color_reference.swatch_image | default: metafield_color_reference.variant_image
+
+                  if metafield_image_reference.value != blank
+                    assign metafield_swatch_image = metafield_image_reference.value
+                  elsif metafield_image_reference != blank
+                    assign metafield_swatch_image = metafield_image_reference
+                  endif
                 endif
 
                 if metafield_secondary_color_reference != blank
@@ -106,7 +115,7 @@
                 {% assign longest_value = product_option_value.size %}
               {% endif %}
               <label
-                class="variant-option__button-label{% if variant_style == 'swatch' %} variant-option__button-label--has-swatch{% endif %}"
+                class="variant-option__button-label{% if variant_style == 'swatch' or metafield_swatch_image != blank %} variant-option__button-label--has-swatch{% endif %}"
               >
                 <input
                   type="radio"
@@ -139,9 +148,9 @@
                     data-current-checked="false"
                   {% endif %}
                 >
-                {% if variant_style == 'swatch' %}
+                {% if variant_style == 'swatch' or metafield_swatch_image != blank %}
                   {% liquid
-                    assign featured_media = product_option_value.variant.featured_media
+                    assign featured_media = metafield_swatch_image | default: product_option_value.variant.featured_media
 
                     # If the variant has no featured media, and we have a combined listing product, then fall back to
                     # using the featured media of the child product that is linked to this option value.
@@ -156,6 +165,9 @@
                     secondary_color: metafield_secondary_color_value,
                     mode: 'unscaled'
                   %}
+                  <span class="visually-hidden">
+                    {{- product_option_value | escape -}}
+                  </span>
                 {% else %}
                   {% if product_option_value.available == true %}
                     <span
@@ -215,11 +227,20 @@
                   {% liquid
                     assign metafield_color_value = blank
                     assign metafield_secondary_color_value = blank
+                    assign metafield_swatch_image = blank
                     assign metafield_color_reference = product_option_value.variant.metafields.custom.color.value
                     assign metafield_secondary_color_reference = product_option_value.variant.metafields.custom.accent_color.value | default: metafield_color_reference
+                    assign metafield_image_reference = blank
 
                     if metafield_color_reference != blank
                       assign metafield_color_value = metafield_color_reference.color | default: metafield_color_reference.hex | default: metafield_color_reference
+                      assign metafield_image_reference = metafield_color_reference.image | default: metafield_color_reference.swatch_image | default: metafield_color_reference.variant_image
+
+                      if metafield_image_reference.value != blank
+                        assign metafield_swatch_image = metafield_image_reference.value
+                      elsif metafield_image_reference != blank
+                        assign metafield_swatch_image = metafield_image_reference
+                      endif
                     endif
 
                     if metafield_secondary_color_reference != blank
