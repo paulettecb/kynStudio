@@ -1,9 +1,22 @@
+{% liquid
+  assign integrate_header = false
+
+  if template.name == 'page'
+    if template.suffix == 'porque-biothane' or template.suffix == 'porque-laton-solido'
+      assign integrate_header = true
+    elsif page.handle != blank and (page.handle contains 'biothane' or page.handle contains 'laton')
+      assign integrate_header = true
+    endif
+  endif
+%}
+
 <div
-  class="section section--full-width infographic-with-text spacing-style"
+  class="section section--full-width infographic-with-text spacing-style{% if integrate_header %} infographic-with-text--integrated-header{% endif %}"
   style="
     {% render 'spacing-style', settings: section.settings %}
     --infographic-max-width: {{ section.settings.max_width }}px;
     --infographic-background: 'radial-gradient(circle at top right, #e2e8f0 0%, #cbd5e1 100%)';
+    background: radial-gradient(circle at top right, #e2e8f0 0%, #cbd5e1 100%);
   "
 >
   <div class="section-background" style="background: radial-gradient(circle at top right, #e2e8f0 0%, #cbd5e1 100%);"></div>
@@ -40,6 +53,13 @@
     </div>
   </div>
 </div>
+
+{% stylesheet %}
+  .infographic-with-text--integrated-header {
+    padding-top: calc(var(--header-group-height, 0px) + var(--padding-block-start));
+    margin-top: calc(var(--header-group-height, 0px) * -1);
+  }
+{% endstylesheet %}
 
 {% schema %}
 {
