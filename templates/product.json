@@ -27,8 +27,8 @@
             "thumbnail_width": 47,
             "thumbnail_radius": 5,
             "aspect_ratio": "adapt",
-            "constrain_to_viewport": true,
-            "media_fit": "contain",
+            "constrain_to_viewport": false,
+            "media_fit": "cover",
             "media_radius": 31,
             "extend_media": false,
             "zoom": true,
@@ -36,8 +36,8 @@
             "hide_variants": true,
             "padding-block-start": 100,
             "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 47
+            "padding-inline-start": 17,
+            "padding-inline-end": 17
           },
           "blocks": {}
         },
