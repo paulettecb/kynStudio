@@ -7,6 +7,11 @@
 
 {% assign block_settings = block.settings %}
 
+{% liquid
+  assign primary_finish_visual_entries = product_resource.metafields.shopify['color-pattern'].value
+  assign secondary_finish_visual_entries = product_resource.metafields.custom.secomdary_finish.value
+%}
+
 {% unless product_resource.has_only_default_variant %}
   {% liquid
     assign button_background_brightness = section.settings.color_scheme.settings.foreground | color_brightness
@@ -37,8 +42,37 @@
         {%- liquid
           assign swatch_count = product_option.values | map: 'swatch' | compact | size
           assign variant_style = block_settings.variant_style
+          assign product_option_name_handle = product_option.name | handleize
+          assign option_visual_entries = blank
+          assign option_has_visual_images = false
 
-          if swatch_count > 0 and block_settings.show_swatches
+          if product_option_name_handle == 'primary-finish'
+            assign option_visual_entries = primary_finish_visual_entries
+          elsif product_option_name_handle == 'secondary-finish'
+            assign option_visual_entries = secondary_finish_visual_entries
+          endif
+
+          if block_settings.show_swatches and option_visual_entries != blank
+            for product_option_value in product_option.values
+              assign option_value_label = product_option_value.name | default: product_option_value | strip | downcase
+
+              for entry in option_visual_entries
+                assign entry_label = entry.label.value | default: entry.label | default: entry.name.value | default: entry.name | default: entry.title.value | default: entry.title | default: entry.system.handle
+                assign entry_image = entry.image.value | default: entry.image
+
+                if entry_label != blank and entry_image != blank and entry_label | strip | downcase == option_value_label
+                  assign option_has_visual_images = true
+                  break
+                endif
+              endfor
+
+              if option_has_visual_images
+                break
+              endif
+            endfor
+          endif
+
+          if block_settings.show_swatches and (swatch_count > 0 or option_has_visual_images)
             if block_settings.variant_style == 'dropdown'
               assign variant_style = 'swatch_dropdown'
             else
@@ -115,17 +149,32 @@
                 {% if variant_style == 'swatch' %}
                   {% liquid
                     assign featured_media = product_option_value.variant.featured_media
+                    assign option_value_visual_image = blank
 
                     # If the variant has no featured media, and we have a combined listing product, then fall back to
                     # using the featured media of the child product that is linked to this option value.
                     if featured_media == blank and product_option_value.product_url
                       assign featured_media = product_option_value.variant.product.featured_media
                     endif
+
+                    if option_visual_entries != blank
+                      assign option_value_label = product_option_value.name | default: product_option_value | strip | downcase
+
+                      for entry in option_visual_entries
+                        assign entry_label = entry.label.value | default: entry.label | default: entry.name.value | default: entry.name | default: entry.title.value | default: entry.title | default: entry.system.handle
+                        assign entry_image = entry.image.value | default: entry.image
+
+                        if entry_label != blank and entry_image != blank and entry_label | strip | downcase == option_value_label
+                          assign option_value_visual_image = entry_image
+                          break
+                        endif
+                      endfor
+                    endif
                   %}
 
                   {% render 'swatch',
                     swatch: product_option_value.swatch,
-                    variant_image: featured_media,
+                    variant_image: option_value_visual_image | default: featured_media,
                     mode: 'unscaled'
                   %}
                 {% else %}
