@@ -1,9 +1,12 @@
 {% liquid
-  assign integrated_header_pages = 'porque-biothane,porque-laton-solido' | split: ','
   assign integrate_header = false
 
-  if template.name == 'page' and page.handle != blank and integrated_header_pages contains page.handle
-    assign integrate_header = true
+  if template.name == 'page'
+    if template.suffix == 'porque-biothane' or template.suffix == 'porque-laton-solido'
+      assign integrate_header = true
+    elsif page.handle != blank and (page.handle contains 'biothane' or page.handle contains 'laton')
+      assign integrate_header = true
+    endif
   endif
 %}
 
@@ -13,6 +16,7 @@
     {% render 'spacing-style', settings: section.settings %}
     --infographic-max-width: {{ section.settings.max_width }}px;
     --infographic-background: 'radial-gradient(circle at top right, #e2e8f0 0%, #cbd5e1 100%)';
+    background: radial-gradient(circle at top right, #e2e8f0 0%, #cbd5e1 100%);
   "
 >
   <div class="section-background" style="background: radial-gradient(circle at top right, #e2e8f0 0%, #cbd5e1 100%);"></div>

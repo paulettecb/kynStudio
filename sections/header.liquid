@@ -16,9 +16,10 @@
 
   assign integrate_header_with_gradient = false
 
-  if template.name == 'page' and page.handle != blank
-    assign integrated_header_pages = 'porque-biothane,porque-laton-solido' | split: ','
-    if integrated_header_pages contains page.handle
+  if template.name == 'page'
+    if template.suffix == 'porque-biothane' or template.suffix == 'porque-laton-solido'
+      assign integrate_header_with_gradient = true
+    elsif page.handle != blank and (page.handle contains 'biothane' or page.handle contains 'laton')
       assign integrate_header_with_gradient = true
     endif
   elsif template.name == 'collection'
