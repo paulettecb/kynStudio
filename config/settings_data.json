@@ -64,7 +64,7 @@
     "card_corner_radius": 7,
     "card_title_case": "uppercase",
     "show_variant_image": false,
-    "variant_swatch_width": 44,
+    "variant_swatch_width": 64,
     "variant_swatch_height": 85,
     "variant_swatch_radius": 34,
     "variant_swatch_border_style": "none",
