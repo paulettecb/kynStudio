@@ -51,20 +51,6 @@
             assign option_id_attribute = 'data-option-id="' | append: fieldset_id | append: '"'
             assign longest_value = 0
           endif
-
-          assign product_option_name_downcase = product_option.name | downcase
-          assign product_option_key = 'option' | append: product_option.position
-          assign option_uses_secondary_finish = false
-
-          if product_option_name_downcase == 'secondary finish'
-            assign option_uses_secondary_finish = true
-          endif
-
-          if product_option_name_downcase == 'color'
-            assign product_option_display_name = 'Finish'
-          else
-            assign product_option_display_name = product_option.name
-          endif
         -%}
 
         {%- if product_option.values.size == 1 and variant_style != 'swatch' -%}
@@ -72,7 +58,7 @@
             class="variant-option"
             data-testid="variant-option-single"
           >
-            {{- product_option_display_name | escape -}}
+            {{- product_option.name | escape -}}
             <span
               class="variant-option__swatch-value"
               data-testid="variant-option-single-value"
@@ -89,74 +75,17 @@
             {{ option_id_attribute }}
           >
             <legend>
-              {{ product_option_display_name | escape -}}
+              {{ product_option.name | escape -}}
               {%- if variant_style == 'swatch' -%}
                 <span class="variant-option__swatch-value">{{ product_option.selected_value }}</span>
               {%- endif %}
             </legend>
-
             {%- for product_option_value in product_option.values -%}
-              {% liquid
-                assign option_value_variant = product_option_value.variant
-                assign metafield_color_value = blank
-                assign metafield_secondary_color_value = blank
-                assign metafield_swatch_image = blank
-                assign metafield_image_reference = blank
-                assign matched_finish_reference = blank
-
-                assign primary_finish_entries = product_resource.metafields.shopify['color-pattern'].value
-                assign secomdary_finish_entries = product_resource.metafields.custom['secomdary-finish'].value
-                assign option_value_name_downcase = product_option_value.name | strip | downcase
-
-                if option_value_variant == blank
-                  for variant in product_resource.variants
-                    if variant[product_option_key] == product_option_value.name
-                      assign option_value_variant = variant
-                      break
-                    endif
-                  endfor
-                endif
-
-                if option_uses_secondary_finish
-                  if secomdary_finish_entries != blank
-                    for finish_entry in secomdary_finish_entries
-                      assign finish_label = finish_entry.label | default: finish_entry.name | default: finish_entry.title | default: finish_entry.system.handle
-                      assign finish_label_downcase = finish_label | strip | downcase
-
-                      if finish_label_downcase == option_value_name_downcase
-                        assign matched_finish_reference = finish_entry
-                        break
-                      endif
-                    endfor
-                  endif
-                else
-                  if primary_finish_entries != blank
-                    for finish_entry in primary_finish_entries
-                      assign finish_label = finish_entry.label | default: finish_entry.name | default: finish_entry.title | default: finish_entry.system.handle
-                      assign finish_label_downcase = finish_label | strip | downcase
-
-                      if finish_label_downcase == option_value_name_downcase
-                        assign matched_finish_reference = finish_entry
-                        break
-                      endif
-                    endfor
-                  endif
-                endif
-
-                if matched_finish_reference != blank
-                  assign metafield_color_value = matched_finish_reference.color | default: matched_finish_reference.hex | default: matched_finish_reference
-                  assign metafield_secondary_color_value = metafield_color_value
-                  assign metafield_image_reference = matched_finish_reference.image.value | default: matched_finish_reference.image | default: matched_finish_reference.swatch_image.value | default: matched_finish_reference.swatch_image | default: matched_finish_reference.variant_image.value | default: matched_finish_reference.variant_image
-                  assign metafield_swatch_image = metafield_image_reference
-                endif
-              %}
-
               {% if product_option_value.size > longest_value and option_id_attribute %}
                 {% assign longest_value = product_option_value.size %}
               {% endif %}
-
               <label
-                class="variant-option__button-label{% if variant_style == 'swatch' or metafield_swatch_image != blank %} variant-option__button-label--has-swatch{% endif %}"
+                class="variant-option__button-label{% if variant_style == 'swatch' %} variant-option__button-label--has-swatch{% endif %}"
               >
                 <input
                   type="radio"
@@ -173,12 +102,6 @@
                   data-option-value-id="{{ product_option_value.id }}"
                   data-option-available="{{ product_option_value.available }}"
                   data-connected-product-url="{{ product_option_value.product_url }}"
-                  {% if metafield_color_value != blank %}
-                    data-metaobject-color="{{ metafield_color_value | escape }}"
-                  {% endif %}
-                  {% if metafield_secondary_color_value != blank %}
-                    data-metaobject-secondary-color="{{ metafield_secondary_color_value | escape }}"
-                  {% endif %}
                   {% if product_option_value.variant.id %}
                     data-variant-id="{{ product_option_value.variant.id }}"
                   {% endif %}
@@ -189,24 +112,22 @@
                     data-current-checked="false"
                   {% endif %}
                 >
-
-                {% if variant_style == 'swatch' or metafield_swatch_image != blank %}
+                {% if variant_style == 'swatch' %}
                   {% liquid
-                    assign featured_media = metafield_swatch_image | default: option_value_variant.featured_media
+                    assign featured_media = product_option_value.variant.featured_media
 
+                    # If the variant has no featured media, and we have a combined listing product, then fall back to
+                    # using the featured media of the child product that is linked to this option value.
                     if featured_media == blank and product_option_value.product_url
-                      assign featured_media = option_value_variant.product.featured_media
+                      assign featured_media = product_option_value.variant.product.featured_media
                     endif
                   %}
 
                   {% render 'swatch',
                     swatch: product_option_value.swatch,
                     variant_image: featured_media,
-                    secondary_color: metafield_secondary_color_value,
-                    mode: 'unscaled',
-                    force_variant_image: metafield_swatch_image != blank
+                    mode: 'unscaled'
                   %}
-                  <span class="visually-hidden">{{- product_option_value | escape -}}</span>
                 {% else %}
                   {% if product_option_value.available == true %}
                     <span
@@ -221,11 +142,9 @@
                     {{- product_option_value | escape -}}
                   </span>
                 {% endif %}
-
                 {% render 'strikethrough-variant', product_option: product_option_value %}
               </label>
             {%- endfor -%}
-
             {% if option_id_attribute %}
               {% style %}
                 [data-option-id="{{ fieldset_id }}"] {
@@ -234,18 +153,23 @@
               {% endstyle %}
             {% endif %}
           </fieldset>
-
         {%- elsif block_settings.variant_style == 'dropdowns' -%}
+          {%
+            # There is an opportunity to build a custom select component that will allow us to style the select element further (animation for dropdown, swatches shown in the dropdown options, etc)
+            # It's too bad as it mean rebuilding baked in behaviours but I think we've already done that for the locale selectors
+            # in dawn. So it might mean more time spent in setting it up but worth it for future updates/styling.
+          %}
           {% liquid
             assign property_being_updated = false
             if settings.variant_swatch_width != settings.variant_swatch_height
               assign property_being_updated = true
+              # (original width / original height) x new height (20px at the moment) = new width
               assign new_width = settings.variant_swatch_width | times: 1.0 | divided_by: settings.variant_swatch_height | times: 20
             endif
           %}
 
           <div class="variant-option variant-option--dropdowns">
-            <label for="Option-{{ block.id }}-{{ forloop.index0 }}">{{ product_option_display_name | escape }}</label>
+            <label for="Option-{{ block.id }}-{{ forloop.index0 }}">{{ product_option.name | escape }}</label>
             <div
               class="variant-option__select-wrapper"
               style="
@@ -260,59 +184,12 @@
                 class="variant-option__select"
               >
                 {%- for product_option_value in product_option.values -%}
-                  {% liquid
-                    assign metafield_color_value = blank
-                    assign metafield_secondary_color_value = blank
-                    assign matched_finish_reference = blank
-
-                    assign primary_finish_entries = product_resource.metafields.shopify['color-pattern'].value
-                    assign secomdary_finish_entries = product_resource.metafields.custom['secomdary-finish'].value
-                    assign option_value_name_downcase = product_option_value.name | strip | downcase
-
-                    if option_uses_secondary_finish
-                      if secomdary_finish_entries != blank
-                        for finish_entry in secomdary_finish_entries
-                          assign finish_label = finish_entry.label | default: finish_entry.name | default: finish_entry.title | default: finish_entry.system.handle
-                          assign finish_label_downcase = finish_label | strip | downcase
-
-                          if finish_label_downcase == option_value_name_downcase
-                            assign matched_finish_reference = finish_entry
-                            break
-                          endif
-                        endfor
-                      endif
-                    else
-                      if primary_finish_entries != blank
-                        for finish_entry in primary_finish_entries
-                          assign finish_label = finish_entry.label | default: finish_entry.name | default: finish_entry.title | default: finish_entry.system.handle
-                          assign finish_label_downcase = finish_label | strip | downcase
-
-                          if finish_label_downcase == option_value_name_downcase
-                            assign matched_finish_reference = finish_entry
-                            break
-                          endif
-                        endfor
-                      endif
-                    endif
-
-                    if matched_finish_reference != blank
-                      assign metafield_color_value = matched_finish_reference.color | default: matched_finish_reference.hex | default: matched_finish_reference
-                      assign metafield_secondary_color_value = metafield_color_value
-                    endif
-                  %}
-
                   <option
                     value="{{ product_option_value | escape }}"
                     data-input-id="{{ product_option.position }}-{{ forloop.index0 }}"
                     data-option-value-id="{{ product_option_value.id }}"
                     data-variant-id="{{ product_option_value.variant.id }}"
                     data-connected-product-url="{{ product_option_value.product_url }}"
-                    {% if metafield_color_value != blank %}
-                      data-metaobject-color="{{ metafield_color_value | escape }}"
-                    {% endif %}
-                    {% if metafield_secondary_color_value != blank %}
-                      data-metaobject-secondary-color="{{ metafield_secondary_color_value | escape }}"
-                    {% endif %}
                     {% if product_option_value.selected %}
                       selected="selected"
                     {% endif %}
@@ -346,6 +223,7 @@
 {% endunless %}
 
 {% stylesheet %}
+  /* Variant picker container styles - unique to main variant picker */
   .variant-picker {
     width: 100%;
   }
@@ -359,6 +237,7 @@
     padding-inline-start: max(4px, var(--padding-inline-start));
   }
 
+  /* Dropdown variant option styles */
   .variant-option__select-wrapper {
     display: flex;
     position: relative;
@@ -414,6 +293,7 @@
     transform: translateY(-50%);
   }
 
+  /* Variant picker alignment modifiers */
   .variant-picker--center,
   .variant-picker--center .variant-option {
     text-align: center;
