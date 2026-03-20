@@ -58,9 +58,10 @@
 
               for entry in option_visual_entries
                 assign entry_label = entry.label.value | default: entry.label | default: entry.name.value | default: entry.name | default: entry.title.value | default: entry.title | default: entry.system.handle
+                assign entry_label_normalized = entry_label | strip | downcase
                 assign entry_image = entry.image.value | default: entry.image
 
-                if entry_label != blank and entry_image != blank and entry_label | strip | downcase == option_value_label
+                if entry_label != blank and entry_image != blank and entry_label_normalized == option_value_label
                   assign option_has_visual_images = true
                   break
                 endif
@@ -162,9 +163,10 @@
 
                       for entry in option_visual_entries
                         assign entry_label = entry.label.value | default: entry.label | default: entry.name.value | default: entry.name | default: entry.title.value | default: entry.title | default: entry.system.handle
+                        assign entry_label_normalized = entry_label | strip | downcase
                         assign entry_image = entry.image.value | default: entry.image
 
-                        if entry_label != blank and entry_image != blank and entry_label | strip | downcase == option_value_label
+                        if entry_label != blank and entry_image != blank and entry_label_normalized == option_value_label
                           assign option_value_visual_image = entry_image
                           break
                         endif
