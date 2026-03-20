@@ -1,5 +1,14 @@
+{% liquid
+  assign integrated_header_pages = 'porque-biothane,porque-laton-solido' | split: ','
+  assign integrate_header = false
+
+  if template.name == 'page' and page.handle != blank and integrated_header_pages contains page.handle
+    assign integrate_header = true
+  endif
+%}
+
 <div
-  class="section section--full-width infographic-with-text spacing-style"
+  class="section section--full-width infographic-with-text spacing-style{% if integrate_header %} infographic-with-text--integrated-header{% endif %}"
   style="
     {% render 'spacing-style', settings: section.settings %}
     --infographic-max-width: {{ section.settings.max_width }}px;
@@ -40,6 +49,13 @@
     </div>
   </div>
 </div>
+
+{% stylesheet %}
+  .infographic-with-text--integrated-header {
+    padding-top: calc(var(--header-group-height, 0px) + var(--padding-block-start));
+    margin-top: calc(var(--header-group-height, 0px) * -1);
+  }
+{% endstylesheet %}
 
 {% schema %}
 {

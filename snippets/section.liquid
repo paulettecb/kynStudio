@@ -1,3 +1,11 @@
+{% liquid
+  assign integrate_gradient_header = false
+
+  if template.name == 'collection' and section.index == 1
+    assign integrate_gradient_header = true
+  endif
+%}
+
 {%- doc -%}
   Renders a wrapper section
 
@@ -5,9 +13,9 @@
   @param {string} children - The children of the section
 {%- enddoc -%}
 
-<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<div class="section-background{% if integrate_gradient_header %} section-background--integrated-gradient{% else %} color-{{ section.settings.color_scheme }}{% endif %}"></div>
 <div
-  class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}"
+  class="section section--{{ section.settings.section_width }}{% if integrate_gradient_header %} section--integrated-gradient-header{% else %} color-{{ section.settings.color_scheme }}{% endif %}"
   data-testid="ui-test-section"
 
   {% if request.visual_preview_mode %}
@@ -85,6 +93,16 @@
     > main
     > .section-wrapper:first-child {
     --section-height-offset: var(--header-group-height, 0);
+  }
+
+  .section-background--integrated-gradient {
+    background: radial-gradient(circle at top right, #e2e8f0 0%, #cbd5e1 100%);
+  }
+
+  .section--integrated-gradient-header {
+    background: radial-gradient(circle at top right, #e2e8f0 0%, #cbd5e1 100%);
+    padding-top: var(--header-group-height, 0px);
+    margin-top: calc(var(--header-group-height, 0px) * -1);
   }
 
   .custom-section-background {
