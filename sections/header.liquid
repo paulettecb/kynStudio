@@ -14,6 +14,17 @@
     assign search_style = 'modal'
   endif
 
+  assign integrate_header_with_gradient = false
+
+  if template.name == 'page' and page.handle != blank
+    assign integrated_header_pages = 'porque-biothane,porque-laton-solido' | split: ','
+    if integrated_header_pages contains page.handle
+      assign integrate_header_with_gradient = true
+    endif
+  elsif template.name == 'collection'
+    assign integrate_header_with_gradient = true
+  endif
+
   if section.settings.enable_transparent_header_home and template.name == 'index'
     assign transparent = 'always'
     assign transparent_color_scheme = section.settings.home_color_scheme
@@ -23,6 +34,9 @@
   elsif section.settings.enable_transparent_header_collection and template.name == 'collection'
     assign transparent = 'always'
     assign transparent_color_scheme = section.settings.collection_color_scheme
+  elsif integrate_header_with_gradient
+    assign transparent = 'always'
+    assign transparent_color_scheme = 'inverse'
   endif
 
   if section.settings.enable_sticky_header == 'always'
