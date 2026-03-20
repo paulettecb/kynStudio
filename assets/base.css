@@ -11,9 +11,6 @@ body {
   min-height: 100svh;
   font-variation-settings: 'slnt' 0;
 }
-body.template-product .kyn-product {
-  background: radial-gradient(circle at top right, #e2e8f0 0%, #cbd5e1 100%);
-}
 
 
 :root {
@@ -5016,4 +5013,8 @@ product-recommendations:has([data-has-recommendations='false']) {
 
 .infographic-with-text__image--placeholder {
   background: color-mix(in srgb, var(--infographic-background-color), #000 6%);
+}
+
+body.template-product .kyn-product {
+  background: radial-gradient(circle at top right, #e2e8f0 0%, #cbd5e1 100%);
 }
