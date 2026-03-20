@@ -8,7 +8,7 @@
 -%}
 
 {% unless product_resource == blank %}
-  {% render 'variant-main-picker', product_resource: product_resource, block: block %}
+  {% render 'variant-main-picker', product_resource: product_resource %}
 {% endunless %}
 
 {% schema %}
@@ -36,10 +36,6 @@
         {
           "value": "buttons",
           "label": "t:options.buttons"
-        },
-        {
-          "value": "swatches",
-          "label": "t:options.image.swatches"
         }
       ],
       "default": "buttons"
