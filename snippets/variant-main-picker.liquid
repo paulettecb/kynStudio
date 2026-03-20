@@ -73,11 +73,13 @@
             endfor
           endif
 
-          if block_settings.show_swatches and (swatch_count > 0 or option_has_visual_images)
-            if block_settings.variant_style == 'dropdown'
-              assign variant_style = 'swatch_dropdown'
-            else
-              assign variant_style = 'swatch'
+          if block_settings.show_swatches
+            if swatch_count > 0 or option_has_visual_images
+              if block_settings.variant_style == 'dropdown'
+                assign variant_style = 'swatch_dropdown'
+              else
+                assign variant_style = 'swatch'
+              endif
             endif
           endif
 
