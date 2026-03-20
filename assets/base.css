@@ -4,7 +4,7 @@
 
 body {
   color: var(--color-foreground);
-  background: var(--color-background);
+  background: radial-gradient(circle at top right, #e2e8f0 0%, #cbd5e1 100%);
   display: flex;
   flex-direction: column;
   margin: 0;
