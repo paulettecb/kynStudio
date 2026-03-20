@@ -320,7 +320,7 @@
         }
       },
       "settings": {
-        "content_width": "content-center-aligned",
+        "content_width": "content-full-width",
         "desktop_media_position": "right",
         "equal_columns": true,
         "limit_details_width": true,
