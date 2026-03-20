@@ -389,7 +389,3 @@ if (window.Shopify?.designMode && !isIOS) {
     });
   })();
 }
-
-body.template-product .kyn-product {
-  background: radial-gradient(circle at top right, #e2e8f0 0%, #cbd5e1 100%);
-}
