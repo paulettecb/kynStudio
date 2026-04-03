@@ -19,26 +19,98 @@
         "padding-block-end": 0
       }
     },
-    "infographic_with_text_BB8hHK": {
-      "type": "infographic-with-text",
-      "name": "Infographic with text",
+    "section_MUJ497": {
+      "type": "section",
+      "blocks": {
+        "text_gDrWqX": {
+          "type": "text",
+          "name": "t:names.heading",
+          "settings": {
+            "text": "<h2>{{ closest.page.title }}</h2>",
+            "width": "fit-content",
+            "max_width": "none",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "text_zb89AJ": {
+          "type": "text",
+          "name": "t:names.text",
+          "settings": {
+            "text": "{{ closest.page.content }}",
+            "width": "fit-content",
+            "max_width": "none",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_gDrWqX",
+        "text_zb89AJ"
+      ],
+      "name": "t:names.custom_section",
       "settings": {
-        "subtitle": "{{ closest.page.title }}",
-        "title": "{{ closest.page.title }}",
-        "rich_text": "<p></p><p><strong>No es tendencia. Es decisión.</strong></p><p></p><p>El Biothane® es un material técnico que puede parecer cuero,</p><p>pero fue creado para algo muy distinto: <strong>funcionar mejor.</strong></p><p><br/></p><p>No absorbe olores.</p><p>No se agrieta.</p><p>No se debilita con el agua, el sol o el uso constante.</p><p><br/></p><p>Está hecho para <strong>vivir aventuras</strong>, no para quedarse guardado.</p><p><br/></p><p>Se limpia en segundos.</p><p>No retiene humedad.</p><p>Y mantiene su forma incluso después de años de uso.</p><p><br/></p><p>Funciona en la ciudad.</p><p>Funciona en el bosque.</p><p>Funciona cuando el paseo se vuelve entrenamiento.</p><p><br/></p><p><strong>Elegancia y versatilidad sin fragilidad.</strong></p><p><br/></p><p>Cuando tu vida con tu perro no tiene límites,</p><p>el material que te acompaña tampoco debería tenerlos.<br/><br/><br/><br/><strong>¿Qué hace diferente al Biothane?</strong></p><p> </p><p>El Biothane® no es cuero ni plástico simple.</p><p><br/></p><p>Es una <strong>cinta de poliéster de alta resistencia recubierta con un polímero impermeable</strong>.</p><p>Esta estructura híbrida combina <strong>la fuerza de una fibra técnica con la protección de un recubrimiento sellado</strong>.</p><p><br/></p><p>El resultado es un material que:</p><p>• no absorbe agua</p><p>• no acumula bacterias ni olores</p><p>• resiste radiación UV</p><p>• no se deforma con el uso</p><p>• mantiene su color y estructura durante años</p><p><br/></p><p>A diferencia del cuero, <strong>no requiere mantenimiento</strong>.</p><p>A diferencia de muchos materiales sintéticos, <strong>no se vuelve frágil con el tiempo</strong>.</p><p><br/></p><p>Por eso es utilizado en:</p><p> </p><p>• equipo ecuestre</p><p>• correas de rescate</p><p>• entrenamiento canino profesional</p><p>• aplicaciones outdoor de alto desempeño</p><p> </p><p>En KYN lo elegimos por una razón simple:</p><p><br/></p><p><strong>funciona mejor en la vida real.</strong></p><p> </p><p><strong>Un buen diseño no solo se ve bien. Se comporta bien cuando importa.</strong><br/></p>",
-        "image": "shopify://shop_images/2Documento_A4_Marketing_Empresas_Organico_Rosa.svg",
-        "image_position": "left",
-        "max_width": 1960,
-        "background_color": "#f6f3ee",
-        "padding-block-start": 32,
-        "padding-block-end": 80,
-        "padding-inline-start": 0,
-        "padding-inline-end": 0
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "flex-start",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "small",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 0,
+        "padding-block-end": 0
       }
     }
   },
   "order": [
-    "infographic_with_text_BB8hHK",
-    "main"
+    "main",
+    "section_MUJ497"
   ]
 }
