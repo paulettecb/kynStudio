@@ -396,7 +396,7 @@
                   "settings": {
                     "text": "<ul><li>Totalmente. Mientras que el cuero se estira, se pudre con la humedad y pierde fuerza en los puntos de costura, el <strong>BioThane® Beta Series</strong> mantiene una resistencia a la tracción de hasta <strong>450 kg</strong>.</li><li>Su núcleo de cinta de poliéster es prácticamente irrompible para cualquier raza de perro, lo que proporciona una seguridad activa que el nylon o el cuero simplemente no pueden igualar.</li><li>Además, su acabado de polímero técnico asegura que el material no se deshilache ni se debilite con el tiempo, garantizando que tu <strong>The Urban Leash</strong> sea la última correa que necesites comprar.</li></ul>",
                     "width": "100%",
-                    "max_width": "normal",
+                    "max_width": "none",
                     "alignment": "left",
                     "type_preset": "rte",
                     "font": "var(--font-body--family)",
@@ -459,6 +459,47 @@
               },
               "block_order": [
                 "text_jhyRKV"
+              ]
+            },
+            "accordion_row_tGbXEi": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_row",
+              "settings": {
+                "heading": "¿El BioThane® requiere mantenimiento?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_J6JmY7": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>No. Debido a su recubrimiento de polímero avanzado, es 100% impermeable y resistente a los olores; basta con limpiarlo con un paño húmedo para que recupere su estado original.</p>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_J6JmY7"
               ]
             },
             "accordion_row_APkqA3": {
@@ -660,58 +701,17 @@
               "block_order": [
                 "text_ABdRhb"
               ]
-            },
-            "accordion_row_tGbXEi": {
-              "type": "_accordion-row",
-              "name": "t:names.accordion_row",
-              "settings": {
-                "heading": "¿El BioThane® requiere mantenimiento?",
-                "open_by_default": false,
-                "icon": "none",
-                "width": 20
-              },
-              "blocks": {
-                "text_J6JmY7": {
-                  "type": "text",
-                  "name": "t:names.text",
-                  "settings": {
-                    "text": "<p>No. Debido a su recubrimiento de polímero avanzado, es 100% impermeable y resistente a los olores; basta con limpiarlo con un paño húmedo para que recupere su estado original.</p>",
-                    "width": "100%",
-                    "max_width": "none",
-                    "alignment": "left",
-                    "type_preset": "rte",
-                    "font": "var(--font-body--family)",
-                    "font_size": "1rem",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "wrap": "pretty",
-                    "color": "var(--color-foreground)",
-                    "background": false,
-                    "background_color": "#00000026",
-                    "corner_radius": 0,
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
-                  },
-                  "blocks": {}
-                }
-              },
-              "block_order": [
-                "text_J6JmY7"
-              ]
             }
           },
           "block_order": [
             "accordion_row_Jnz6iq",
             "accordion_row_NB7cC8",
+            "accordion_row_tGbXEi",
             "accordion_row_APkqA3",
             "accordion_row_4NE6Vq",
             "accordion_row_tVfDXa",
             "accordion_row_8m7ANX",
-            "accordion_row_CMi4gV",
-            "accordion_row_tGbXEi"
+            "accordion_row_CMi4gV"
           ]
         }
       },
@@ -746,6 +746,20 @@
         "gradient_direction": "to top",
         "padding-block-start": 48,
         "padding-block-end": 48
+      }
+    },
+    "divider_ehW9w9": {
+      "type": "divider",
+      "name": "t:names.divider_section",
+      "settings": {
+        "color_scheme": "",
+        "section_width": "full-width",
+        "thickness": 1,
+        "corner_radius": "square",
+        "width_percent": 100,
+        "alignment_horizontal": "center",
+        "padding-block-start": 16,
+        "padding-block-end": 16
       }
     },
     "section_8gwPLQ": {
@@ -1485,6 +1499,7 @@
   "order": [
     "main",
     "section_KWxPcA",
+    "divider_ehW9w9",
     "section_8gwPLQ",
     "featured_blog_posts_GFxadY",
     "product_recommendations_qnzPkn"
