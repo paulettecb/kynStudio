@@ -381,6 +381,86 @@
             "padding-inline-end": 0
           },
           "blocks": {
+            "accordion_row_Jnz6iq": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_row",
+              "settings": {
+                "heading": "¿Realmente el BioThane® es más fuerte que el cuero?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_DCVeHT": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<ul><li>Totalmente. Mientras que el cuero se estira, se pudre con la humedad y pierde fuerza en los puntos de costura, el <strong>BioThane® Beta Series</strong> mantiene una resistencia a la tracción de hasta <strong>450 kg</strong>.</li><li>Su núcleo de cinta de poliéster es prácticamente irrompible para cualquier raza de perro, lo que proporciona una seguridad activa que el nylon o el cuero simplemente no pueden igualar.</li><li>Además, su acabado de polímero técnico asegura que el material no se deshilache ni se debilite con el tiempo, garantizando que tu <strong>The Urban Leash</strong> sea la última correa que necesites comprar.</li></ul>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_DCVeHT"
+              ]
+            },
+            "accordion_row_NB7cC8": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_row",
+              "settings": {
+                "heading": "¿Qué tan resistentes son sus mosquetones?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_jhyRKV": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<ul><li>Cada mosquetón de <strong>KYN Studio</strong> es seleccionado por su grado de dureza y seguridad mecánica.</li><li>Al ser de latón sólido, no sufren de \"fatiga de metal\" como los mosquetones de zinc o fundición, lo que los hace ideales para perros de alto impacto que dan tirones fuertes durante los paseos.</li><li>Su diseño asegura que el mecanismo de cierre no se bloquee por la suciedad o la arena, manteniendo una funcionalidad técnica constante.</li></ul>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_jhyRKV"
+              ]
+            },
             "accordion_row_APkqA3": {
               "type": "_accordion-row",
               "name": "t:names.accordion_row",
@@ -624,6 +704,8 @@
             }
           },
           "block_order": [
+            "accordion_row_Jnz6iq",
+            "accordion_row_NB7cC8",
             "accordion_row_APkqA3",
             "accordion_row_4NE6Vq",
             "accordion_row_tVfDXa",
