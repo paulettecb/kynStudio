@@ -40,9 +40,45 @@
 
   <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
     {% render 'skip-to-content-link', href: '#MainContent', text: 'accessibility.skip_to_text' %}
+    <aside class="atelier-notice-bar" role="status" aria-live="polite">
+      <p class="atelier-notice-bar__text">
+        ATELIER NOTICE: Due to material sourcing and technical assembly, orders may ship within 3-5 business days.
+      </p>
+    </aside>
     <div id="header-group">
       {% sections 'header-group' %}
     </div>
+
+    {% stylesheet %}
+      .atelier-notice-bar {
+        background: #101010;
+        color: #d4af37;
+        font-family: var(--font-body--family);
+        margin: 0;
+        padding: 0.9rem 1.25rem;
+      }
+
+      .atelier-notice-bar__text {
+        margin: 0;
+        text-align: center;
+        letter-spacing: 0.12em;
+        line-height: 1.5;
+        font-size: clamp(0.68rem, 1.5vw, 0.78rem);
+        text-transform: uppercase;
+      }
+
+      @media screen and (max-width: 749px) {
+        .atelier-notice-bar {
+          padding: 0.75rem 1rem;
+        }
+
+        .atelier-notice-bar__text {
+          letter-spacing: 0.1em;
+          font-size: 0.65rem;
+          line-height: 1.45;
+        }
+      }
+    {% endstylesheet %}
 
     <script>
       // Inline header height and menu style calculations to prevent layout shift
