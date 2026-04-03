@@ -725,7 +725,7 @@
           "type": "text",
           "name": "t:names.text",
           "settings": {
-            "text": "<p>No es plástico, es ingeniería aplicada al paseo. El BioThane® es un material compuesto por un núcleo de cinta de poliéster recubierto de PVC que ofrece una resistencia a la tracción superior a los <strong>450 kg</strong>.</p><p></p><ul><li><strong>Hidrofóbico y Antimicrobiano:</strong> A diferencia del nylon, no absorbe agua ni genera olores, manteniendo su integridad estructural en condiciones urbanas extremas.</li></ul><p></p><ul><li><strong>Flexibilidad Técnica:</strong> Mantiene su suavidad y agarre incluso en temperaturas bajo cero, sin agrietarse ni perder color con el tiempo.</li></ul><p></p>",
+            "text": "<p>No es piel, no es plástico, es ingeniería aplicada al paseo. El BioThane® es un material patentado, compuesto por un núcleo de cinta de poliéster recubierto de PVC que ofrece una resistencia a la tracción superior a los <strong>450 kg</strong>.</p><p></p><ul><li><strong>Hidrofóbico y Antimicrobiano:</strong> A diferencia del nylon, no absorbe agua ni genera olores, manteniendo su integridad estructural en condiciones urbanas extremas.</li></ul><p></p><ul><li><strong>Flexibilidad Técnica:</strong> Mantiene su suavidad y agarre incluso en temperaturas bajo cero, sin agrietarse ni perder color con el tiempo.</li></ul><p></p>",
             "width": "100%",
             "max_width": "none",
             "alignment": "left",
