@@ -1,0 +1,45 @@
+<div class="atelier-home-banner" role="note" aria-label="Atelier shipping notice">
+  <p class="atelier-home-banner__text">
+    ATELIER NOTICE: Due to material sourcing and technical assembly, orders may ship within 3-5 business days.
+  </p>
+</div>
+
+{% stylesheet %}
+  .atelier-home-banner {
+    background: #101010;
+    color: #ffffff;
+    padding: clamp(1rem, 2.2vw, 1.6rem) 1.25rem;
+  }
+
+  .atelier-home-banner__text {
+    font-family: var(--font-body--family);
+    font-size: clamp(0.75rem, 1.2vw, 0.9rem);
+    letter-spacing: 0.12em;
+    line-height: 1.6;
+    margin: 0 auto;
+    max-width: 1200px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #ffffff;
+  }
+
+  @media screen and (max-width: 749px) {
+    .atelier-home-banner {
+      padding: 0.95rem 1rem;
+    }
+
+    .atelier-home-banner__text {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      line-height: 1.45;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Atelier notice banner",
+  "tag": "section",
+  "class": "section"
+}
+{% endschema %}
