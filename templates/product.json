@@ -850,7 +850,7 @@
             "thickness": 1,
             "corner_radius": "square",
             "width_percent": 100,
-            "padding-block-start": 0,
+            "padding-block-start": 43,
             "padding-block-end": 0
           },
           "blocks": {}
@@ -940,7 +940,7 @@
             "thickness": 1,
             "corner_radius": "square",
             "width_percent": 100,
-            "padding-block-start": 0,
+            "padding-block-start": 43,
             "padding-block-end": 0
           },
           "blocks": {}
