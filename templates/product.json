@@ -289,6 +289,7 @@
                 },
                 "accelerated-checkout": {
                   "type": "accelerated-checkout",
+                  "disabled": true,
                   "static": true,
                   "settings": {},
                   "blocks": {}
@@ -298,6 +299,7 @@
             },
             "mercado_pago_banner_tooltips_credits_QPC9kp": {
               "type": "shopify://apps/mercado-pago-banner/blocks/tooltips_credits/3f05369b-cc5d-42f7-86b9-0bdc7b2d0f95",
+              "disabled": true,
               "settings": {
                 "background": "transparent",
                 "content": "option1"
@@ -664,6 +666,310 @@
         "padding-block-end": 48
       }
     },
+    "section_8gwPLQ": {
+      "type": "section",
+      "blocks": {
+        "text_7tCYHg": {
+          "type": "text",
+          "name": "t:names.heading",
+          "settings": {
+            "text": "<h2>Biothane<strong>® Beta Series: </strong></h2>",
+            "width": "fit-content",
+            "max_width": "none",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "text_L3w4jM": {
+          "type": "text",
+          "name": "t:names.text",
+          "settings": {
+            "text": "<h2>Polímero de Alto Rendimiento</h2>",
+            "width": "fit-content",
+            "max_width": "none",
+            "alignment": "left",
+            "type_preset": "h3",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "text_t9R3tp": {
+          "type": "text",
+          "name": "t:names.text",
+          "settings": {
+            "text": "<p>No es plástico, es ingeniería aplicada al paseo. El BioThane® es un material compuesto por un núcleo de cinta de poliéster recubierto de PVC que ofrece una resistencia a la tracción superior a los <strong>450 kg</strong>.</p><p></p><ul><li><strong>Hidrofóbico y Antimicrobiano:</strong> A diferencia del nylon, no absorbe agua ni genera olores, manteniendo su integridad estructural en condiciones urbanas extremas.</li></ul><p></p><ul><li><strong>Flexibilidad Técnica:</strong> Mantiene su suavidad y agarre incluso en temperaturas bajo cero, sin agrietarse ni perder color con el tiempo.</li></ul><p></p>",
+            "width": "100%",
+            "max_width": "none",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 14,
+            "padding-block-end": 0,
+            "padding-inline-start": 31,
+            "padding-inline-end": 33
+          },
+          "blocks": {}
+        },
+        "divider_REcHwR": {
+          "type": "_divider",
+          "name": "t:names.divider",
+          "settings": {
+            "thickness": 1,
+            "corner_radius": "square",
+            "width_percent": 100,
+            "padding-block-start": 0,
+            "padding-block-end": 0
+          },
+          "blocks": {}
+        },
+        "text_piDNey": {
+          "type": "text",
+          "name": "t:names.heading",
+          "settings": {
+            "text": "<p><strong>Metalurgia de Precisión: </strong></p>",
+            "width": "fit-content",
+            "max_width": "none",
+            "alignment": "left",
+            "type_preset": "h2",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 39,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "text_XePytq": {
+          "type": "text",
+          "name": "t:names.text",
+          "settings": {
+            "text": "<p><strong>Latón Sólido (LL) + 18k Gold</strong></p>",
+            "width": "fit-content",
+            "max_width": "none",
+            "alignment": "left",
+            "type_preset": "h3",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "text_BGLpNi": {
+          "type": "text",
+          "name": "t:names.text",
+          "settings": {
+            "text": "<p>La decisión de importar herrajes desde Estados Unidos y Europa nació de una negativa: no aceptar el zamak o el zinc cromado que abunda en el mercado nacional.</p><p></p><ul><li><strong>Latón de Lujo (LL):</strong> Utilizamos latón sólido, una aleación no ferrosa que es naturalmente resistente a la corrosión y al óxido, incluso cerca del mar.</li></ul><p></p><ul><li><strong>Acabado Galvánico:</strong> Cada pieza cuenta con un chapado de <strong>oro de 18k</strong>, proporcionando una estética editorial que no sacrifica la dureza necesaria para el uso rudo. Es un herraje eterno, diseñado para durar más que la vida del producto mismo.</li></ul><p></p>",
+            "width": "100%",
+            "max_width": "none",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 14,
+            "padding-block-end": 0,
+            "padding-inline-start": 31,
+            "padding-inline-end": 33
+          },
+          "blocks": {}
+        },
+        "divider_gfADWU": {
+          "type": "_divider",
+          "name": "t:names.divider",
+          "settings": {
+            "thickness": 1,
+            "corner_radius": "square",
+            "width_percent": 100,
+            "padding-block-start": 0,
+            "padding-block-end": 0
+          },
+          "blocks": {}
+        },
+        "text_aKFy7c": {
+          "type": "text",
+          "name": "t:names.heading",
+          "settings": {
+            "text": "<p><strong>Ensamblaje Mecánico:</strong></p>",
+            "width": "fit-content",
+            "max_width": "none",
+            "alignment": "left",
+            "type_preset": "h2",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 39,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "text_McTTwL": {
+          "type": "text",
+          "name": "t:names.text",
+          "settings": {
+            "text": "<p><strong>Remaches de Tornillo (Chicago Screws)</strong></p>",
+            "width": "fit-content",
+            "max_width": "none",
+            "alignment": "left",
+            "type_preset": "h3",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "text_XUNDGG": {
+          "type": "text",
+          "name": "t:names.text",
+          "settings": {
+            "text": "<p>En <strong>KYN Studio</strong>, rechazamos los remaches de presión tradicionales que se debilitan con el impacto constante.</p><ul><li><strong>Seguridad Activa:</strong> Utilizamos tornillos de seguridad (Chicago Screws) que actúan como una unión mecánica real entre las capas de BioThane®.</li></ul><p></p><ul><li><strong>Mantenimiento Industrial:</strong> Este tipo de ensamble permite que el producto sea inspeccionado y, de ser necesario, ajustado, garantizando que el punto de unión sea siempre el lugar más fuerte de la correa, no el más débil.</li></ul><p></p>",
+            "width": "100%",
+            "max_width": "none",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 14,
+            "padding-block-end": 0,
+            "padding-inline-start": 31,
+            "padding-inline-end": 33
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_7tCYHg",
+        "text_L3w4jM",
+        "text_t9R3tp",
+        "divider_REcHwR",
+        "text_piDNey",
+        "text_XePytq",
+        "text_BGLpNi",
+        "divider_gfADWU",
+        "text_aKFy7c",
+        "text_McTTwL",
+        "text_XUNDGG"
+      ],
+      "name": "t:names.custom_section",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "flex-start",
+        "gap": 0,
+        "section_width": "page-width",
+        "section_height": "small",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
     "featured_blog_posts_GFxadY": {
       "type": "featured-blog-posts",
       "blocks": {
@@ -786,6 +1092,7 @@
           "block_order": []
         }
       },
+      "disabled": true,
       "name": "t:names.blog_posts_carousel",
       "settings": {
         "blog": "",
@@ -1096,6 +1403,7 @@
   "order": [
     "main",
     "section_KWxPcA",
+    "section_8gwPLQ",
     "featured_blog_posts_GFxadY",
     "product_recommendations_qnzPkn"
   ]
