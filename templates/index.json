@@ -75,6 +75,10 @@
         "padding-block-end": 0
       }
     },
+    "atelier_notice_banner": {
+      "type": "atelier-notice-banner",
+      "settings": {}
+    },
     "collection_links_Ut4aMz": {
       "type": "collection-links",
       "blocks": {
@@ -1517,6 +1521,7 @@
   },
   "order": [
     "hero_iyt6zg",
+    "atelier_notice_banner",
     "collection_links_Ut4aMz",
     "collection_list_MVFtae",
     "featured_product_mTUbKC",
