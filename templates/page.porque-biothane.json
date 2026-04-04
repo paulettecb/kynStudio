@@ -261,7 +261,7 @@
             "margin_bottom": 60,
             "table_font": "nanum_pen_script_n4",
             "text_size": 18,
-            "text_transform": "uppercase",
+            "text_transform": "capitalize",
             "header_font_weight": "400",
             "text_color": "#ffffff",
             "feature_label_color": "#273448",
