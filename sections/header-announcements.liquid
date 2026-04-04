@@ -22,25 +22,77 @@
     endif
   %}
 
-  <announcement-bar-component
-    class="announcement-bar__slider"
-    {% if autoplay == true %}
-      autoplay="{{ section.settings.speed }}" aria-live="polite"
-    {% endif %}
-  >
-    {% if show_arrows %}
-      {% render 'slideshow-arrows', icon_style: 'chevron' %}
-    {% endif %}
-
-    <div class="announcement-bar__slides">
-      {% content_for 'blocks' %}
+  {% if section.blocks.size == 1 %}
+    <div class="announcement-bar__marquee" aria-live="polite">
+      <div class="announcement-bar__marquee-track">
+        <div class="announcement-bar__marquee-item">
+          {% content_for 'blocks' %}
+        </div>
+        <div class="announcement-bar__marquee-item" aria-hidden="true">
+          {% content_for 'blocks' %}
+        </div>
+      </div>
     </div>
-  </announcement-bar-component>
+  {% else %}
+    <announcement-bar-component
+      class="announcement-bar__slider"
+      {% if autoplay == true %}
+        autoplay="{{ section.settings.speed }}" aria-live="polite"
+      {% endif %}
+    >
+      {% if show_arrows %}
+        {% render 'slideshow-arrows', icon_style: 'chevron' %}
+      {% endif %}
+
+      <div class="announcement-bar__slides">
+        {% content_for 'blocks' %}
+      </div>
+    </announcement-bar-component>
+  {% endif %}
 </aside>
 
 {% stylesheet %}
   .announcement-bar {
     border-block-end: var(--border-bottom-width) solid var(--color-border);
+  }
+
+  .announcement-bar__marquee {
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .announcement-bar__marquee-track {
+    display: flex;
+    width: max-content;
+    min-width: 100%;
+    animation: announcement-marquee-motion 18s linear infinite;
+  }
+
+  .announcement-bar__marquee-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 100%;
+    flex-shrink: 0;
+  }
+
+  .announcement-bar__marquee-item .announcement-bar__slide {
+    width: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .announcement-bar__marquee-track {
+      animation: none;
+    }
+  }
+
+  @keyframes announcement-marquee-motion {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
   }
 
   .announcement-bar__slider {
