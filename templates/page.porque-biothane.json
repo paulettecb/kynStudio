@@ -188,7 +188,7 @@
           "type": "ai_gen_block_957b185",
           "settings": {
             "heading": "Analisis Comparativo de Materiales",
-            "heading_size": 21,
+            "heading_size": 24,
             "heading_letter_spacing": 3,
             "heading_color": "#9b7a0f",
             "heading_alignment": "center",
@@ -256,7 +256,7 @@
             "row_8_col_4": "",
             "row_8_col_5": "",
             "row_8_col_6": "",
-            "desktop_width_percent": 100,
+            "desktop_width_percent": 85,
             "margin_top": 60,
             "margin_bottom": 60,
             "table_font": "sans_serif_n4",
