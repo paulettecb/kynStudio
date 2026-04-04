@@ -1,6 +1,694 @@
+{% doc %}
+  @prompt
+    Create a mobile-optimized version of an existing comparison table block. The table compares materials for pet/dog accessories. Here are all the details to replicate:
+    
+    HEADING: "Analisis Comparativo de Materiales" — 24px, gold color #9b7a0f, centered, letter-spacing 3px, font: Nanum Pen Script (nanum_pen_script_n4)
+    
+    COLUMNS: Características (feature labels) | KYN Biothane® (highlighted) | Nylon | Cuero
+    
+    ROWS (4 rows):
+    - No absorbe agua: ✓ | ✕ | ✕
+    - Libre de olores: ✓ | ✕ | ✕
+    - Limpieza instantánea: ✓ | ✕ | ✕
+    - Resistencia UV: ✓ | ✓ | ✓
+    
+    COLORS: Text #ffffff, feature label color #273448, highlight column (KYN Biothane®) #9b7a0f gold, other columns #273448 dark blue-grey. Row borders 1px #273448.
+    
+    BUTTON below table: Label "Conoce más sobre el latón", links to shopify://pages/why-solid-brass, primary style, full width.
+    
+    MOBILE DESIGN REQUIREMENTS:
+    - On mobile, instead of a horizontal table, show each material (KYN Biothane®, Nylon, Cuero) as a stacked card
+    - Each card shows the material name as a header, then lists each feature with a ✓ or ✕
+    - KYN Biothane® card should be visually highlighted with the gold color #9b7a0f
+    - On desktop, keep the original horizontal table layout
+    - Use CSS media queries to switch between layouts
+    - All fonts should use the theme's font variables: heading font nanum_pen_script_n4, body font red_hat_text_n4
+    - Text uppercase, clean and modern look matching the existing brand colors, In the layout customization you need to add a mobile section as well as the desktop one, but other that that, is amazing
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-material-comparison-{{ ai_gen_id }} {
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    display: block;
+  }
+
+  .ai-material-comparison__heading-{{ ai_gen_id }} {
+    font-family: {{ block.settings.heading_font.family }}, {{ block.settings.heading_font.fallback_families }};
+    font-weight: {{ block.settings.heading_font.weight }};
+    font-style: {{ block.settings.heading_font.style }};
+    font-size: {{ block.settings.heading_size }}px;
+    color: {{ block.settings.heading_color }};
+    text-align: center;
+    letter-spacing: {{ block.settings.heading_letter_spacing }}px;
+    margin: 0 0 32px;
+    text-transform: uppercase;
+  }
+
+  .ai-material-comparison__table-wrapper-{{ ai_gen_id }} {
+    overflow-x: auto;
+  }
+
+  .ai-material-comparison__table-{{ ai_gen_id }} {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: {{ block.settings.body_font.family }}, {{ block.settings.body_font.fallback_families }};
+    font-weight: {{ block.settings.body_font.weight }};
+    font-style: {{ block.settings.body_font.style }};
+  }
+
+  .ai-material-comparison__table-{{ ai_gen_id }} th,
+  .ai-material-comparison__table-{{ ai_gen_id }} td {
+    padding: 16px;
+    text-align: center;
+    border-bottom: 1px solid {{ block.settings.border_color }};
+    text-transform: uppercase;
+  }
+
+  .ai-material-comparison__table-{{ ai_gen_id }} th {
+    font-weight: 600;
+    font-size: 16px;
+  }
+
+  .ai-material-comparison__table-{{ ai_gen_id }} td {
+    font-size: 14px;
+  }
+
+  .ai-material-comparison__table-{{ ai_gen_id }} th:first-child,
+  .ai-material-comparison__table-{{ ai_gen_id }} td:first-child {
+    text-align: left;
+    color: {{ block.settings.feature_label_color }};
+  }
+
+  .ai-material-comparison__table-{{ ai_gen_id }} th.ai-material-comparison__highlight-{{ ai_gen_id }},
+  .ai-material-comparison__table-{{ ai_gen_id }} td.ai-material-comparison__highlight-{{ ai_gen_id }} {
+    background-color: {{ block.settings.highlight_bg_color }};
+    color: {{ block.settings.text_color }};
+  }
+
+  .ai-material-comparison__table-{{ ai_gen_id }} th:not(.ai-material-comparison__highlight-{{ ai_gen_id }}):not(:first-child),
+  .ai-material-comparison__table-{{ ai_gen_id }} td:not(.ai-material-comparison__highlight-{{ ai_gen_id }}):not(:first-child) {
+    background-color: {{ block.settings.column_bg_color }};
+    color: {{ block.settings.text_color }};
+  }
+
+  .ai-material-comparison__check-{{ ai_gen_id }} {
+    color: {{ block.settings.check_color }};
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .ai-material-comparison__cross-{{ ai_gen_id }} {
+    color: {{ block.settings.cross_color }};
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .ai-material-comparison__mobile-cards-{{ ai_gen_id }} {
+    display: none;
+  }
+
+  .ai-material-comparison__button-wrapper-{{ ai_gen_id }} {
+    margin-top: 32px;
+  }
+
+  .ai-material-comparison__button-{{ ai_gen_id }} {
+    display: inline-block;
+    width: 100%;
+    padding: 16px 32px;
+    background-color: {{ block.settings.button_bg_color }};
+    color: {{ block.settings.button_text_color }};
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 600;
+    border: {{ block.settings.button_border_width }}px solid {{ block.settings.button_border_color }};
+    border-radius: {{ block.settings.button_border_radius }}px;
+    transition: all 0.3s ease;
+  }
+
+  .ai-material-comparison__button-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_bg_color }};
+    color: {{ block.settings.button_hover_text_color }};
+    border-color: {{ block.settings.button_hover_border_color }};
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-material-comparison-{{ ai_gen_id }} {
+      width: {{ block.settings.mobile_width_percent }}%;
+    }
+
+    .ai-material-comparison__heading-{{ ai_gen_id }} {
+      font-size: {{ block.settings.mobile_heading_size }}px;
+    }
+
+    .ai-material-comparison__table-wrapper-{{ ai_gen_id }} {
+      display: none;
+    }
+
+    .ai-material-comparison__mobile-cards-{{ ai_gen_id }} {
+      display: block;
+    }
+
+    .ai-material-comparison__card-{{ ai_gen_id }} {
+      margin-bottom: {{ block.settings.mobile_card_spacing }}px;
+      border: 1px solid {{ block.settings.border_color }};
+      border-radius: {{ block.settings.mobile_card_border_radius }}px;
+      overflow: hidden;
+    }
+
+    .ai-material-comparison__card-header-{{ ai_gen_id }} {
+      padding: 16px;
+      text-align: center;
+      font-weight: 600;
+      font-size: {{ block.settings.mobile_card_header_size }}px;
+      text-transform: uppercase;
+      color: {{ block.settings.text_color }};
+    }
+
+    .ai-material-comparison__card-header-{{ ai_gen_id }}.ai-material-comparison__highlight-{{ ai_gen_id }} {
+      background-color: {{ block.settings.highlight_bg_color }};
+    }
+
+    .ai-material-comparison__card-header-{{ ai_gen_id }}:not(.ai-material-comparison__highlight-{{ ai_gen_id }}) {
+      background-color: {{ block.settings.column_bg_color }};
+    }
+
+    .ai-material-comparison__card-body-{{ ai_gen_id }} {
+      padding: 16px;
+    }
+
+    .ai-material-comparison__card-row-{{ ai_gen_id }} {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid {{ block.settings.border_color }};
+    }
+
+    .ai-material-comparison__card-row-{{ ai_gen_id }}:last-child {
+      border-bottom: none;
+    }
+
+    .ai-material-comparison__card-label-{{ ai_gen_id }} {
+      color: {{ block.settings.feature_label_color }};
+      font-size: {{ block.settings.mobile_card_label_size }}px;
+      text-transform: uppercase;
+    }
+
+    .ai-material-comparison__card-value-{{ ai_gen_id }} {
+      font-size: {{ block.settings.mobile_card_value_size }}px;
+    }
+  }
+{% endstyle %}
+
+<material-comparison-{{ ai_gen_id }} class="ai-material-comparison-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <h2 class="ai-material-comparison__heading-{{ ai_gen_id }}">{{ block.settings.heading }}</h2>
+
+  <div class="ai-material-comparison__table-wrapper-{{ ai_gen_id }}">
+    <table class="ai-material-comparison__table-{{ ai_gen_id }}">
+      <thead>
+        <tr>
+          <th>{{ block.settings.column_1_label }}</th>
+          <th class="ai-material-comparison__highlight-{{ ai_gen_id }}">{{ block.settings.column_2_label }}</th>
+          <th>{{ block.settings.column_3_label }}</th>
+          <th>{{ block.settings.column_4_label }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ block.settings.row_1_label }}</td>
+          <td class="ai-material-comparison__highlight-{{ ai_gen_id }}">
+            <span class="ai-material-comparison__check-{{ ai_gen_id }}">✓</span>
+          </td>
+          <td>
+            <span class="ai-material-comparison__cross-{{ ai_gen_id }}">✕</span>
+          </td>
+          <td>
+            <span class="ai-material-comparison__cross-{{ ai_gen_id }}">✕</span>
+          </td>
+        </tr>
+        <tr>
+          <td>{{ block.settings.row_2_label }}</td>
+          <td class="ai-material-comparison__highlight-{{ ai_gen_id }}">
+            <span class="ai-material-comparison__check-{{ ai_gen_id }}">✓</span>
+          </td>
+          <td>
+            <span class="ai-material-comparison__cross-{{ ai_gen_id }}">✕</span>
+          </td>
+          <td>
+            <span class="ai-material-comparison__cross-{{ ai_gen_id }}">✕</span>
+          </td>
+        </tr>
+        <tr>
+          <td>{{ block.settings.row_3_label }}</td>
+          <td class="ai-material-comparison__highlight-{{ ai_gen_id }}">
+            <span class="ai-material-comparison__check-{{ ai_gen_id }}">✓</span>
+          </td>
+          <td>
+            <span class="ai-material-comparison__cross-{{ ai_gen_id }}">✕</span>
+          </td>
+          <td>
+            <span class="ai-material-comparison__cross-{{ ai_gen_id }}">✕</span>
+          </td>
+        </tr>
+        <tr>
+          <td>{{ block.settings.row_4_label }}</td>
+          <td class="ai-material-comparison__highlight-{{ ai_gen_id }}">
+            <span class="ai-material-comparison__check-{{ ai_gen_id }}">✓</span>
+          </td>
+          <td>
+            <span class="ai-material-comparison__check-{{ ai_gen_id }}">✓</span>
+          </td>
+          <td>
+            <span class="ai-material-comparison__check-{{ ai_gen_id }}">✓</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ai-material-comparison__mobile-cards-{{ ai_gen_id }}">
+    <div class="ai-material-comparison__card-{{ ai_gen_id }}">
+      <div class="ai-material-comparison__card-header-{{ ai_gen_id }} ai-material-comparison__highlight-{{ ai_gen_id }}">
+        {{ block.settings.column_2_label }}
+      </div>
+      <div class="ai-material-comparison__card-body-{{ ai_gen_id }}">
+        <div class="ai-material-comparison__card-row-{{ ai_gen_id }}">
+          <span class="ai-material-comparison__card-label-{{ ai_gen_id }}">{{ block.settings.row_1_label }}</span>
+          <span class="ai-material-comparison__card-value-{{ ai_gen_id }} ai-material-comparison__check-{{ ai_gen_id }}">✓</span>
+        </div>
+        <div class="ai-material-comparison__card-row-{{ ai_gen_id }}">
+          <span class="ai-material-comparison__card-label-{{ ai_gen_id }}">{{ block.settings.row_2_label }}</span>
+          <span class="ai-material-comparison__card-value-{{ ai_gen_id }} ai-material-comparison__check-{{ ai_gen_id }}">✓</span>
+        </div>
+        <div class="ai-material-comparison__card-row-{{ ai_gen_id }}">
+          <span class="ai-material-comparison__card-label-{{ ai_gen_id }}">{{ block.settings.row_3_label }}</span>
+          <span class="ai-material-comparison__card-value-{{ ai_gen_id }} ai-material-comparison__check-{{ ai_gen_id }}">✓</span>
+        </div>
+        <div class="ai-material-comparison__card-row-{{ ai_gen_id }}">
+          <span class="ai-material-comparison__card-label-{{ ai_gen_id }}">{{ block.settings.row_4_label }}</span>
+          <span class="ai-material-comparison__card-value-{{ ai_gen_id }} ai-material-comparison__check-{{ ai_gen_id }}">✓</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ai-material-comparison__card-{{ ai_gen_id }}">
+      <div class="ai-material-comparison__card-header-{{ ai_gen_id }}">
+        {{ block.settings.column_3_label }}
+      </div>
+      <div class="ai-material-comparison__card-body-{{ ai_gen_id }}">
+        <div class="ai-material-comparison__card-row-{{ ai_gen_id }}">
+          <span class="ai-material-comparison__card-label-{{ ai_gen_id }}">{{ block.settings.row_1_label }}</span>
+          <span class="ai-material-comparison__card-value-{{ ai_gen_id }} ai-material-comparison__cross-{{ ai_gen_id }}">✕</span>
+        </div>
+        <div class="ai-material-comparison__card-row-{{ ai_gen_id }}">
+          <span class="ai-material-comparison__card-label-{{ ai_gen_id }}">{{ block.settings.row_2_label }}</span>
+          <span class="ai-material-comparison__card-value-{{ ai_gen_id }} ai-material-comparison__cross-{{ ai_gen_id }}">✕</span>
+        </div>
+        <div class="ai-material-comparison__card-row-{{ ai_gen_id }}">
+          <span class="ai-material-comparison__card-label-{{ ai_gen_id }}">{{ block.settings.row_3_label }}</span>
+          <span class="ai-material-comparison__card-value-{{ ai_gen_id }} ai-material-comparison__cross-{{ ai_gen_id }}">✕</span>
+        </div>
+        <div class="ai-material-comparison__card-row-{{ ai_gen_id }}">
+          <span class="ai-material-comparison__card-label-{{ ai_gen_id }}">{{ block.settings.row_4_label }}</span>
+          <span class="ai-material-comparison__card-value-{{ ai_gen_id }} ai-material-comparison__check-{{ ai_gen_id }}">✓</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ai-material-comparison__card-{{ ai_gen_id }}">
+      <div class="ai-material-comparison__card-header-{{ ai_gen_id }}">
+        {{ block.settings.column_4_label }}
+      </div>
+      <div class="ai-material-comparison__card-body-{{ ai_gen_id }}">
+        <div class="ai-material-comparison__card-row-{{ ai_gen_id }}">
+          <span class="ai-material-comparison__card-label-{{ ai_gen_id }}">{{ block.settings.row_1_label }}</span>
+          <span class="ai-material-comparison__card-value-{{ ai_gen_id }} ai-material-comparison__cross-{{ ai_gen_id }}">✕</span>
+        </div>
+        <div class="ai-material-comparison__card-row-{{ ai_gen_id }}">
+          <span class="ai-material-comparison__card-label-{{ ai_gen_id }}">{{ block.settings.row_2_label }}</span>
+          <span class="ai-material-comparison__card-value-{{ ai_gen_id }} ai-material-comparison__cross-{{ ai_gen_id }}">✕</span>
+        </div>
+        <div class="ai-material-comparison__card-row-{{ ai_gen_id }}">
+          <span class="ai-material-comparison__card-label-{{ ai_gen_id }}">{{ block.settings.row_3_label }}</span>
+          <span class="ai-material-comparison__card-value-{{ ai_gen_id }} ai-material-comparison__cross-{{ ai_gen_id }}">✕</span>
+        </div>
+        <div class="ai-material-comparison__card-row-{{ ai_gen_id }}">
+          <span class="ai-material-comparison__card-label-{{ ai_gen_id }}">{{ block.settings.row_4_label }}</span>
+          <span class="ai-material-comparison__card-value-{{ ai_gen_id }} ai-material-comparison__check-{{ ai_gen_id }}">✓</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% if block.settings.button_link != blank %}
+    <div class="ai-material-comparison__button-wrapper-{{ ai_gen_id }}">
+      <a href="{{ block.settings.button_link }}" class="ai-material-comparison__button-{{ ai_gen_id }}">
+        {{ block.settings.button_label }}
+      </a>
+    </div>
+  {% endif %}
+</material-comparison-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class MaterialComparison{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+      }
+    }
+
+    customElements.define('material-comparison-{{ ai_gen_id }}', MaterialComparison{{ ai_gen_id }});
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Material comparison",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Analisis Comparativo de Materiales"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Heading font",
+      "default": "nanum_pen_script_n4"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 16,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "heading_letter_spacing",
+      "label": "Letter spacing",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "default": 3
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#9b7a0f"
+    },
+    {
+      "type": "header",
+      "content": "Table columns"
+    },
+    {
+      "type": "text",
+      "id": "column_1_label",
+      "label": "Column 1 label",
+      "default": "Características"
+    },
+    {
+      "type": "text",
+      "id": "column_2_label",
+      "label": "Column 2 label (highlighted)",
+      "default": "KYN Biothane®"
+    },
+    {
+      "type": "text",
+      "id": "column_3_label",
+      "label": "Column 3 label",
+      "default": "Nylon"
+    },
+    {
+      "type": "text",
+      "id": "column_4_label",
+      "label": "Column 4 label",
+      "default": "Cuero"
+    },
+    {
+      "type": "header",
+      "content": "Table rows"
+    },
+    {
+      "type": "text",
+      "id": "row_1_label",
+      "label": "Row 1 label",
+      "default": "No absorbe agua"
+    },
+    {
+      "type": "text",
+      "id": "row_2_label",
+      "label": "Row 2 label",
+      "default": "Libre de olores"
+    },
+    {
+      "type": "text",
+      "id": "row_3_label",
+      "label": "Row 3 label",
+      "default": "Limpieza instantánea"
+    },
+    {
+      "type": "text",
+      "id": "row_4_label",
+      "label": "Row 4 label",
+      "default": "Resistencia UV"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "feature_label_color",
+      "label": "Feature label color",
+      "default": "#273448"
+    },
+    {
+      "type": "color",
+      "id": "highlight_bg_color",
+      "label": "Highlight column background",
+      "default": "#9b7a0f"
+    },
+    {
+      "type": "color",
+      "id": "column_bg_color",
+      "label": "Other columns background",
+      "default": "#273448"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#273448"
+    },
+    {
+      "type": "color",
+      "id": "check_color",
+      "label": "Check mark color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "cross_color",
+      "label": "Cross mark color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Conoce más sobre el latón"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Background color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Border color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "button_border_width",
+      "label": "Border width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "button_hover_bg_color",
+      "label": "Hover background color",
+      "default": "#383838"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text_color",
+      "label": "Hover text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_border_color",
+      "label": "Hover border color",
+      "default": "#383838"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Body font",
+      "default": "red_hat_text_n4"
+    },
+    {
+      "type": "header",
+      "content": "Desktop layout"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Mobile layout"
+    },
+    {
+      "type": "range",
+      "id": "mobile_width_percent",
+      "label": "Width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "mobile_heading_size",
+      "label": "Heading size",
+      "min": 16,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "mobile_card_spacing",
+      "label": "Card spacing",
+      "min": 10,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "mobile_card_border_radius",
+      "label": "Card border radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "mobile_card_header_size",
+      "label": "Card header size",
+      "min": 14,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "mobile_card_label_size",
+      "label": "Card label size",
+      "min": 12,
+      "max": 18,
+      "step": 2,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "mobile_card_value_size",
+      "label": "Card value size",
+      "min": 14,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    }
+  ],
+  "presets": [
+    {
+      "name": "Material comparison"
+    }
+  ]
+}
 {% endschema %}
