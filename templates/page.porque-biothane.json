@@ -259,7 +259,7 @@
             "desktop_width_percent": 100,
             "margin_top": 60,
             "margin_bottom": 60,
-            "table_font": "sans_serif_n4",
+            "table_font": "nanum_pen_script_n4",
             "text_size": 18,
             "text_transform": "uppercase",
             "header_font_weight": "400",
