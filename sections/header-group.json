@@ -22,7 +22,7 @@
             "show_separator": true,
             "separator_symbol": "★",
             "separator_spacing": 10,
-            "scroll_speed": 1,
+            "scroll_speed": 100,
             "background_color": "#000000",
             "text_color": "#d2b519",
             "font_size": 17,
