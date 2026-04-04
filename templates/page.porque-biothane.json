@@ -140,26 +140,11 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
-            },
-            "button_47phf9": {
-              "type": "button",
-              "settings": {
-                "label": "Conoce más sobre el latón",
-                "link": "shopify://pages/why-solid-brass",
-                "open_in_new_tab": false,
-                "style_class": "button",
-                "width": "custom",
-                "custom_width": 100,
-                "width_mobile": "custom",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
             }
           },
           "block_order": [
             "text_d6DJmP",
-            "text_kYjkRE",
-            "button_47phf9"
+            "text_kYjkRE"
           ]
         }
       },
@@ -293,10 +278,25 @@
             "cell_padding_horizontal": 5
           },
           "blocks": {}
+        },
+        "button_ir8xmC": {
+          "type": "button",
+          "settings": {
+            "label": "Conoce más sobre el latón",
+            "link": "shopify://pages/why-solid-brass",
+            "open_in_new_tab": false,
+            "style_class": "button",
+            "width": "custom",
+            "custom_width": 100,
+            "width_mobile": "custom",
+            "custom_width_mobile": 100
+          },
+          "blocks": {}
         }
       },
       "block_order": [
-        "ai_gen_block_957b185_GTYN9i"
+        "ai_gen_block_957b185_GTYN9i",
+        "button_ir8xmC"
       ],
       "settings": {
         "content_direction": "column",
