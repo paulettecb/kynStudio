@@ -48,6 +48,9 @@
 {% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
 
 {% style %}
+  h4 {
+    font-family: {{ block.settings.table_font.family }}, {{ block.settings.table_font.fallback_families }};
+  }
   .ai-comparison-table-{{ ai_gen_id }} {
     display: block;
     width: {{ block.settings.desktop_width_percent }}%;
