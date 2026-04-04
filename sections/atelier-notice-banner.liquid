@@ -1,7 +1,14 @@
 <div class="atelier-home-banner" role="note" aria-label="Atelier shipping notice">
-  <p class="atelier-home-banner__text">
-    ATELIER NOTICE: Due to material sourcing and technical assembly, orders may ship within 3-5 business days.
-  </p>
+  <div class="atelier-home-banner__marquee" aria-live="polite">
+    <div class="atelier-home-banner__track">
+      <p class="atelier-home-banner__text">
+        ATELIER NOTICE: Due to material sourcing and technical assembly, orders may ship within 3-5 business days.
+      </p>
+      <p class="atelier-home-banner__text" aria-hidden="true">
+        ATELIER NOTICE: Due to material sourcing and technical assembly, orders may ship within 3-5 business days.
+      </p>
+    </div>
+  </div>
 </div>
 
 {% stylesheet %}
@@ -9,6 +16,19 @@
     background: #101010;
     color: #ffffff;
     padding: clamp(1rem, 2.2vw, 1.6rem) 1.25rem;
+    overflow: hidden;
+  }
+
+  .atelier-home-banner__marquee {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .atelier-home-banner__track {
+    display: flex;
+    width: max-content;
+    min-width: 100%;
+    animation: atelier-notice-marquee 18s linear infinite;
   }
 
   .atelier-home-banner__text {
@@ -21,6 +41,9 @@
     text-align: center;
     text-transform: uppercase;
     color: #ffffff;
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding-inline: min(6vw, 4rem);
   }
 
   @media screen and (max-width: 749px) {
@@ -32,6 +55,21 @@
       font-size: 0.7rem;
       letter-spacing: 0.1em;
       line-height: 1.45;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .atelier-home-banner__track {
+      animation: none;
+    }
+  }
+
+  @keyframes atelier-notice-marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
     }
   }
 {% endstylesheet %}
