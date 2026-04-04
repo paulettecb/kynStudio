@@ -97,7 +97,7 @@
       adjustSpeed() {
         const track = this.querySelector('.ai-marquee-banner__track-{{ ai_gen_id }}');
         if (track) {
-          const contentWidth = track.scrollWidth / 10;
+          const contentWidth = track.scrollWidth / 2;
           const speed = {{ block.settings.scroll_speed }};
           track.style.animationDuration = speed + 's';
         }
