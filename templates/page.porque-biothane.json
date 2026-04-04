@@ -35,8 +35,8 @@
             "image": "shopify://shop_images/MG_9907.jpg",
             "link": "",
             "image_ratio": "square",
-            "width": "fill",
-            "custom_width": 100,
+            "width": "custom",
+            "custom_width": 72,
             "width_mobile": "fill",
             "custom_width_mobile": 100,
             "height": "fit",
@@ -95,10 +95,10 @@
               "name": "t:names.heading",
               "settings": {
                 "text": "<p>{{ closest.page.title }}</p>",
-                "width": "fit-content",
-                "max_width": "normal",
+                "width": "100%",
+                "max_width": "none",
                 "alignment": "left",
-                "type_preset": "h3",
+                "type_preset": "h4",
                 "font": "var(--font-body--family)",
                 "font_size": "1rem",
                 "line_height": "normal",
@@ -120,8 +120,8 @@
               "type": "text",
               "settings": {
                 "text": "{{ closest.page.content }}",
-                "width": "fit-content",
-                "max_width": "narrow",
+                "width": "100%",
+                "max_width": "none",
                 "alignment": "left",
                 "type_preset": "rte",
                 "font": "var(--font-body--family)",
@@ -144,13 +144,13 @@
             "button_47phf9": {
               "type": "button",
               "settings": {
-                "label": "Comprar ahora",
-                "link": "shopify://collections/all",
+                "label": "Conoce más sobre el latón",
+                "link": "shopify://pages/why-solid-brass",
                 "open_in_new_tab": false,
                 "style_class": "button",
-                "width": "fit-content",
+                "width": "custom",
                 "custom_width": 100,
-                "width_mobile": "fit-content",
+                "width_mobile": "custom",
                 "custom_width_mobile": 100
               },
               "blocks": {}
