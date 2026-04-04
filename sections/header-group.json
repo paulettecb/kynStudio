@@ -11,6 +11,62 @@
   "type": "header",
   "name": "Header",
   "sections": {
+    "blocks_ihGkgP": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_f3d2311_xYfkp8": {
+          "type": "ai_gen_block_f3d2311",
+          "settings": {
+            "announcement_text": "ATELIER NOTICE: DUE TO MATERIAL SOURCING AND TECHNICAL ASSEMBLY, ORDERS MAY SHIP WITHIN 3-5 BUSINESS DAYS.",
+            "repeat_count": 3,
+            "show_separator": true,
+            "separator_symbol": "★",
+            "separator_spacing": 10,
+            "scroll_speed": 100,
+            "background_color": "#000000",
+            "text_color": "#d2b519",
+            "font_size": 17,
+            "font_weight": "400",
+            "text_transform": "uppercase",
+            "letter_spacing": 1,
+            "vertical_padding": 12,
+            "item_spacing": 20
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_f3d2311_xYfkp8"
+      ],
+      "name": "Scrolling marquee banner",
+      "settings": {
+        "content_direction": "row",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 0,
+        "section_width": "full-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-1",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
     "header_section": {
       "type": "header",
       "blocks": {
@@ -87,6 +143,7 @@
     }
   },
   "order": [
+    "blocks_ihGkgP",
     "header_section"
   ]
 }
