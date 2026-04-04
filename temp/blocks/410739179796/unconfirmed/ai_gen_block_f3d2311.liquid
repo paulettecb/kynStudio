@@ -1,6 +1,285 @@
+{% doc %}
+  @prompt
+    Inside the header section elements, create a full-width scrolling marquee announcement banner that displays text continuously moving from right to left across the full width of the page. The banner should have customizable background color, text color, font size, and scrolling speed. It should seamlessly loop the text and look clean and modern, matching the store's header area.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-marquee-banner-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    background-color: {{ block.settings.background_color }};
+    padding: {{ block.settings.vertical_padding }}px 0;
+    position: relative;
+  }
+
+  .ai-marquee-banner__track-{{ ai_gen_id }} {
+    display: flex;
+    width: max-content;
+    animation: ai-marquee-scroll-{{ ai_gen_id }} {{ block.settings.scroll_speed }}s linear infinite;
+  }
+
+  .ai-marquee-banner__content-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    padding: 0 {{ block.settings.item_spacing }}px;
+  }
+
+  .ai-marquee-banner__text-{{ ai_gen_id }} {
+    color: {{ block.settings.text_color }};
+    font-size: {{ block.settings.font_size }}px;
+    font-weight: {{ block.settings.font_weight }};
+    text-transform: {{ block.settings.text_transform }};
+    letter-spacing: {{ block.settings.letter_spacing }}px;
+  }
+
+  .ai-marquee-banner__separator-{{ ai_gen_id }} {
+    display: inline-block;
+    margin: 0 {{ block.settings.separator_spacing }}px;
+    color: {{ block.settings.text_color }};
+    font-size: {{ block.settings.font_size }}px;
+  }
+
+  @keyframes ai-marquee-scroll-{{ ai_gen_id }} {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ai-marquee-banner__track-{{ ai_gen_id }} {
+      animation: none;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-marquee-banner__text-{{ ai_gen_id }} {
+      font-size: {{ block.settings.font_size | times: 0.8 }}px;
+    }
+  }
+{% endstyle %}
+
+<marquee-banner-{{ ai_gen_id }} class="ai-marquee-banner-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-marquee-banner__track-{{ ai_gen_id }}">
+    {% for i in (1..2) %}
+      <div class="ai-marquee-banner__content-{{ ai_gen_id }}">
+        {% for j in (1..block.settings.repeat_count) %}
+          <span class="ai-marquee-banner__text-{{ ai_gen_id }}">
+            {{ block.settings.announcement_text }}
+          </span>
+          {% if block.settings.show_separator %}
+            <span class="ai-marquee-banner__separator-{{ ai_gen_id }}">
+              {{ block.settings.separator_symbol }}
+            </span>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
+</marquee-banner-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class MarqueeBanner{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.adjustSpeed();
+      }
+
+      adjustSpeed() {
+        const track = this.querySelector('.ai-marquee-banner__track-{{ ai_gen_id }}');
+        if (track) {
+          const contentWidth = track.scrollWidth / 2;
+          const speed = {{ block.settings.scroll_speed }};
+          track.style.animationDuration = speed + 's';
+        }
+      }
+    }
+
+    customElements.define('marquee-banner-{{ ai_gen_id }}', MarqueeBanner{{ ai_gen_id }});
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Scrolling marquee banner",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "announcement_text",
+      "label": "Announcement text",
+      "default": "Free shipping on orders over $50"
+    },
+    {
+      "type": "range",
+      "id": "repeat_count",
+      "label": "Repeat count",
+      "min": 3,
+      "max": 20,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Separator"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_separator",
+      "label": "Show separator",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "separator_symbol",
+      "label": "Separator symbol",
+      "default": "★"
+    },
+    {
+      "type": "range",
+      "id": "separator_spacing",
+      "label": "Separator spacing",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Animation"
+    },
+    {
+      "type": "range",
+      "id": "scroll_speed",
+      "label": "Scroll speed",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "s",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Font size",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "font_weight",
+      "label": "Font weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semi-bold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "select",
+      "id": "text_transform",
+      "label": "Text transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "range",
+      "id": "letter_spacing",
+      "label": "Letter spacing",
+      "min": 0,
+      "max": 5,
+      "step": 0.5,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "vertical_padding",
+      "label": "Vertical padding",
+      "min": 5,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "item_spacing",
+      "label": "Item spacing",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    }
+  ],
+  "presets": [
+    {
+      "name": "Scrolling marquee banner"
+    }
+  ]
+}
 {% endschema %}
