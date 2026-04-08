@@ -146,7 +146,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<p>• Biothane impermeable<br/>• Herrajes de latón sólido<br/>• Sistema modular KYN</p>",
+                "text": "<p>• Waterproof Biothane<br/>• Solid brass hardware<br/>• KYN modular system</p>",
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "left",
@@ -251,12 +251,12 @@
               "type": "product-tabs",
               "name": "Product tabs",
               "settings": {
-                "tab_1_label": "Uso previsto",
-                "tab_1_content": "<p>El Traffic Handle está diseñado para momentos donde necesitas mantener a tu perro cerca de forma inmediata.</p><p>Cruzar calles, moverte entre gente, entrar o salir del coche, o simplemente recuperar control rápido durante el paseo.</p><p>Su longitud corta permite una conexión directa con tu perro sin enrollar la correa ni reducir una correa larga.</p><p>Simple, inmediato y siempre listo.</p>",
-                "tab_2_label": "Materiales",
-                "tab_2_content": "<p><strong>Biothane® impermeable</strong><br/>Cinta técnica de poliéster recubierta con polímero sellado. No absorbe humedad, no retiene olores y se limpia en segundos.</p><p><strong>Latón sólido</strong><br/>Herrajes fabricados en latón macizo. No dependen de recubrimientos y desarrollan una pátina natural con el uso.</p><p>Diseñado para durar años en uso real.</p>",
-                "tab_3_label": "Construcción",
-                "tab_3_content": "<p>• Biothane® de alto desempeño<br/>• Herrajes de latón sólido<br/>• Chicago screws para mantenimiento sencillo<br/>• Compatible con el sistema modular KYN</p>"
+                "tab_1_label": "t:product_faq.tab_1_label",
+                "tab_1_content": "t:product_faq.tab_1_content",
+                "tab_2_label": "t:product_faq.tab_2_label",
+                "tab_2_content": "t:product_faq.tab_2_content",
+                "tab_3_label": "t:product_faq.tab_3_label",
+                "tab_3_content": "t:product_faq.tab_3_content"
               },
               "blocks": {}
             },

@@ -357,5 +357,46 @@
       "default_title": "Default Title",
       "sticky_add_to_cart": "Quick add to cart bar"
     }
+  },
+  "custom_marketing": {
+    "shop_by_collection": "<h3>Shop by collection</h3>",
+    "modular_versatile_design": "<h2>Modular<br/>Versatile Design</h2>",
+    "urban_elegant_functional": "<h2>Urban<br/>Elegant<br/>Functional</h2>",
+    "durability_comfort_every_piece": "<h2>Durability and comfort in every piece</h2>",
+    "premium_products_chosen_to_last": "<h2>Premium products and finishing details chosen to last</h2>",
+    "coming_soon_cta": "<p><a href=\"/collections/all\" title=\"All products\">Coming soon</a></p>",
+    "atelier_notice": "ATELIER NOTICE: Due to material sourcing and technical assembly, orders may ship within 3–5 business days.",
+    "comparative_material_analysis": "Comparative Material Analysis",
+    "features": "Features",
+    "leather": "Leather",
+    "does_not_absorb_water": "Does not absorb water",
+    "odor_resistant": "Odor resistant",
+    "easy_to_clean": "Easy to clean",
+    "uv_resistance": "UV resistance",
+    "learn_more_solid_brass": "Learn more about solid brass"
+  },
+  "product_faq": {
+    "tab_1_label": "Intended use",
+    "tab_1_content": "<p>The Traffic Handle is designed for moments when you need to keep your dog close immediately.</p><p>Crossing streets, moving through crowds, getting in or out of the car, or simply regaining quick control during your walk.</p><p>Its short length gives you direct connection with your dog without wrapping the leash or shortening a long lead.</p><p>Simple, immediate, and always ready.</p>",
+    "tab_2_label": "Materials",
+    "tab_2_content": "<p><strong>Waterproof Biothane®</strong><br/>Technical polyester webbing coated with a sealed polymer. It does not absorb moisture, does not retain odors, and cleans in seconds.</p><p><strong>Solid brass</strong><br/>Hardware made from solid brass. It does not rely on surface coatings and develops a natural patina over time.</p><p>Built to last for years in real use.</p>",
+    "tab_3_label": "Construction",
+    "tab_3_content": "<p>• High-performance Biothane®<br/>• Solid brass hardware<br/>• Chicago screws for easy maintenance<br/>• Compatible with the KYN modular system</p>",
+    "q1_heading": "Is BioThane® really stronger than leather?",
+    "q1_answer": "<ul><li>Absolutely. While leather stretches, degrades with moisture, and weakens at stitched stress points, <strong>BioThane® Beta Series</strong> maintains tensile strength of up to <strong>450 kg</strong>.</li><li>Its polyester-webbing core is virtually unbreakable for any dog breed, delivering active safety that nylon or leather simply cannot match.</li><li>Its technical polymer finish also helps prevent fraying and long-term weakening, helping make your <strong>The Urban Leash</strong> the last leash you need to buy.</li></ul>",
+    "q2_heading": "How durable are your snap hooks?",
+    "q2_answer": "<ul><li>Every <strong>KYN Studio</strong> snap hook is selected for hardness rating and mechanical safety.</li><li>Because they are made from solid brass, they do not suffer from the same \"metal fatigue\" common in zinc or cast hooks, making them ideal for high-impact dogs that pull hard on walks.</li><li>The design also helps prevent the closure mechanism from jamming with dirt or sand, maintaining consistent technical performance.</li></ul>",
+    "q3_heading": "Does BioThane® require maintenance?",
+    "q3_answer": "<p>No. Thanks to its advanced polymer coating, it is 100% waterproof and odor-resistant; just wipe it with a damp cloth to restore its original condition.</p>",
+    "q4_heading": "Why do you call it a system?",
+    "q4_answer": "<p>Because KYN is designed so you can start with an <strong>Urban Leash</strong> and later connect it to an <strong>Urban Crossbody</strong>. Its modular architecture, with pieces such as <strong>THE URBAN LINK</strong>, allows you to add anti-tangle extensions or connect multiple dogs to a single <strong>Urban Crossbody</strong> without complications.</p>",
+    "q5_heading": "Where do your materials come from?",
+    "q5_answer": "<ul><li>We import <strong>BioThane® Beta</strong> directly from its original factory to ensure authenticity, since many \"dupes\" do not offer the same quality.</li><li>Our solid brass hardware and mechanical components are sourced from specialized U.S. suppliers to ensure metal purity.</li></ul>",
+    "q6_heading": "Why did you choose importing instead of buying locally?",
+    "q6_answer": "<ul><li>After extensive research in the local market, we found that available brass did not meet the density and strength standards required for high-impact dogs.</li><li>We chose to take on the complexity of importing to ensure every <strong>KYN</strong> piece is structurally superior to mass-market alternatives in Mexico.<br/><br/>That said, if a local supplier can match our current quality standards, we would be happy to move production nationally—supporting local industry is part of our long-term vision.</li></ul>",
+    "q7_heading": "Why is brass considered \"waterproof\"?",
+    "q7_answer": "<ul><li>Unlike common zinc or chrome-plated steel hardware, solid brass is a non-ferrous metal, making it naturally resistant to oxidation caused by humidity or salinity.</li><li>To maximize durability, we chose hardware with a thick <strong>18k gold</strong> finish, creating a technical barrier that preserves the piece’s elevated look for years with proper care.</li></ul>",
+    "q8_heading": "What is the difference between your screws and common rivets?",
+    "q8_answer": "<p></p><ul><li>Most leashes use press rivets that can loosen under mechanical tension; at <strong>KYN</strong>, we use <strong>screw rivets (Chicago Screws)</strong> reinforced with specialized high-strength adhesive to create a solid, permanent bond.</li><li>This system allows safety inspection and helps ensure the joining point is the strongest part of the entire <strong>Urban Walk System</strong>.</li></ul>"
   }
 }

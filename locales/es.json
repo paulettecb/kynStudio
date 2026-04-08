@@ -336,5 +336,46 @@
       "success_moderated": "Comentario publicado y a la espera de moderación",
       "success": "Comentario publicado"
     }
+  },
+  "custom_marketing": {
+    "shop_by_collection": "<h3>Compra por colección</h3>",
+    "modular_versatile_design": "<h2>Diseño modular<br/>Versátil</h2>",
+    "urban_elegant_functional": "<h2>Urbano<br/>Elegante<br/>Funcional</h2>",
+    "durability_comfort_every_piece": "<h2>Durabilidad y comodidad en cada elemento</h2>",
+    "premium_products_chosen_to_last": "<h2>Productos premium y toques finales elegidos para durar</h2>",
+    "coming_soon_cta": "<p><a href=\"/collections/all\" title=\"Todos los productos\">Próximamente</a></p>",
+    "atelier_notice": "AVISO ATELIER: Debido al abastecimiento de materiales y ensamblaje técnico, los pedidos pueden enviarse en un plazo de 3–5 días hábiles.",
+    "comparative_material_analysis": "Análisis comparativo de materiales",
+    "features": "Características",
+    "leather": "Cuero",
+    "does_not_absorb_water": "No absorbe agua",
+    "odor_resistant": "Libre de olores",
+    "easy_to_clean": "Fácil de limpiar",
+    "uv_resistance": "Resistencia UV",
+    "learn_more_solid_brass": "Conoce más sobre el latón sólido"
+  },
+  "product_faq": {
+    "tab_1_label": "Uso previsto",
+    "tab_1_content": "<p>El Traffic Handle está diseñado para momentos en los que necesitas mantener a tu perro cerca de forma inmediata.</p><p>Cruzar calles, moverte entre gente, entrar o salir del coche, o simplemente recuperar control rápido durante el paseo.</p><p>Su longitud corta permite una conexión directa con tu perro sin enrollar la correa ni reducir una correa larga.</p><p>Simple, inmediato y siempre listo.</p>",
+    "tab_2_label": "Materiales",
+    "tab_2_content": "<p><strong>Biothane® impermeable</strong><br/>Cinta técnica de poliéster recubierta con polímero sellado. No absorbe humedad, no retiene olores y se limpia en segundos.</p><p><strong>Latón sólido</strong><br/>Herrajes fabricados en latón macizo. No dependen de recubrimientos y desarrollan una pátina natural con el uso.</p><p>Diseñado para durar años en uso real.</p>",
+    "tab_3_label": "Construcción",
+    "tab_3_content": "<p>• Biothane® de alto desempeño<br/>• Herrajes de latón sólido<br/>• Chicago screws para mantenimiento sencillo<br/>• Compatible con el sistema modular KYN</p>",
+    "q1_heading": "¿Realmente el BioThane® es más fuerte que el cuero?",
+    "q1_answer": "<ul><li>Totalmente. Mientras que el cuero se estira, se pudre con la humedad y pierde fuerza en los puntos de costura, el <strong>BioThane® Beta Series</strong> mantiene una resistencia a la tracción de hasta <strong>450 kg</strong>.</li><li>Su núcleo de cinta de poliéster es prácticamente irrompible para cualquier raza de perro, lo que proporciona una seguridad activa que el nylon o el cuero simplemente no pueden igualar.</li><li>Además, su acabado de polímero técnico asegura que el material no se deshilache ni se debilite con el tiempo, garantizando que tu <strong>The Urban Leash</strong> sea la última correa que necesites comprar.</li></ul>",
+    "q2_heading": "¿Qué tan resistentes son sus mosquetones?",
+    "q2_answer": "<ul><li>Cada mosquetón de <strong>KYN Studio</strong> es seleccionado por su grado de dureza y seguridad mecánica.</li><li>Al ser de latón sólido, no sufren de \"fatiga de metal\" como los mosquetones de zinc o fundición, lo que los hace ideales para perros de alto impacto que dan tirones fuertes durante los paseos.</li><li>Su diseño asegura que el mecanismo de cierre no se bloquee por la suciedad o la arena, manteniendo una funcionalidad técnica constante.</li></ul>",
+    "q3_heading": "¿El BioThane® requiere mantenimiento?",
+    "q3_answer": "<p>No. Debido a su recubrimiento de polímero avanzado, es 100% impermeable y resistente a los olores; basta con limpiarlo con un paño húmedo para que recupere su estado original.</p>",
+    "q4_heading": "¿Por qué le llaman sistema?",
+    "q4_answer": "<p>Porque el concepto de KYN es que puedas iniciar con una <strong>Urban Leash</strong> y más adelante conectarla a un <strong>Urban Crossbody</strong>. Su arquitectura modular, con piezas como <strong>THE URBAN LINK</strong>, permite añadir extensiones antienredos o conectar múltiples perros a un solo <strong>Urban Crossbody</strong> sin complicaciones.</p>",
+    "q5_heading": "¿De dónde provienen los materiales?",
+    "q5_answer": "<ul><li>Importamos el <strong>BioThane® Beta</strong> directamente desde su fábrica para asegurarnos de la autenticidad del producto, ya que hay muchos \"dupes\" que no ofrecen la misma calidad.</li><li>Nuestros herrajes de latón sólido y componentes mecánicos son importados de proveedores especializados en Estados Unidos para asegurar la pureza del metal.</li></ul>",
+    "q6_heading": "¿Por qué decidieron importar en lugar de comprar localmente?",
+    "q6_answer": "<ul><li>Tras una fase de investigación en el mercado nacional, determinamos que el latón disponible no cumplía con los estándares de densidad y resistencia necesarios para perros de alto impacto.</li><li>Optamos por absorber la complejidad de los procesos de importación para garantizar que cada pieza de <strong>KYN</strong> sea estructuralmente superior a lo que se fabrica masivamente en México.<br/><br/>Así mismo, si algún proveedor local puede garantizar la calidad que manejamos actualmente, encantados migramos a producción nacional; nuestro sueño es apoyar el mercado local.</li></ul>",
+    "q7_heading": "¿Por qué el latón es \"waterproof\"?",
+    "q7_answer": "<ul><li>A diferencia de los herrajes comunes de zinc o acero cromado, el latón sólido es un metal no ferroso, lo que lo hace naturalmente resistente a la oxidación por humedad o salinidad.</li><li>Para maximizar su durabilidad, elegimos herrajes con un recubrimiento grueso de <strong>oro de 18k</strong>, creando una barrera técnica que mantiene la estética de la pieza por años con cuidados adecuados.</li></ul>",
+    "q8_heading": "¿Qué diferencia hay entre sus tornillos y los remaches comunes?",
+    "q8_answer": "<p></p><ul><li>La mayoría de las correas usan remaches de presión que pueden soltarse bajo tensión mecánica; en <strong>KYN</strong>, utilizamos <strong>remaches de tornillo (Chicago Screws)</strong> reforzados con adhesivo especializado de alta resistencia para crear una unión sólida y permanente.</li><li>Este sistema permite inspección de seguridad y ayuda a asegurar que el punto de unión sea el lugar más resistente de todo el <strong>Urban Walk System</strong>.</li></ul>"
   }
 }

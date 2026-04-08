@@ -251,12 +251,12 @@
               "type": "product-tabs",
               "name": "Product tabs",
               "settings": {
-                "tab_1_label": "Uso previsto",
-                "tab_1_content": "<p>El Traffic Handle está diseñado para momentos donde necesitas mantener a tu perro cerca de forma inmediata.</p><p>Cruzar calles, moverte entre gente, entrar o salir del coche, o simplemente recuperar control rápido durante el paseo.</p><p>Su longitud corta permite una conexión directa con tu perro sin enrollar la correa ni reducir una correa larga.</p><p>Simple, inmediato y siempre listo.</p>",
-                "tab_2_label": "Materiales",
-                "tab_2_content": "<p><strong>Biothane® impermeable</strong><br/>Cinta técnica de poliéster recubierta con polímero sellado. No absorbe humedad, no retiene olores y se limpia en segundos.</p><p><strong>Latón sólido</strong><br/>Herrajes fabricados en latón macizo. No dependen de recubrimientos y desarrollan una pátina natural con el uso.</p><p>Diseñado para durar años en uso real.</p>",
-                "tab_3_label": "Construcción",
-                "tab_3_content": "<p>• Biothane® de alto desempeño<br/>• Herrajes de latón sólido<br/>• Chicago screws para mantenimiento sencillo<br/>• Compatible con el sistema modular KYN</p>"
+                "tab_1_label": "t:product_faq.tab_1_label",
+                "tab_1_content": "t:product_faq.tab_1_content",
+                "tab_2_label": "t:product_faq.tab_2_label",
+                "tab_2_content": "t:product_faq.tab_2_content",
+                "tab_3_label": "t:product_faq.tab_3_label",
+                "tab_3_content": "t:product_faq.tab_3_content"
               },
               "blocks": {}
             },
@@ -385,7 +385,7 @@
               "type": "_accordion-row",
               "name": "t:names.accordion_row",
               "settings": {
-                "heading": "¿Realmente el BioThane® es más fuerte que el cuero?",
+                "heading": "t:product_faq.q1_heading",
                 "open_by_default": false,
                 "icon": "none",
                 "width": 20
@@ -394,7 +394,7 @@
                 "text_DCVeHT": {
                   "type": "text",
                   "settings": {
-                    "text": "<ul><li>Totalmente. Mientras que el cuero se estira, se pudre con la humedad y pierde fuerza en los puntos de costura, el <strong>BioThane® Beta Series</strong> mantiene una resistencia a la tracción de hasta <strong>450 kg</strong>.</li><li>Su núcleo de cinta de poliéster es prácticamente irrompible para cualquier raza de perro, lo que proporciona una seguridad activa que el nylon o el cuero simplemente no pueden igualar.</li><li>Además, su acabado de polímero técnico asegura que el material no se deshilache ni se debilite con el tiempo, garantizando que tu <strong>The Urban Leash</strong> sea la última correa que necesites comprar.</li></ul>",
+                    "text": "t:product_faq.q1_answer",
                     "width": "100%",
                     "max_width": "none",
                     "alignment": "left",
@@ -425,7 +425,7 @@
               "type": "_accordion-row",
               "name": "t:names.accordion_row",
               "settings": {
-                "heading": "¿Qué tan resistentes son sus mosquetones?",
+                "heading": "t:product_faq.q2_heading",
                 "open_by_default": false,
                 "icon": "none",
                 "width": 20
@@ -434,7 +434,7 @@
                 "text_jhyRKV": {
                   "type": "text",
                   "settings": {
-                    "text": "<ul><li>Cada mosquetón de <strong>KYN Studio</strong> es seleccionado por su grado de dureza y seguridad mecánica.</li><li>Al ser de latón sólido, no sufren de \"fatiga de metal\" como los mosquetones de zinc o fundición, lo que los hace ideales para perros de alto impacto que dan tirones fuertes durante los paseos.</li><li>Su diseño asegura que el mecanismo de cierre no se bloquee por la suciedad o la arena, manteniendo una funcionalidad técnica constante.</li></ul>",
+                    "text": "t:product_faq.q2_answer",
                     "width": "100%",
                     "max_width": "none",
                     "alignment": "left",
@@ -465,7 +465,7 @@
               "type": "_accordion-row",
               "name": "t:names.accordion_row",
               "settings": {
-                "heading": "¿El BioThane® requiere mantenimiento?",
+                "heading": "t:product_faq.q3_heading",
                 "open_by_default": false,
                 "icon": "none",
                 "width": 20
@@ -475,7 +475,7 @@
                   "type": "text",
                   "name": "t:names.text",
                   "settings": {
-                    "text": "<p>No. Debido a su recubrimiento de polímero avanzado, es 100% impermeable y resistente a los olores; basta con limpiarlo con un paño húmedo para que recupere su estado original.</p>",
+                    "text": "t:product_faq.q3_answer",
                     "width": "100%",
                     "max_width": "none",
                     "alignment": "left",
@@ -506,7 +506,7 @@
               "type": "_accordion-row",
               "name": "t:names.accordion_row",
               "settings": {
-                "heading": "¿Porqué le llaman sistema?",
+                "heading": "t:product_faq.q4_heading",
                 "open_by_default": false,
                 "icon": "none",
                 "width": 20
@@ -515,7 +515,7 @@
                 "text_i9mhgY": {
                   "type": "text",
                   "settings": {
-                    "text": "<p>Porque el concepto de KYN es que puedas iniciar con una <strong>Urban Leash</strong>, y mas adelante conectarla a un <strong>Urban Crossbody</strong>, además que su diseño modular de piezas como <strong>THE URBAN LINK</strong> permite añadir extensiones antienredos o conectar múltiples perros a un solo <strong>Urban Crossbody</strong> sin complicaciones.</p>",
+                    "text": "t:product_faq.q4_answer",
                     "width": "100%",
                     "max_width": "none",
                     "alignment": "left",
@@ -545,7 +545,7 @@
             "accordion_row_4NE6Vq": {
               "type": "_accordion-row",
               "settings": {
-                "heading": "¿De dónde provienen los materiales?",
+                "heading": "t:product_faq.q5_heading",
                 "open_by_default": false,
                 "icon": "none",
                 "width": 34
@@ -554,7 +554,7 @@
                 "text_4VkCkf": {
                   "type": "text",
                   "settings": {
-                    "text": "<ul><li>Importamos el <strong>BioThane® Beta</strong> directamente desde su fábrica para asegurarnos de la autenticidad del producto, ya que hay muchos \"dupes\" que no ofrecen la misma calidad.</li><li> Nuestros herrajes de latón sólido y componentes mecánicos son importados de proveedores especializados en Estados Unidos para asegurar la pureza del metal.</li></ul>",
+                    "text": "t:product_faq.q5_answer",
                     "width": "100%",
                     "max_width": "none",
                     "alignment": "left",
@@ -584,7 +584,7 @@
             "accordion_row_tVfDXa": {
               "type": "_accordion-row",
               "settings": {
-                "heading": "¿Por qué decidieron importar en lugar de comprar localmente?",
+                "heading": "t:product_faq.q6_heading",
                 "open_by_default": false,
                 "icon": "none",
                 "width": 20
@@ -593,7 +593,7 @@
                 "text_pW8Rc8": {
                   "type": "text",
                   "settings": {
-                    "text": "<ul><li>Tras una fase de investigación en el mercado nacional, determinamos que el latón disponible no cumplía con los estándares de densidad y resistencia necesarios para perros de alto impacto.</li><li>Optamos por absorber la complejidad de los procesos de importación para garantizar que cada pieza de <strong>KYN </strong>sea estructuralmente superior a lo que se fabrica masivamente en México.<br/><br/>Así mismo queremos asegurar que si algún proveedor local nos puede garantizar la calidad que estamos manejando actualmente, encantados nos mudamos a producción nacional, nuestro sueño es apoyar el mercado nacional.</li></ul>",
+                    "text": "t:product_faq.q6_answer",
                     "width": "100%",
                     "max_width": "none",
                     "alignment": "left",
@@ -624,7 +624,7 @@
               "type": "_accordion-row",
               "name": "t:names.accordion_row",
               "settings": {
-                "heading": "¿Por qué el latón es \"waterproof\"?",
+                "heading": "t:product_faq.q7_heading",
                 "open_by_default": false,
                 "icon": "none",
                 "width": 20
@@ -634,7 +634,7 @@
                   "type": "text",
                   "name": "t:names.text",
                   "settings": {
-                    "text": "<ul><li>A diferencia de los herrajes comunes de zinc o acero cromado, el latón sólido es un metal no ferroso, lo que lo hace físicamente inmune a la oxidación por humedad o salinidad.</li><li>Para maximizar su durabilidad, elejimos herrajes con un recubrimiento grueso de <strong>oro de 18k</strong>, creando una barrera técnica que mantiene la estética editorial de la pieza por años, manteniendo sus cuidados.</li></ul>",
+                    "text": "t:product_faq.q7_answer",
                     "width": "100%",
                     "max_width": "none",
                     "alignment": "left",
@@ -665,7 +665,7 @@
               "type": "_accordion-row",
               "name": "t:names.accordion_row",
               "settings": {
-                "heading": "¿Qué diferencia hay entre sus tornillos y los remaches comunes?",
+                "heading": "t:product_faq.q8_heading",
                 "open_by_default": false,
                 "icon": "none",
                 "width": 20
@@ -675,7 +675,7 @@
                   "type": "text",
                   "name": "t:names.text",
                   "settings": {
-                    "text": "<p></p><ul><li>La mayoría de las correas usan remaches de presión que pueden soltarse bajo tensión mecánica; en <strong>KYN, </strong>utilizamos <strong>remaches de tornillo (Chicago Screws)</strong> que además están unidos con fuerte pegamento especializado, creando una unión sólida y permanente.</li><li>Este sistema permite una inspección de seguridad del equipo y asegura que el punto de unión sea el lugar más resistente de todo el <strong>Urban Walk System</strong>.</li></ul>",
+                    "text": "t:product_faq.q8_answer",
                     "width": "100%",
                     "max_width": "none",
                     "alignment": "left",
@@ -795,7 +795,7 @@
           "type": "text",
           "name": "t:names.text",
           "settings": {
-            "text": "<h2>Polímero de Alto Rendimiento</h2>",
+            "text": "<h2>High-Performance Polymer</h2>",
             "width": "fit-content",
             "max_width": "none",
             "alignment": "left",
@@ -821,7 +821,7 @@
           "type": "text",
           "name": "t:names.text",
           "settings": {
-            "text": "<p>No es piel, no es plástico, es ingeniería aplicada al paseo. El BioThane® es un material patentado, compuesto por un núcleo de cinta de poliéster recubierto de PVC que ofrece una resistencia a la tracción superior a los <strong>450 kg</strong>.</p><p></p><ul><li><strong>Hidrofóbico y Antimicrobiano:</strong> A diferencia del nylon, no absorbe agua ni genera olores, manteniendo su integridad estructural en condiciones urbanas extremas.</li></ul><p></p><ul><li><strong>Flexibilidad Técnica:</strong> Mantiene su suavidad y agarre incluso en temperaturas bajo cero, sin agrietarse ni perder color con el tiempo.</li></ul><p></p>",
+            "text": "<p>It is not leather, and it is not plastic—it is engineering applied to everyday walks. BioThane® is a patented material built from a polyester-webbing core coated in PVC, offering tensile strength above <strong>450 kg</strong>.</p><p></p><ul><li><strong>Hydrophobic and antimicrobial:</strong> Unlike nylon, it does not absorb water or generate odors, preserving structural integrity in demanding urban conditions.</li></ul><p></p><ul><li><strong>Technical flexibility:</strong> It retains softness and grip even in sub-zero temperatures, without cracking or losing color over time.</li></ul><p></p>",
             "width": "100%",
             "max_width": "none",
             "alignment": "left",
@@ -859,7 +859,7 @@
           "type": "text",
           "name": "t:names.heading",
           "settings": {
-            "text": "<p><strong>Metalurgia de Precisión: </strong></p>",
+            "text": "<p><strong>Precision Metallurgy:</strong></p>",
             "width": "fit-content",
             "max_width": "none",
             "alignment": "left",
@@ -885,7 +885,7 @@
           "type": "text",
           "name": "t:names.text",
           "settings": {
-            "text": "<p><strong>Latón Sólido (LL) + 18k Gold</strong></p>",
+            "text": "<p><strong>Solid Brass (LL) + 18k Gold</strong></p>",
             "width": "fit-content",
             "max_width": "none",
             "alignment": "left",
@@ -911,7 +911,7 @@
           "type": "text",
           "name": "t:names.text",
           "settings": {
-            "text": "<p>La decisión de importar herrajes desde Estados Unidos y Europa nació de una negativa: no aceptar el zamak o el zinc cromado que abunda en el mercado nacional.</p><p></p><ul><li><strong>Latón de vaciado: </strong>Los anillos O y D de tus piezas están construidas por vaciado, lo que elimina de su proceso el soldado y le da a su construcción, fuerza adicional al no tener uniones.</li></ul><p></p><ul><li><strong>Low Lead (LL)</strong>(Bajo contenido de plomo)<strong> :</strong> Utilizamos latón sólido, una aleación no ferrosa que es naturalmente resistente a la corrosión y al óxido, incluso cerca del mar.<br/>Es una aleación de latón que cumple con normativas internacionales de seguridad (como la Proposición 65 de California). Significa que el contenido de plomo es mínimo o inexistente.<br/><br/>Al ser un accesorio que está en contacto constante con las manos del humano y el cuello del perro, usar materiales <strong>Low Lead, </strong>garantiza que es un producto seguro y no tóxico.</li></ul><p></p><ul><li><strong>Acabado Galvánico:</strong> Cada pieza cuenta con un chapado de <strong>oro de 18k</strong>, proporcionando una estética editorial que no sacrifica la dureza necesaria para el uso rudo. Es un herraje eterno, diseñado para durar más que la vida del producto mismo.</li></ul><p></p>",
+            "text": "<p>Our decision to import hardware from the United States and Europe came from one principle: refusing low-grade zamak or chrome-plated zinc commonly found in the local market.</p><p></p><ul><li><strong>Cast brass:</strong> The O-rings and D-rings in your pieces are cast, which removes welded joints and increases structural strength.</li></ul><p></p><ul><li><strong>Low Lead (LL):</strong> We use solid brass, a non-ferrous alloy naturally resistant to corrosion and rust, even near the sea.<br/>It complies with international safety standards (such as California Proposition 65), meaning lead content is minimal or non-existent.<br/><br/>Because this hardware stays in constant contact with both your hands and your dog’s neck, using <strong>Low Lead</strong> materials helps ensure a safe, non-toxic product.</li></ul><p></p><ul><li><strong>Galvanic finish:</strong> Each piece includes an <strong>18k gold</strong> plating that delivers elevated aesthetics without sacrificing durability for real-world use.</li></ul><p></p>",
             "width": "100%",
             "max_width": "none",
             "alignment": "left",
@@ -949,7 +949,7 @@
           "type": "text",
           "name": "t:names.heading",
           "settings": {
-            "text": "<p><strong>Ensamblaje Mecánico:</strong></p>",
+            "text": "<p><strong>Mechanical Assembly:</strong></p>",
             "width": "fit-content",
             "max_width": "none",
             "alignment": "left",
@@ -975,7 +975,7 @@
           "type": "text",
           "name": "t:names.text",
           "settings": {
-            "text": "<p><strong>Remaches de Tornillo (Chicago Screws)</strong></p>",
+            "text": "<p><strong>Screw Rivets (Chicago Screws)</strong></p>",
             "width": "fit-content",
             "max_width": "none",
             "alignment": "left",
@@ -1001,7 +1001,7 @@
           "type": "text",
           "name": "t:names.text",
           "settings": {
-            "text": "<p>En <strong>KYN Studio</strong>, rechazamos los remaches de presión tradicionales que se debilitan con el impacto constante.</p><ul><li><strong>Seguridad Activa:</strong> Utilizamos tornillos de seguridad (Chicago Screws) que actúan como una unión mecánica real entre las capas de BioThane®.</li></ul><p></p><ul><li><strong>Mantenimiento Industrial:</strong> Este tipo de ensamble permite que el producto sea inspeccionado y, de ser necesario, ajustado, garantizando que el punto de unión sea siempre el lugar más fuerte de la correa, no el más débil.</li></ul><p></p>",
+            "text": "<p>At <strong>KYN Studio</strong>, we reject traditional press rivets that weaken under constant impact.</p><ul><li><strong>Active safety:</strong> We use security screws (Chicago Screws) that create a true mechanical bond between BioThane® layers.</li></ul><p></p><ul><li><strong>Industrial maintenance:</strong> This assembly method allows inspection and, when needed, adjustment—keeping the connection point the strongest area of the leash, not the weakest.</li></ul><p></p>",
             "width": "100%",
             "max_width": "none",
             "alignment": "left",
