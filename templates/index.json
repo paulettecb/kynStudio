@@ -177,7 +177,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<h3>Shop by collection</h3>",
+                "text": "t:custom_marketing.shop_by_collection",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -811,7 +811,7 @@
                 "text_f8b7gV": {
                   "type": "text",
                   "settings": {
-                    "text": "<h2>Modular<br/>Versatile Design</h2>",
+                    "text": "t:custom_marketing.modular_versatile_design",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "center",
@@ -961,7 +961,7 @@
                 "text_t3xhtx": {
                   "type": "text",
                   "settings": {
-                    "text": "<h2>Urban<br/>Elegant<br/>Functional</h2>",
+                    "text": "t:custom_marketing.urban_elegant_functional",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "center",
@@ -1111,7 +1111,7 @@
                 "text_cy868E": {
                   "type": "text",
                   "settings": {
-                    "text": "<h2>Durability and comfort in every piece</h2>",
+                    "text": "t:custom_marketing.durability_comfort_every_piece",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "center",
@@ -1211,7 +1211,7 @@
         "text_69C6UJ": {
           "type": "text",
           "settings": {
-            "text": "<h2>Premium products and finishing details chosen to last</h2>",
+            "text": "t:custom_marketing.premium_products_chosen_to_last",
             "width": "fit-content",
             "max_width": "none",
             "alignment": "left",
@@ -1236,7 +1236,7 @@
         "text_hzq6cM": {
           "type": "text",
           "settings": {
-            "text": "<p><a href=\"/collections/all\" title=\"All products\">Coming soon</a></p>",
+            "text": "t:custom_marketing.coming_soon_cta",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "right",

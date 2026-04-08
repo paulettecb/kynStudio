@@ -357,5 +357,22 @@
       "default_title": "Default Title",
       "sticky_add_to_cart": "Quick add to cart bar"
     }
+  },
+  "custom_marketing": {
+    "shop_by_collection": "<h3>Shop by collection</h3>",
+    "modular_versatile_design": "<h2>Modular<br/>Versatile Design</h2>",
+    "urban_elegant_functional": "<h2>Urban<br/>Elegant<br/>Functional</h2>",
+    "durability_comfort_every_piece": "<h2>Durability and comfort in every piece</h2>",
+    "premium_products_chosen_to_last": "<h2>Premium products and finishing details chosen to last</h2>",
+    "coming_soon_cta": "<p><a href=\"/collections/all\" title=\"All products\">Coming soon</a></p>",
+    "atelier_notice": "ATELIER NOTICE: Due to material sourcing and technical assembly, orders may ship within 3–5 business days.",
+    "comparative_material_analysis": "Comparative Material Analysis",
+    "features": "Features",
+    "leather": "Leather",
+    "does_not_absorb_water": "Does not absorb water",
+    "odor_resistant": "Odor resistant",
+    "easy_to_clean": "Easy to clean",
+    "uv_resistance": "UV resistance",
+    "learn_more_solid_brass": "Learn more about solid brass"
   }
 }
