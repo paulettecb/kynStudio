@@ -146,7 +146,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<p>• Biothane impermeable<br/>• Herrajes de latón sólido<br/>• Sistema modular KYN</p>",
+                "text": "<p>• Waterproof Biothane<br/>• Solid brass hardware<br/>• KYN modular system</p>",
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "left",
@@ -251,12 +251,12 @@
               "type": "product-tabs",
               "name": "Product tabs",
               "settings": {
-                "tab_1_label": "Uso previsto",
-                "tab_1_content": "<p>El Traffic Handle está diseñado para momentos donde necesitas mantener a tu perro cerca de forma inmediata.</p><p>Cruzar calles, moverte entre gente, entrar o salir del coche, o simplemente recuperar control rápido durante el paseo.</p><p>Su longitud corta permite una conexión directa con tu perro sin enrollar la correa ni reducir una correa larga.</p><p>Simple, inmediato y siempre listo.</p>",
-                "tab_2_label": "Materiales",
-                "tab_2_content": "<p><strong>Biothane® impermeable</strong><br/>Cinta técnica de poliéster recubierta con polímero sellado. No absorbe humedad, no retiene olores y se limpia en segundos.</p><p><strong>Latón sólido</strong><br/>Herrajes fabricados en latón macizo. No dependen de recubrimientos y desarrollan una pátina natural con el uso.</p><p>Diseñado para durar años en uso real.</p>",
-                "tab_3_label": "Construcción",
-                "tab_3_content": "<p>• Biothane® de alto desempeño<br/>• Herrajes de latón sólido<br/>• Chicago screws para mantenimiento sencillo<br/>• Compatible con el sistema modular KYN</p>"
+                "tab_1_label": "Intended use",
+                "tab_1_content": "<p>The Traffic Handle is designed for moments when you need to keep your dog close immediately.</p><p>Crossing streets, moving through crowds, getting in or out of the car, or simply regaining quick control during your walk.</p><p>Its short length gives you direct connection with your dog without wrapping the leash or shortening a long lead.</p><p>Simple, immediate, and always ready.</p>",
+                "tab_2_label": "Materials",
+                "tab_2_content": "<p><strong>Waterproof Biothane®</strong><br/>Technical polyester webbing coated with a sealed polymer. It does not absorb moisture, does not retain odors, and cleans in seconds.</p><p><strong>Solid brass</strong><br/>Hardware made from solid brass. It does not rely on surface coatings and develops a natural patina over time.</p><p>Built to last for years in real use.</p>",
+                "tab_3_label": "Construction",
+                "tab_3_content": "<p>• High-performance Biothane®<br/>• Solid brass hardware<br/>• Chicago screws for easy maintenance<br/>• Compatible with the KYN modular system</p>"
               },
               "blocks": {}
             },

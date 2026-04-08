@@ -177,7 +177,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<h3>Compra por colección</h3>",
+                "text": "<h3>Shop by collection</h3>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -811,7 +811,7 @@
                 "text_f8b7gV": {
                   "type": "text",
                   "settings": {
-                    "text": "<h2>Diseño Modular<br/>Versátil</h2>",
+                    "text": "<h2>Modular<br/>Versatile Design</h2>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "center",
@@ -961,7 +961,7 @@
                 "text_t3xhtx": {
                   "type": "text",
                   "settings": {
-                    "text": "<h2>Urbano<br/>Elegante<br/>Funcional</h2>",
+                    "text": "<h2>Urban<br/>Elegant<br/>Functional</h2>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "center",
@@ -1111,7 +1111,7 @@
                 "text_cy868E": {
                   "type": "text",
                   "settings": {
-                    "text": "<h2>Durabilidad y comodidad en cada elemento</h2>",
+                    "text": "<h2>Durability and comfort in every piece</h2>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "center",
@@ -1211,7 +1211,7 @@
         "text_69C6UJ": {
           "type": "text",
           "settings": {
-            "text": "<h2>Productos premium y toques finales elegidos para durar</h2>",
+            "text": "<h2>Premium products and finishing details chosen to last</h2>",
             "width": "fit-content",
             "max_width": "none",
             "alignment": "left",
@@ -1236,7 +1236,7 @@
         "text_hzq6cM": {
           "type": "text",
           "settings": {
-            "text": "<p><a href=\"/collections/all\" title=\"All products\">Próximamente</a></p>",
+            "text": "<p><a href=\"/collections/all\" title=\"All products\">Coming soon</a></p>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "right",
