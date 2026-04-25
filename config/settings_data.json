@@ -60,6 +60,7 @@
     "popover_border": "none",
     "currency_code_enabled_product_pages": false,
     "currency_code_enabled_product_cards": false,
+    "product_card_carousel": false,
     "product_corner_radius": 11,
     "card_corner_radius": 7,
     "card_title_case": "uppercase",
