@@ -10,6 +10,7 @@
 {% liquid
   assign primary_finish_visual_entries = product_resource.metafields.shopify['color-pattern'].value
   assign secondary_finish_visual_entries = product_resource.metafields.custom.secomdary_finish.value
+  assign selected_variant = product_resource.selected_variant
 %}
 
 {% unless product_resource.has_only_default_variant %}
@@ -114,10 +115,20 @@
             <legend>
               {{ product_option.name | escape -}}
               {%- if variant_style == 'swatch' -%}
-                <span class="variant-option__swatch-value">{{ product_option.selected_value }}</span>
+                <span class="variant-option__swatch-value">
+                  {%- if selected_variant -%}
+                    {{- selected_variant.options[fieldset_index] -}}
+                  {%- endif -%}
+                </span>
               {%- endif %}
             </legend>
             {%- for product_option_value in product_option.values -%}
+              {%- liquid
+                assign is_value_selected = false
+                if selected_variant and selected_variant.options[fieldset_index] == product_option_value
+                  assign is_value_selected = true
+                endif
+              -%}
               {% if product_option_value.size > longest_value and option_id_attribute %}
                 {% assign longest_value = product_option_value.size %}
               {% endif %}
@@ -142,7 +153,7 @@
                   {% if product_option_value.variant.id %}
                     data-variant-id="{{ product_option_value.variant.id }}"
                   {% endif %}
-                  {% if product_option_value.selected %}
+                  {% if is_value_selected %}
                     data-current-checked="true"
                     checked
                   {% else %}
@@ -236,14 +247,28 @@
                 name="options[{{ product_option.name | escape }}]"
                 class="variant-option__select"
               >
+                <option
+                  value=""
+                  {% unless selected_variant %}
+                    selected="selected"
+                  {% endunless %}
+                >
+                  {{ 'actions.select' | t }} {{ product_option.name | escape }}
+                </option>
                 {%- for product_option_value in product_option.values -%}
+                  {%- liquid
+                    assign is_value_selected = false
+                    if selected_variant and selected_variant.options[forloop.parentloop.index0] == product_option_value
+                      assign is_value_selected = true
+                    endif
+                  -%}
                   <option
                     value="{{ product_option_value | escape }}"
                     data-input-id="{{ product_option.position }}-{{ forloop.index0 }}"
                     data-option-value-id="{{ product_option_value.id }}"
                     data-variant-id="{{ product_option_value.variant.id }}"
                     data-connected-product-url="{{ product_option_value.product_url }}"
-                    {% if product_option_value.selected %}
+                    {% if is_value_selected %}
                       selected="selected"
                     {% endif %}
                   >
@@ -269,7 +294,7 @@
       {%- endfor -%}
 
       <script type="application/json">
-        {{ product_resource.selected_or_first_available_variant | json }}
+        {{ selected_variant | json }}
       </script>
     </form>
   </variant-picker>
