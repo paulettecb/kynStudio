@@ -36,10 +36,11 @@ export default class VariantPicker extends Component {
     fieldsets.forEach((fieldset) => {
       const radios = Array.from(fieldset?.querySelectorAll('input') ?? []);
       this.#radios.push(radios);
+      this.#checkedIndices.push([]);
 
       const initialCheckedIndex = radios.findIndex((radio) => radio.dataset.currentChecked === 'true');
       if (initialCheckedIndex !== -1) {
-        this.#checkedIndices.push([initialCheckedIndex]);
+        this.#checkedIndices[this.#checkedIndices.length - 1] = [initialCheckedIndex];
       }
     });
 
