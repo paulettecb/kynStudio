@@ -75,35 +75,88 @@
         "padding-block-end": 0
       }
     },
-    "collection_links_Ut4aMz": {
-      "type": "collection-links",
+    "featured_product_tXhkXJ": {
+      "type": "featured-product",
       "blocks": {
-        "link": {
-          "type": "_collection-link",
+        "media": {
+          "type": "_media-without-appearance",
+          "name": "t:names.product_media",
           "static": true,
           "settings": {
-            "show_count": true
+            "media_type": "image",
+            "image": "shopify://shop_images/1DD0A7F1-9630-4E21-9840-0D257349F6EB.png",
+            "link": "",
+            "video_loop": true,
+            "video_autoplay": false,
+            "image_position": "cover",
+            "video_position": "cover"
           },
+          "blocks": {}
+        },
+        "featured-product": {
+          "type": "_featured-product",
+          "name": "t:names.product",
+          "static": true,
+          "settings": {},
           "blocks": {
-            "title": {
-              "type": "_inline-collection-title",
+            "featured-product-title": {
+              "type": "product-title",
+              "name": "t:names.title",
               "static": true,
               "settings": {
-                "font": "var(--font-heading--family)",
-                "weight": "",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "h5",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
                 "line_height": "normal",
                 "letter_spacing": "normal",
-                "case": "none"
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
               },
               "blocks": {}
             },
-            "image": {
-              "type": "_image",
+            "featured-product-price": {
+              "type": "_featured-product-price",
+              "name": "t:names.price",
               "static": true,
               "settings": {
-                "height": "medium",
-                "ratio": "portrait",
-                "border_radius": 19
+                "show_sale_price_first": true,
+                "type_preset": ""
+              },
+              "blocks": {}
+            },
+            "featured-product-gallery": {
+              "type": "_featured-product-gallery",
+              "name": "t:names.image",
+              "static": true,
+              "settings": {
+                "image_ratio": "adapt",
+                "constrain_to_viewport": "contain"
+              },
+              "blocks": {}
+            },
+            "featured-product-swatches": {
+              "type": "swatches",
+              "name": "t:names.swatches",
+              "static": true,
+              "settings": {
+                "product_swatches_alignment": "flex-start",
+                "product_swatches_alignment_mobile": "flex-start",
+                "hide_padding": true,
+                "product_swatches_padding_top": 4,
+                "product_swatches_padding_bottom": 0,
+                "product_swatches_padding_left": 0,
+                "product_swatches_padding_right": 0
               },
               "blocks": {}
             }
@@ -111,22 +164,13 @@
           "block_order": []
         }
       },
-      "name": "Collection links",
+      "name": "t:names.featured_product",
       "settings": {
-        "collection_list": [
-          "the-kyn-modular-system",
-          "handles",
-          "leashes",
-          "accessories",
-          "bundles"
-        ],
-        "layout": "spotlight",
-        "section_width": "page-width",
-        "alignment": "right",
-        "image_position": "right",
-        "color_scheme": "",
-        "padding-block-start": 82,
-        "padding-block-end": 82
+        "product": "the-urban-crossbody",
+        "layout": "media-left",
+        "color_scheme": "scheme-3",
+        "padding-block-start": 0,
+        "padding-block-end": 0
       }
     },
     "section_6E988p": {
@@ -959,7 +1003,7 @@
   },
   "order": [
     "hero_iyt6zg",
-    "collection_links_Ut4aMz",
+    "featured_product_tXhkXJ",
     "section_6E988p",
     "hero_MVUtj6",
     "section_F9fMc4",
