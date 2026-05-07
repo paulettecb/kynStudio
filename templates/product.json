@@ -506,7 +506,7 @@
               "type": "_accordion-row",
               "name": "t:names.accordion_row",
               "settings": {
-                "heading": "¿Porqué le llaman sistema?",
+                "heading": "¿Por qué le llaman sistema?",
                 "open_by_default": false,
                 "icon": "none",
                 "width": 20
@@ -515,7 +515,7 @@
                 "text_i9mhgY": {
                   "type": "text",
                   "settings": {
-                    "text": "<p>Porque el concepto de KYN es que puedas iniciar con una <strong>Urban Leash</strong>, y mas adelante conectarla a un <strong>Urban Crossbody</strong>, además que su diseño modular de piezas como <strong>THE URBAN LINK</strong> permite añadir extensiones antienredos o conectar múltiples perros a un solo <strong>Urban Crossbody</strong> sin complicaciones.</p>",
+                    "text": "<p>Porque el concepto de KYN es que puedas iniciar con una <strong>Urban Leash</strong>, y más adelante conectarla a un <strong>Urban Crossbody</strong>, además que su diseño modular de piezas como <strong>THE URBAN LINK</strong> permite añadir extensiones antienredos o conectar múltiples perros a un solo <strong>Urban Crossbody</strong> sin complicaciones.</p>",
                     "width": "100%",
                     "max_width": "none",
                     "alignment": "left",
