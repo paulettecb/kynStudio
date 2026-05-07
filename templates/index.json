@@ -107,7 +107,7 @@
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<h2>The Urban Crossbody</h2>",
+                "text": "<h2>Bandolera Urbana</h2>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -157,7 +157,7 @@
             "button_6DUcGU": {
               "type": "button",
               "settings": {
-                "label": "The Urban Crossbody",
+                "label": "Bandolera Urbana",
                 "link": "shopify://products/the-urban-crossbody",
                 "open_in_new_tab": false,
                 "style_class": "button",
@@ -204,7 +204,7 @@
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<h2>The Urban Leash</h2>",
+                "text": "<h2>Correa Urbana</h2>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -254,7 +254,7 @@
             "button_dMCG7y": {
               "type": "button",
               "settings": {
-                "label": "Comprar The Urban Leash",
+                "label": "Comprar Correa Urbana",
                 "link": "shopify://products/the-urban-leash",
                 "open_in_new_tab": false,
                 "style_class": "button",
@@ -506,7 +506,7 @@
                 "text_69WTWw": {
                   "type": "text",
                   "settings": {
-                    "text": "<p>Everything we do starts with why</p>",
+                    "text": "<p>Todo lo que hacemos empieza con un propósito</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "center",
@@ -656,7 +656,7 @@
                 "text_JmPKYb": {
                   "type": "text",
                   "settings": {
-                    "text": "<p>We believe in building better</p>",
+                    "text": "<p>Creemos en construir mejor</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "center",
@@ -806,7 +806,7 @@
                 "text_xzWeNa": {
                   "type": "text",
                   "settings": {
-                    "text": "<p>Real people making great products</p>",
+                    "text": "<p>Personas reales creando productos excelentes</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "center",
