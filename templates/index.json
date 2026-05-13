@@ -107,7 +107,7 @@
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<h2>Bandolera Urbana</h2>",
+                "text": "<h2>The Urban Crossbody</h2>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -157,7 +157,7 @@
             "button_6DUcGU": {
               "type": "button",
               "settings": {
-                "label": "Bandolera Urbana",
+                "label": "The Urban Crossbody",
                 "link": "shopify://products/the-urban-crossbody",
                 "open_in_new_tab": false,
                 "style_class": "button",
@@ -204,7 +204,7 @@
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<h2>Correa Urbana</h2>",
+                "text": "<h2>The Urban Leash</h2>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -254,7 +254,7 @@
             "button_dMCG7y": {
               "type": "button",
               "settings": {
-                "label": "Comprar Correa Urbana",
+                "label": "The Urban Leash",
                 "link": "shopify://products/the-urban-leash",
                 "open_in_new_tab": false,
                 "style_class": "button",
