@@ -10,21 +10,34 @@ function shouldAnimateHeadline(headline) {
   return TARGET_HEADLINES.some((target) => normalizedText.includes(target));
 }
 
-function typeHeadline(headline) {
-  if (headline.dataset.typingAnimationInitialized === 'true') return;
+function getOriginalMarkup(headline) {
+  if (!headline.dataset.typingOriginalMarkup) {
+    headline.dataset.typingOriginalMarkup = headline.innerHTML;
+  }
 
+  return headline.dataset.typingOriginalMarkup;
+}
+
+function typeHeadline(headline) {
+  const originalMarkup = getOriginalMarkup(headline);
   const originalText = headline.innerText;
+
   if (!originalText.trim()) return;
 
-  headline.dataset.typingAnimationInitialized = 'true';
+  if (headline._typingTimeoutId) {
+    clearTimeout(headline._typingTimeoutId);
+  }
+
+  headline.innerHTML = originalMarkup;
+  const typingText = headline.innerText;
   headline.innerHTML = '';
 
   let characterIndex = 0;
 
   const revealNextCharacter = () => {
-    if (characterIndex >= originalText.length) return;
+    if (characterIndex >= typingText.length) return;
 
-    const nextCharacter = originalText[characterIndex];
+    const nextCharacter = typingText[characterIndex];
     if (nextCharacter === '\n') {
       headline.append(document.createElement('br'));
     } else {
@@ -32,19 +45,40 @@ function typeHeadline(headline) {
     }
 
     characterIndex += 1;
-    setTimeout(revealNextCharacter, TYPING_DELAY_MS);
+    headline._typingTimeoutId = setTimeout(revealNextCharacter, TYPING_DELAY_MS);
   };
 
   revealNextCharacter();
 }
 
 function initializeTypingAnimation() {
-  const headlines = document.querySelectorAll('.text-block h2');
+  const headlines = [...document.querySelectorAll('.text-block h2')].filter(shouldAnimateHeadline);
+
+  if (!headlines.length) return;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const headline = entry.target;
+
+        if (entry.isIntersecting) {
+          if (headline.dataset.typingInView !== 'true') {
+            headline.dataset.typingInView = 'true';
+            typeHeadline(headline);
+          }
+        } else {
+          headline.dataset.typingInView = 'false';
+        }
+      });
+    },
+    {
+      threshold: 0.45,
+    },
+  );
 
   headlines.forEach((headline) => {
-    if (shouldAnimateHeadline(headline)) {
-      typeHeadline(headline);
-    }
+    getOriginalMarkup(headline);
+    observer.observe(headline);
   });
 }
 
