@@ -199,22 +199,59 @@
   }
 {% endstyle %}
 
+{% liquid
+  assign heading_text = block.settings.heading | strip
+  if heading_text | slice: 0, 2 | upcase == 'T:'
+    assign heading_text = heading_text | remove_first: 't:' | remove_first: 'T:' | downcase | t
+  endif
+
+  assign column_1_label = block.settings.column_1_label | strip
+  if column_1_label | slice: 0, 2 | upcase == 'T:'
+    assign column_1_label = column_1_label | remove_first: 't:' | remove_first: 'T:' | downcase | t
+  endif
+
+  assign column_4_label = block.settings.column_4_label | strip
+  if column_4_label | slice: 0, 2 | upcase == 'T:'
+    assign column_4_label = column_4_label | remove_first: 't:' | remove_first: 'T:' | downcase | t
+  endif
+
+  assign row_1_label = block.settings.row_1_label | strip
+  if row_1_label | slice: 0, 2 | upcase == 'T:'
+    assign row_1_label = row_1_label | remove_first: 't:' | remove_first: 'T:' | downcase | t
+  endif
+
+  assign row_2_label = block.settings.row_2_label | strip
+  if row_2_label | slice: 0, 2 | upcase == 'T:'
+    assign row_2_label = row_2_label | remove_first: 't:' | remove_first: 'T:' | downcase | t
+  endif
+
+  assign row_3_label = block.settings.row_3_label | strip
+  if row_3_label | slice: 0, 2 | upcase == 'T:'
+    assign row_3_label = row_3_label | remove_first: 't:' | remove_first: 'T:' | downcase | t
+  endif
+
+  assign row_4_label = block.settings.row_4_label | strip
+  if row_4_label | slice: 0, 2 | upcase == 'T:'
+    assign row_4_label = row_4_label | remove_first: 't:' | remove_first: 'T:' | downcase | t
+  endif
+{% endliquid %}
+
 <material-comparison-{{ ai_gen_id }} class="ai-material-comparison-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
-  <h2 class="ai-material-comparison__heading-{{ ai_gen_id }}">{{ block.settings.heading }}</h2>
+  <h2 class="ai-material-comparison__heading-{{ ai_gen_id }}">{{ heading_text }}</h2>
 
   <div class="ai-material-comparison__table-wrapper-{{ ai_gen_id }}">
     <table class="ai-material-comparison__table-{{ ai_gen_id }}">
       <thead>
         <tr>
-          <th>{{ block.settings.column_1_label }}</th>
+          <th>{{ column_1_label }}</th>
           <th class="ai-material-comparison__highlight-{{ ai_gen_id }}">{{ block.settings.column_2_label }}</th>
           <th>{{ block.settings.column_3_label }}</th>
-          <th>{{ block.settings.column_4_label }}</th>
+          <th>{{ column_4_label }}</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>{{ block.settings.row_1_label }}</td>
+          <td>{{ row_1_label }}</td>
           <td class="ai-material-comparison__highlight-{{ ai_gen_id }}">
             <span class="ai-material-comparison__check-{{ ai_gen_id }}">✓</span>
           </td>
@@ -226,7 +263,7 @@
           </td>
         </tr>
         <tr>
-          <td>{{ block.settings.row_2_label }}</td>
+          <td>{{ row_2_label }}</td>
           <td class="ai-material-comparison__highlight-{{ ai_gen_id }}">
             <span class="ai-material-comparison__check-{{ ai_gen_id }}">✓</span>
           </td>
@@ -238,7 +275,7 @@
           </td>
         </tr>
         <tr>
-          <td>{{ block.settings.row_3_label }}</td>
+          <td>{{ row_3_label }}</td>
           <td class="ai-material-comparison__highlight-{{ ai_gen_id }}">
             <span class="ai-material-comparison__check-{{ ai_gen_id }}">✓</span>
           </td>
@@ -250,7 +287,7 @@
           </td>
         </tr>
         <tr>
-          <td>{{ block.settings.row_4_label }}</td>
+          <td>{{ row_4_label }}</td>
           <td class="ai-material-comparison__highlight-{{ ai_gen_id }}">
             <span class="ai-material-comparison__check-{{ ai_gen_id }}">✓</span>
           </td>
@@ -272,19 +309,19 @@
       </div>
       <div class="ai-material-comparison__card-body-{{ ai_gen_id }}">
         <div class="ai-material-comparison__card-row-{{ ai_gen_id }}">
-          <span class="ai-material-comparison__card-label-{{ ai_gen_id }}">{{ block.settings.row_1_label }}</span>
+          <span class="ai-material-comparison__card-label-{{ ai_gen_id }}">{{ row_1_label }}</span>
           <span class="ai-material-comparison__card-value-{{ ai_gen_id }} ai-material-comparison__check-{{ ai_gen_id }}">✓</span>
         </div>
         <div class="ai-material-comparison__card-row-{{ ai_gen_id }}">
-          <span class="ai-material-comparison__card-label-{{ ai_gen_id }}">{{ block.settings.row_2_label }}</span>
+          <span class="ai-material-comparison__card-label-{{ ai_gen_id }}">{{ row_2_label }}</span>
           <span class="ai-material-comparison__card-value-{{ ai_gen_id }} ai-material-comparison__check-{{ ai_gen_id }}">✓</span>
         </div>
         <div class="ai-material-comparison__card-row-{{ ai_gen_id }}">
-          <span class="ai-material-comparison__card-label-{{ ai_gen_id }}">{{ block.settings.row_3_label }}</span>
+          <span class="ai-material-comparison__card-label-{{ ai_gen_id }}">{{ row_3_label }}</span>
           <span class="ai-material-comparison__card-value-{{ ai_gen_id }} ai-material-comparison__check-{{ ai_gen_id }}">✓</span>
         </div>
         <div class="ai-material-comparison__card-row-{{ ai_gen_id }}">
-          <span class="ai-material-comparison__card-label-{{ ai_gen_id }}">{{ block.settings.row_4_label }}</span>
+          <span class="ai-material-comparison__card-label-{{ ai_gen_id }}">{{ row_4_label }}</span>
           <span class="ai-material-comparison__card-value-{{ ai_gen_id }} ai-material-comparison__check-{{ ai_gen_id }}">✓</span>
         </div>
       </div>
@@ -296,19 +333,19 @@
       </div>
       <div class="ai-material-comparison__card-body-{{ ai_gen_id }}">
         <div class="ai-material-comparison__card-row-{{ ai_gen_id }}">
-          <span class="ai-material-comparison__card-label-{{ ai_gen_id }}">{{ block.settings.row_1_label }}</span>
+          <span class="ai-material-comparison__card-label-{{ ai_gen_id }}">{{ row_1_label }}</span>
           <span class="ai-material-comparison__card-value-{{ ai_gen_id }} ai-material-comparison__cross-{{ ai_gen_id }}">✕</span>
         </div>
         <div class="ai-material-comparison__card-row-{{ ai_gen_id }}">
-          <span class="ai-material-comparison__card-label-{{ ai_gen_id }}">{{ block.settings.row_2_label }}</span>
+          <span class="ai-material-comparison__card-label-{{ ai_gen_id }}">{{ row_2_label }}</span>
           <span class="ai-material-comparison__card-value-{{ ai_gen_id }} ai-material-comparison__cross-{{ ai_gen_id }}">✕</span>
         </div>
         <div class="ai-material-comparison__card-row-{{ ai_gen_id }}">
-          <span class="ai-material-comparison__card-label-{{ ai_gen_id }}">{{ block.settings.row_3_label }}</span>
+          <span class="ai-material-comparison__card-label-{{ ai_gen_id }}">{{ row_3_label }}</span>
           <span class="ai-material-comparison__card-value-{{ ai_gen_id }} ai-material-comparison__cross-{{ ai_gen_id }}">✕</span>
         </div>
         <div class="ai-material-comparison__card-row-{{ ai_gen_id }}">
-          <span class="ai-material-comparison__card-label-{{ ai_gen_id }}">{{ block.settings.row_4_label }}</span>
+          <span class="ai-material-comparison__card-label-{{ ai_gen_id }}">{{ row_4_label }}</span>
           <span class="ai-material-comparison__card-value-{{ ai_gen_id }} ai-material-comparison__check-{{ ai_gen_id }}">✓</span>
         </div>
       </div>
@@ -316,23 +353,23 @@
 
     <div class="ai-material-comparison__card-{{ ai_gen_id }}">
       <div class="ai-material-comparison__card-header-{{ ai_gen_id }}">
-        {{ block.settings.column_4_label }}
+        {{ column_4_label }}
       </div>
       <div class="ai-material-comparison__card-body-{{ ai_gen_id }}">
         <div class="ai-material-comparison__card-row-{{ ai_gen_id }}">
-          <span class="ai-material-comparison__card-label-{{ ai_gen_id }}">{{ block.settings.row_1_label }}</span>
+          <span class="ai-material-comparison__card-label-{{ ai_gen_id }}">{{ row_1_label }}</span>
           <span class="ai-material-comparison__card-value-{{ ai_gen_id }} ai-material-comparison__cross-{{ ai_gen_id }}">✕</span>
         </div>
         <div class="ai-material-comparison__card-row-{{ ai_gen_id }}">
-          <span class="ai-material-comparison__card-label-{{ ai_gen_id }}">{{ block.settings.row_2_label }}</span>
+          <span class="ai-material-comparison__card-label-{{ ai_gen_id }}">{{ row_2_label }}</span>
           <span class="ai-material-comparison__card-value-{{ ai_gen_id }} ai-material-comparison__cross-{{ ai_gen_id }}">✕</span>
         </div>
         <div class="ai-material-comparison__card-row-{{ ai_gen_id }}">
-          <span class="ai-material-comparison__card-label-{{ ai_gen_id }}">{{ block.settings.row_3_label }}</span>
+          <span class="ai-material-comparison__card-label-{{ ai_gen_id }}">{{ row_3_label }}</span>
           <span class="ai-material-comparison__card-value-{{ ai_gen_id }} ai-material-comparison__cross-{{ ai_gen_id }}">✕</span>
         </div>
         <div class="ai-material-comparison__card-row-{{ ai_gen_id }}">
-          <span class="ai-material-comparison__card-label-{{ ai_gen_id }}">{{ block.settings.row_4_label }}</span>
+          <span class="ai-material-comparison__card-label-{{ ai_gen_id }}">{{ row_4_label }}</span>
           <span class="ai-material-comparison__card-value-{{ ai_gen_id }} ai-material-comparison__check-{{ ai_gen_id }}">✓</span>
         </div>
       </div>
