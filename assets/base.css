@@ -14,6 +14,7 @@ body {
 
 
 :root {
+  --font-base: clamp(1rem, 1.2vw, 1.125rem);
   --hover-lift-amount: 4px;
   --hover-scale-amount: 1.03;
   --hover-subtle-zoom-amount: 1.015;
@@ -809,7 +810,7 @@ h1,
   font-family: var(--font-h1--family);
   font-style: var(--font-h1--style);
   font-weight: var(--font-h1--weight);
-  font-size: var(--font-h1--size);
+  font-size: clamp(2.5rem, 4vw, 3rem);
   line-height: var(--font-h1--line-height);
   letter-spacing: var(--font-h1--letter-spacing);
   text-transform: var(--font-h1--case);
@@ -831,7 +832,7 @@ h2,
   font-family: var(--font-h2--family);
   font-style: var(--font-h2--style);
   font-weight: var(--font-h2--weight);
-  font-size: var(--font-h2--size);
+  font-size: clamp(2.1rem, 3.3vw, 2.6rem);
   line-height: var(--font-h2--line-height);
   letter-spacing: var(--font-h2--letter-spacing);
   text-transform: var(--font-h2--case);
@@ -854,7 +855,7 @@ h3,
   font-family: var(--font-h3--family);
   font-style: var(--font-h3--style);
   font-weight: var(--font-h3--weight);
-  font-size: var(--font-h3--size);
+  font-size: clamp(1.8rem, 2.8vw, 2.2rem);
   line-height: var(--font-h3--line-height);
   letter-spacing: var(--font-h3--letter-spacing);
   text-transform: var(--font-h3--case);
@@ -4980,7 +4981,7 @@ product-recommendations:has([data-has-recommendations='false']) {
 
 .infographic-with-text__subtitle {
   margin: 0 0 0.75rem;
-  font-size: 0.75rem;
+  font-size: calc(var(--font-base) * 0.75);
   letter-spacing: 0.14em;
   text-transform: uppercase;
   opacity: 0.75;
@@ -4996,7 +4997,7 @@ product-recommendations:has([data-has-recommendations='false']) {
 .infographic-with-text__rte {
   margin-top: clamp(16px, 2.2vw, 28px);
   max-width: 70ch;
-  font-size: clamp(1rem, 1.2vw, 1.125rem);
+  font-size: var(--font-base);
   line-height: 1.7;
 }
 
@@ -5013,4 +5014,15 @@ product-recommendations:has([data-has-recommendations='false']) {
 
 .infographic-with-text__image--placeholder {
   background: color-mix(in srgb, var(--infographic-background-color), #000 6%);
+}
+
+/* Accessible fallback styling for site navigation links */
+.site-nav {
+  color: #1a1a1a;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 0.5rem 0.75rem;
+}
+
+.site-nav a {
+  color: #1a1a1a;
 }

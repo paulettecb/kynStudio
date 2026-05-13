@@ -259,6 +259,13 @@
     justify-content: var(--grid-area-alignment);
   }
 
+  .menu-list__link:focus-visible,
+  .mega-menu__link:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
   .menu-list__list-item {
     flex-shrink: 0;
     white-space: nowrap;
