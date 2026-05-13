@@ -43,6 +43,42 @@
     "
   >
     {% content_for 'blocks' %}
+  <div class="footer-custom-links" aria-label="Footer quick links">
+    <div class="footer-custom-links__column">
+      <h3>Shop</h3>
+      <ul>
+        <li><a href="/collections/new-arrivals">New Arrivals</a></li>
+        <li><a href="/collections/best-sellers">Best Sellers</a></li>
+        <li><a href="/collections/sale">Sale</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-custom-links__column">
+      <h3>About Us</h3>
+      <ul>
+        <li><a href="/pages/our-story">Our Story</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-custom-links__column">
+      <h3>Connect</h3>
+      <div class="footer-custom-links__social">
+        <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <span aria-hidden="true">📸</span> Instagram
+        </a>
+        <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+          <span aria-hidden="true">📘</span> Facebook
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-custom-links__column">
+      <h3>Search</h3>
+      <form action="/search" method="get">
+        <input name="q" type="text" placeholder="Buscar" />
+      </form>
+    </div>
+  </div>
   </div>
 </div>
 
@@ -83,6 +119,37 @@
     .footer-content--isolated-grid-item-desktop > :last-child {
       grid-column: 1 / -1;
     }
+  }
+
+
+  .footer-custom-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+  }
+
+  .footer-custom-links__column h3 {
+    margin: 0 0 0.5rem;
+  }
+
+  .footer-custom-links__column ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .footer-custom-links__column li + li {
+    margin-top: 0.35rem;
+  }
+
+  .footer-custom-links__social {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .footer-custom-links form input {
+    width: 100%;
   }
 {% endstylesheet %}
 
