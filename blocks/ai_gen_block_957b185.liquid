@@ -152,37 +152,37 @@
 {% endstyle %}
 
 {% liquid
-  assign heading_text = block.settings.heading
+  assign heading_text = block.settings.heading | strip
   if heading_text | slice: 0, 2 | upcase == 'T:'
     assign heading_text = heading_text | remove_first: 't:' | remove_first: 'T:' | downcase | t
   endif
 
-  assign header_feature = block.settings.header_feature
+  assign header_feature = block.settings.header_feature | strip
   if header_feature | slice: 0, 2 | upcase == 'T:'
     assign header_feature = header_feature | remove_first: 't:' | remove_first: 'T:' | downcase | t
   endif
 
-  assign header_column_3 = block.settings.header_column_3
+  assign header_column_3 = block.settings.header_column_3 | strip
   if header_column_3 | slice: 0, 2 | upcase == 'T:'
     assign header_column_3 = header_column_3 | remove_first: 't:' | remove_first: 'T:' | downcase | t
   endif
 
-  assign row_1_feature = block.settings.row_1_feature
+  assign row_1_feature = block.settings.row_1_feature | strip
   if row_1_feature | slice: 0, 2 | upcase == 'T:'
     assign row_1_feature = row_1_feature | remove_first: 't:' | remove_first: 'T:' | downcase | t
   endif
 
-  assign row_2_feature = block.settings.row_2_feature
+  assign row_2_feature = block.settings.row_2_feature | strip
   if row_2_feature | slice: 0, 2 | upcase == 'T:'
     assign row_2_feature = row_2_feature | remove_first: 't:' | remove_first: 'T:' | downcase | t
   endif
 
-  assign row_3_feature = block.settings.row_3_feature
+  assign row_3_feature = block.settings.row_3_feature | strip
   if row_3_feature | slice: 0, 2 | upcase == 'T:'
     assign row_3_feature = row_3_feature | remove_first: 't:' | remove_first: 'T:' | downcase | t
   endif
 
-  assign row_4_feature = block.settings.row_4_feature
+  assign row_4_feature = block.settings.row_4_feature | strip
   if row_4_feature | slice: 0, 2 | upcase == 'T:'
     assign row_4_feature = row_4_feature | remove_first: 't:' | remove_first: 'T:' | downcase | t
   endif

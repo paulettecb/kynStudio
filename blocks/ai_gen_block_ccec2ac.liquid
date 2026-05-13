@@ -200,37 +200,37 @@
 {% endstyle %}
 
 {% liquid
-  assign heading_text = block.settings.heading
+  assign heading_text = block.settings.heading | strip
   if heading_text | slice: 0, 2 | upcase == 'T:'
     assign heading_text = heading_text | remove_first: 't:' | remove_first: 'T:' | downcase | t
   endif
 
-  assign column_1_label = block.settings.column_1_label
+  assign column_1_label = block.settings.column_1_label | strip
   if column_1_label | slice: 0, 2 | upcase == 'T:'
     assign column_1_label = column_1_label | remove_first: 't:' | remove_first: 'T:' | downcase | t
   endif
 
-  assign column_4_label = block.settings.column_4_label
+  assign column_4_label = block.settings.column_4_label | strip
   if column_4_label | slice: 0, 2 | upcase == 'T:'
     assign column_4_label = column_4_label | remove_first: 't:' | remove_first: 'T:' | downcase | t
   endif
 
-  assign row_1_label = block.settings.row_1_label
+  assign row_1_label = block.settings.row_1_label | strip
   if row_1_label | slice: 0, 2 | upcase == 'T:'
     assign row_1_label = row_1_label | remove_first: 't:' | remove_first: 'T:' | downcase | t
   endif
 
-  assign row_2_label = block.settings.row_2_label
+  assign row_2_label = block.settings.row_2_label | strip
   if row_2_label | slice: 0, 2 | upcase == 'T:'
     assign row_2_label = row_2_label | remove_first: 't:' | remove_first: 'T:' | downcase | t
   endif
 
-  assign row_3_label = block.settings.row_3_label
+  assign row_3_label = block.settings.row_3_label | strip
   if row_3_label | slice: 0, 2 | upcase == 'T:'
     assign row_3_label = row_3_label | remove_first: 't:' | remove_first: 'T:' | downcase | t
   endif
 
-  assign row_4_label = block.settings.row_4_label
+  assign row_4_label = block.settings.row_4_label | strip
   if row_4_label | slice: 0, 2 | upcase == 'T:'
     assign row_4_label = row_4_label | remove_first: 't:' | remove_first: 'T:' | downcase | t
   endif
