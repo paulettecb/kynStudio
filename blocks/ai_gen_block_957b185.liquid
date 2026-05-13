@@ -151,16 +151,53 @@
   }
 {% endstyle %}
 
+{% liquid
+  assign heading_text = block.settings.heading
+  if heading_text contains 't:'
+    assign heading_text = heading_text | remove_first: 't:' | t
+  endif
+
+  assign header_feature = block.settings.header_feature
+  if header_feature contains 't:'
+    assign header_feature = header_feature | remove_first: 't:' | t
+  endif
+
+  assign header_column_3 = block.settings.header_column_3
+  if header_column_3 contains 't:'
+    assign header_column_3 = header_column_3 | remove_first: 't:' | t
+  endif
+
+  assign row_1_feature = block.settings.row_1_feature
+  if row_1_feature contains 't:'
+    assign row_1_feature = row_1_feature | remove_first: 't:' | t
+  endif
+
+  assign row_2_feature = block.settings.row_2_feature
+  if row_2_feature contains 't:'
+    assign row_2_feature = row_2_feature | remove_first: 't:' | t
+  endif
+
+  assign row_3_feature = block.settings.row_3_feature
+  if row_3_feature contains 't:'
+    assign row_3_feature = row_3_feature | remove_first: 't:' | t
+  endif
+
+  assign row_4_feature = block.settings.row_4_feature
+  if row_4_feature contains 't:'
+    assign row_4_feature = row_4_feature | remove_first: 't:' | t
+  endif
+{% endliquid %}
+
 <div class="ai-comparison-table-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
   {% if block.settings.heading != blank %}
-    <h4 class="ai-comparison-table__heading-{{ ai_gen_id }}">{{ block.settings.heading }}</h4>
+    <h4 class="ai-comparison-table__heading-{{ ai_gen_id }}">{{ heading_text }}</h4>
   {% endif %}
 
   <div class="ai-comparison-table__wrapper-{{ ai_gen_id }}">
     <table class="ai-comparison-table__table-{{ ai_gen_id }}">
       <thead>
         <tr>
-          <th>{{ block.settings.header_feature }}</th>
+          <th>{{ header_feature }}</th>
           {% if block.settings.header_column_1 != blank %}
             <th>{{ block.settings.header_column_1 }}</th>
           {% endif %}
@@ -168,7 +205,7 @@
             <th>{{ block.settings.header_column_2 }}</th>
           {% endif %}
           {% if block.settings.header_column_3 != blank %}
-            <th>{{ block.settings.header_column_3 }}</th>
+            <th>{{ header_column_3 }}</th>
           {% endif %}
           {% if block.settings.header_column_4 != blank %}
             <th>{{ block.settings.header_column_4 }}</th>
@@ -184,7 +221,7 @@
       <tbody>
         {% if block.settings.row_1_feature != blank %}
           <tr>
-            <td>{{ block.settings.row_1_feature }}</td>
+            <td>{{ row_1_feature }}</td>
             {% if block.settings.header_column_1 != blank %}
               <td>{{ block.settings.row_1_col_1 }}</td>
             {% endif %}
@@ -208,7 +245,7 @@
 
         {% if block.settings.row_2_feature != blank %}
           <tr>
-            <td>{{ block.settings.row_2_feature }}</td>
+            <td>{{ row_2_feature }}</td>
             {% if block.settings.header_column_1 != blank %}
               <td>{{ block.settings.row_2_col_1 }}</td>
             {% endif %}
@@ -232,7 +269,7 @@
 
         {% if block.settings.row_3_feature != blank %}
           <tr>
-            <td>{{ block.settings.row_3_feature }}</td>
+            <td>{{ row_3_feature }}</td>
             {% if block.settings.header_column_1 != blank %}
               <td>{{ block.settings.row_3_col_1 }}</td>
             {% endif %}
@@ -256,7 +293,7 @@
 
         {% if block.settings.row_4_feature != blank %}
           <tr>
-            <td>{{ block.settings.row_4_feature }}</td>
+            <td>{{ row_4_feature }}</td>
             {% if block.settings.header_column_1 != blank %}
               <td>{{ block.settings.row_4_col_1 }}</td>
             {% endif %}
