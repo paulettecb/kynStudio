@@ -15,7 +15,6 @@ body {
 
 :root {
   --font-base: clamp(1rem, 1.2vw, 1.125rem);
-  --font-title: 'Brush Script MT', 'Segoe Script', 'Snell Roundhand', 'Comic Sans MS', cursive;
   --hover-lift-amount: 4px;
   --hover-scale-amount: 1.03;
   --hover-subtle-zoom-amount: 1.015;
