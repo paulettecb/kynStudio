@@ -33,32 +33,67 @@
     {% assign section_collections = section_collections | split: ',' %}
   {% endif %}
 
-  {% capture list_items %}
-    {% for collection in section_collections limit: max_items %}
-      <div class="resource-list__item">
-        {% content_for 'block', type: '_collection-card', id: 'static-collection-card', closest.collection: collection %}
-      </div>
-      {% unless forloop.last %}
-        <!--@list/split-->
-      {% endunless %}
-    {% endfor %}
-  {% endcapture %}
+  {% assign has_collections = false %}
+  {% for collection in section_collections limit: max_items %}
+    {% if collection != blank %}
+      {% assign has_collections = true %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
 
-  {% liquid
-    # Create an array from the list items to be used for different layout types
-    assign list_items_array = list_items | strip | split: '<!--@list/split-->'
-  %}
-
-  {% render 'resource-list',
-    list_items: list_items,
-    list_items_array: list_items_array,
-    settings: section.settings,
-    carousel_ref: 'mainCollectionList',
-    slide_count: max_items,
-    content_type: 'collections',
-    test_id: 'collections-list-grid'
-  %}
+  {% if has_collections %}
+    <ul class="collection-product-grid list-unstyled" role="list">
+      {% for collection in section_collections limit: max_items %}
+        {% assign featured_product = collection.featured_image | default: collection.products.first.featured_image %}
+        {% assign first_product = collection.products.first %}
+        {% if collection != blank and first_product != blank %}
+          <li class="collection-product-card">
+            <a href="{{ collection.url }}" class="collection-product-card__image-link">
+              {% if featured_product %}
+                {{
+                  featured_product
+                  | image_url: width: 720
+                  | image_tag: class: 'collection-product-card__image', loading: 'lazy', alt: collection.title
+                }}
+              {% endif %}
+            </a>
+            <h3 class="collection-product-card__title">{{ first_product.title }}</h3>
+            <p class="collection-product-card__price">{{ first_product.price | money }}</p>
+            {% form 'product', first_product %}
+              <input type="hidden" name="id" value="{{ first_product.selected_or_first_available_variant.id }}">
+              <button type="submit" class="button">Agregar al carrito</button>
+            {% endform %}
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  {% else %}
+    <div class="collection-product-placeholder text-block paragraph">
+      <h3>Próximamente</h3>
+      <p>Estamos preparando nuevas colecciones y productos destacados. Vuelve pronto para descubrirlos.</p>
+    </div>
+  {% endif %}
 </div>
+
+{% stylesheet %}
+  .collection-product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+
+  .collection-product-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .collection-product-card__image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+{% endstylesheet %}
 
 {% schema %}
 {

@@ -28,12 +28,16 @@ class HeaderMenu extends Component {
     onDocumentLoaded(this.#preloadImages);
     window.addEventListener('resize', this.#resizeListener);
     this.overflowMenu?.addEventListener('pointerleave', this.#overflowSubmenuListener);
+    this.addEventListener('click', this.#handleMenuToggleClick);
+    this.addEventListener('keydown', this.#handleMenuKeydown);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
     window.removeEventListener('resize', this.#resizeListener);
     this.overflowMenu?.removeEventListener('pointerleave', this.#overflowSubmenuListener);
+    this.removeEventListener('click', this.#handleMenuToggleClick);
+    this.removeEventListener('keydown', this.#handleMenuKeydown);
     this.#cleanupMutationObserver();
   }
 
@@ -47,6 +51,49 @@ class HeaderMenu extends Component {
 
   #overflowSubmenuListener = () => {
     this.#deactivate();
+  };
+
+  /**
+   * Open submenu on first click for keyboard/mouse accessibility.
+   * Second click follows the link.
+   * @param {MouseEvent} event
+   */
+  #handleMenuToggleClick = (event) => {
+    const target = event.target instanceof Element ? event.target : null;
+    const menuLink = target?.closest('[ref="menuitem"][aria-haspopup="true"]');
+    if (!(menuLink instanceof HTMLElement)) return;
+
+    const isAlreadyExpanded = menuLink.ariaExpanded === 'true';
+    if (!isAlreadyExpanded) {
+      event.preventDefault();
+      this.activate(event);
+      menuLink.focus();
+    }
+  };
+
+  /**
+   * Keyboard support for submenu behavior.
+   * @param {KeyboardEvent} event
+   */
+  #handleMenuKeydown = (event) => {
+    if (event.key === 'Escape') {
+      this.#deactivate();
+      return;
+    }
+
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+
+    const target = event.target instanceof Element ? event.target : null;
+    const menuLink = target?.closest('[ref="menuitem"][aria-haspopup="true"]');
+    if (!(menuLink instanceof HTMLElement)) return;
+
+    event.preventDefault();
+    this.activate(event);
+    const submenu = findSubmenu(menuLink);
+    const firstMenuItem = submenu?.querySelector('[role="menuitem"]');
+    if (firstMenuItem instanceof HTMLElement) {
+      firstMenuItem.focus();
+    }
   };
 
   /**

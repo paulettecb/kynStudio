@@ -74,6 +74,8 @@
 <ul
   data-menu-list-id="{{ id }}"
   class="mega-menu__list list-unstyled"
+  role="menu"
+  aria-label="{{ parent_link.title | escape }}"
   style="--menu-image-border-radius: {{ image_border_radius }}px;"
 >
   {% for link in parent_link.links %}
@@ -110,6 +112,8 @@
       <a
         href="{{ link.url }}"
         class="mega-menu__link {% if link.links != blank %}mega-menu__link--parent{% endif %}"
+        role="menuitem"
+        aria-label="{{ link.title | escape }}"
       >
         {% if menu_content_type == 'collection_images' %}
           {%- capture collection_image_sizes -%}
@@ -138,6 +142,8 @@
       {% if link.links != blank %}
         <ul
           class="list-unstyled"
+          role="menu"
+          aria-label="{{ link.title | escape }}"
           {% if should_break_columns %}
             style="column-count: {{ column_span }};"
           {% endif %}
@@ -152,6 +158,8 @@
               <a
                 href="{{ childLink.url }}"
                 class="mega-menu__link"
+                role="menuitem"
+                aria-label="{{ childLink.title | escape }}"
               >
                 <span class="wrap-text">{{- childLink.title -}}</span>
               </a>
