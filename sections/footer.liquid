@@ -78,6 +78,17 @@
         <input name="q" type="text" placeholder="Buscar" />
       </form>
     </div>
+
+    <div class="footer-custom-links__column">
+      <h3>Newsletter</h3>
+      <form class="footer-newsletter-form" action="/contact#contact_form" method="post" accept-charset="UTF-8">
+        <input type="hidden" name="form_type" value="customer">
+        <input type="hidden" name="utf8" value="✓">
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <input type="email" name="contact[email]" placeholder="Dirección de correo electrónico" required>
+        <button type="submit">Suscribirme</button>
+      </form>
+    </div>
   </div>
   </div>
 </div>
@@ -150,6 +161,41 @@
 
   .footer-custom-links form input {
     width: 100%;
+  }
+
+  .footer-newsletter-form {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .footer-newsletter-form input[type='email'] {
+    width: 100%;
+    padding: 0.65rem 0.75rem;
+    border: 1px solid currentColor;
+    border-radius: 0.25rem;
+    background: transparent;
+    color: inherit;
+  }
+
+  .footer-newsletter-form button {
+    width: fit-content;
+    padding: 0.65rem 1rem;
+    border: 1px solid currentColor;
+    border-radius: 0.25rem;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+
+  .footer-newsletter-form button:hover {
+    opacity: 0.8;
+  }
+
+  .footer-newsletter-form button:focus-visible,
+  .footer-newsletter-form input[type='email']:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
   }
 {% endstylesheet %}
 
