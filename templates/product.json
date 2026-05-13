@@ -234,14 +234,15 @@
               },
               "blocks": {}
             },
-            "variant_picker_R3rGDr": {
+            "variant_picker_DWMfdY": {
               "type": "variant-picker",
+              "name": "t:names.product_variant_picker",
               "settings": {
                 "variant_style": "buttons",
                 "show_swatches": true,
                 "alignment": "left",
-                "padding-block-start": 12,
-                "padding-block-end": 24,
+                "padding-block-start": 0,
+                "padding-block-end": 8,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
               },
@@ -314,7 +315,7 @@
             "divider_HrJgFt",
             "ai_gen_block_21d728f_TPTRaz",
             "ai_gen_block_53a9d41_zjqAhT",
-            "variant_picker_R3rGDr",
+            "variant_picker_DWMfdY",
             "accordion_NKWPiW",
             "buy_buttons_eYQEYi",
             "mercado_pago_banner_tooltips_credits_QPC9kp"
