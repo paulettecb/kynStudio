@@ -153,38 +153,38 @@
 
 {% liquid
   assign heading_text = block.settings.heading
-  if heading_text contains 't:'
-    assign heading_text = heading_text | remove_first: 't:' | t
+  if heading_text | slice: 0, 2 | upcase == 'T:'
+    assign heading_text = heading_text | remove_first: 't:' | remove_first: 'T:' | downcase | t
   endif
 
   assign header_feature = block.settings.header_feature
-  if header_feature contains 't:'
-    assign header_feature = header_feature | remove_first: 't:' | t
+  if header_feature | slice: 0, 2 | upcase == 'T:'
+    assign header_feature = header_feature | remove_first: 't:' | remove_first: 'T:' | downcase | t
   endif
 
   assign header_column_3 = block.settings.header_column_3
-  if header_column_3 contains 't:'
-    assign header_column_3 = header_column_3 | remove_first: 't:' | t
+  if header_column_3 | slice: 0, 2 | upcase == 'T:'
+    assign header_column_3 = header_column_3 | remove_first: 't:' | remove_first: 'T:' | downcase | t
   endif
 
   assign row_1_feature = block.settings.row_1_feature
-  if row_1_feature contains 't:'
-    assign row_1_feature = row_1_feature | remove_first: 't:' | t
+  if row_1_feature | slice: 0, 2 | upcase == 'T:'
+    assign row_1_feature = row_1_feature | remove_first: 't:' | remove_first: 'T:' | downcase | t
   endif
 
   assign row_2_feature = block.settings.row_2_feature
-  if row_2_feature contains 't:'
-    assign row_2_feature = row_2_feature | remove_first: 't:' | t
+  if row_2_feature | slice: 0, 2 | upcase == 'T:'
+    assign row_2_feature = row_2_feature | remove_first: 't:' | remove_first: 'T:' | downcase | t
   endif
 
   assign row_3_feature = block.settings.row_3_feature
-  if row_3_feature contains 't:'
-    assign row_3_feature = row_3_feature | remove_first: 't:' | t
+  if row_3_feature | slice: 0, 2 | upcase == 'T:'
+    assign row_3_feature = row_3_feature | remove_first: 't:' | remove_first: 'T:' | downcase | t
   endif
 
   assign row_4_feature = block.settings.row_4_feature
-  if row_4_feature contains 't:'
-    assign row_4_feature = row_4_feature | remove_first: 't:' | t
+  if row_4_feature | slice: 0, 2 | upcase == 'T:'
+    assign row_4_feature = row_4_feature | remove_first: 't:' | remove_first: 'T:' | downcase | t
   endif
 {% endliquid %}
 

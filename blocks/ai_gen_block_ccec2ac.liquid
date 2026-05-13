@@ -201,38 +201,38 @@
 
 {% liquid
   assign heading_text = block.settings.heading
-  if heading_text contains 't:'
-    assign heading_text = heading_text | remove_first: 't:' | t
+  if heading_text | slice: 0, 2 | upcase == 'T:'
+    assign heading_text = heading_text | remove_first: 't:' | remove_first: 'T:' | downcase | t
   endif
 
   assign column_1_label = block.settings.column_1_label
-  if column_1_label contains 't:'
-    assign column_1_label = column_1_label | remove_first: 't:' | t
+  if column_1_label | slice: 0, 2 | upcase == 'T:'
+    assign column_1_label = column_1_label | remove_first: 't:' | remove_first: 'T:' | downcase | t
   endif
 
   assign column_4_label = block.settings.column_4_label
-  if column_4_label contains 't:'
-    assign column_4_label = column_4_label | remove_first: 't:' | t
+  if column_4_label | slice: 0, 2 | upcase == 'T:'
+    assign column_4_label = column_4_label | remove_first: 't:' | remove_first: 'T:' | downcase | t
   endif
 
   assign row_1_label = block.settings.row_1_label
-  if row_1_label contains 't:'
-    assign row_1_label = row_1_label | remove_first: 't:' | t
+  if row_1_label | slice: 0, 2 | upcase == 'T:'
+    assign row_1_label = row_1_label | remove_first: 't:' | remove_first: 'T:' | downcase | t
   endif
 
   assign row_2_label = block.settings.row_2_label
-  if row_2_label contains 't:'
-    assign row_2_label = row_2_label | remove_first: 't:' | t
+  if row_2_label | slice: 0, 2 | upcase == 'T:'
+    assign row_2_label = row_2_label | remove_first: 't:' | remove_first: 'T:' | downcase | t
   endif
 
   assign row_3_label = block.settings.row_3_label
-  if row_3_label contains 't:'
-    assign row_3_label = row_3_label | remove_first: 't:' | t
+  if row_3_label | slice: 0, 2 | upcase == 'T:'
+    assign row_3_label = row_3_label | remove_first: 't:' | remove_first: 'T:' | downcase | t
   endif
 
   assign row_4_label = block.settings.row_4_label
-  if row_4_label contains 't:'
-    assign row_4_label = row_4_label | remove_first: 't:' | t
+  if row_4_label | slice: 0, 2 | upcase == 'T:'
+    assign row_4_label = row_4_label | remove_first: 't:' | remove_first: 'T:' | downcase | t
   endif
 {% endliquid %}
 
