@@ -807,7 +807,7 @@ h1,
 .h1.h1,
 .text-block.h1 > *,
 .text-block.h1 :is(h1, h2, h3, h4, h5, h6) {
-  font-family: var(--font-h1--family);
+  font-family: var(--font-title);
   font-style: var(--font-h1--style);
   font-weight: var(--font-h1--weight);
   font-size: clamp(2.5rem, 4vw, 3rem);
@@ -829,7 +829,7 @@ h2,
 .h2.h2,
 .text-block.h2 > *,
 .text-block.h2 :is(h1, h2, h3, h4, h5, h6) {
-  font-family: var(--font-h2--family);
+  font-family: var(--font-title);
   font-style: var(--font-h2--style);
   font-weight: var(--font-h2--weight);
   font-size: clamp(2.1rem, 3.3vw, 2.6rem);
@@ -852,7 +852,7 @@ h3,
 .h3.h3,
 .text-block.h3 > *,
 .text-block.h3 :is(h1, h2, h3, h4, h5, h6) {
-  font-family: var(--font-h3--family);
+  font-family: var(--font-title);
   font-style: var(--font-h3--style);
   font-weight: var(--font-h3--weight);
   font-size: clamp(1.8rem, 2.8vw, 2.2rem);
@@ -4989,6 +4989,7 @@ product-recommendations:has([data-has-recommendations='false']) {
 
 .infographic-with-text__title {
   margin: 0;
+  font-family: var(--font-title);
   font-size: clamp(1.8rem, 3.2vw, 3rem);
   line-height: 1.08;
   text-wrap: balance;
