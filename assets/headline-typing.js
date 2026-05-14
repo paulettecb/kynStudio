@@ -1,8 +1,10 @@
-const TYPING_DELAY_MS = 50;
+const LETTER_STAGGER_MS = 35;
 const TARGET_HEADLINES = [
   'Diseño Modular',
   'Urbano',
   'Durabilidad y comodidad en cada elemento',
+  'Text component styled with Tailwind CSS.',
+  'Includes responsive font sizing, tight letter tracking, and smooth color transitions—ideal for hero banners, section headers.',
 ];
 
 function shouldAnimateHeadline(headline) {
@@ -18,37 +20,40 @@ function getOriginalMarkup(headline) {
   return headline.dataset.typingOriginalMarkup;
 }
 
-function typeHeadline(headline) {
-  const originalMarkup = getOriginalMarkup(headline);
-  const originalText = headline.innerText;
+function splitTextToAnimatedNodes(headline) {
+  const sourceText = headline.textContent ?? '';
+  if (!sourceText.trim()) return;
 
-  if (!originalText.trim()) return;
+  const fragment = document.createDocumentFragment();
+  let letterIndex = 0;
 
-  if (headline._typingTimeoutId) {
-    clearTimeout(headline._typingTimeoutId);
-  }
-
-  headline.innerHTML = originalMarkup;
-  const typingText = headline.innerText;
-  headline.innerHTML = '';
-
-  let characterIndex = 0;
-
-  const revealNextCharacter = () => {
-    if (characterIndex >= typingText.length) return;
-
-    const nextCharacter = typingText[characterIndex];
-    if (nextCharacter === '\n') {
-      headline.append(document.createElement('br'));
-    } else {
-      headline.append(document.createTextNode(nextCharacter));
+  for (const character of sourceText) {
+    if (character === '\n') {
+      fragment.append(document.createElement('br'));
+      continue;
     }
 
-    characterIndex += 1;
-    headline._typingTimeoutId = setTimeout(revealNextCharacter, TYPING_DELAY_MS);
-  };
+    if (character === ' ') {
+      fragment.append(document.createTextNode(' '));
+      continue;
+    }
 
-  revealNextCharacter();
+    const letter = document.createElement('span');
+    letter.className = 'headline-letter-reveal';
+    letter.textContent = character;
+    letter.style.setProperty('--letter-reveal-delay', `${letterIndex * LETTER_STAGGER_MS}ms`);
+    fragment.append(letter);
+    letterIndex += 1;
+  }
+
+  headline.innerHTML = '';
+  headline.append(fragment);
+}
+
+function animateHeadline(headline) {
+  const originalMarkup = getOriginalMarkup(headline);
+  headline.innerHTML = originalMarkup;
+  splitTextToAnimatedNodes(headline);
 }
 
 function initializeTypingAnimation() {
@@ -64,7 +69,7 @@ function initializeTypingAnimation() {
         if (entry.isIntersecting) {
           if (headline.dataset.typingInView !== 'true') {
             headline.dataset.typingInView = 'true';
-            typeHeadline(headline);
+            animateHeadline(headline);
           }
         } else {
           headline.dataset.typingInView = 'false';
@@ -72,7 +77,7 @@ function initializeTypingAnimation() {
       });
     },
     {
-      threshold: 0.45,
+      threshold: 0.35,
     },
   );
 
