@@ -1,95 +1,66 @@
-
-
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
-<div
-  class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}"
->
-  {% liquid
-    assign total_blocks = section.blocks.size
-
-    # Grid layout calculations
-    assign grid_columns = total_blocks | at_most: 4
-
-    # Calculate last row counts using modulo arithmetic
-    # last_row_count = (total_blocks - 1) % N + 1
-    assign last_row_count = total_blocks | minus: 1 | modulo: 4 | plus: 1
-    assign tablet_last_row_count = total_blocks | minus: 1 | modulo: 2 | plus: 1
-
-    # Check if there are orphaned elements (single item in last row)
-    assign has_isolated_grid_item_desktop = false
-    assign has_isolated_grid_item_tablet = false
-
-    if total_blocks > 4 and last_row_count == 1
-      assign has_isolated_grid_item_desktop = true
-    endif
-
-    if total_blocks == 5
-      assign has_isolated_grid_item_tablet = true
-    endif
-  %}
+<div class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}">
   <div
-    class="
-      footer-content
-      spacing-style
-      {% if has_isolated_grid_item_desktop %}footer-content--isolated-grid-item-desktop{% endif %}
-      {% if has_isolated_grid_item_tablet %}footer-content--isolated-grid-item-tablet{% endif %}
-    "
+    class="footer-content spacing-style"
     style="
-      {%  render 'spacing-style', settings: section.settings %}
+      {% render 'spacing-style', settings: section.settings %}
       --footer-gap: {{ section.settings.gap }}px;
-      --grid-columns: {{ grid_columns }};
-      --last-row-count: {{ last_row_count }};
-      --tablet-last-row-count: {{ tablet_last_row_count }};
     "
   >
-    {% content_for 'blocks' %}
-  <div class="footer-custom-links" aria-label="Footer quick links">
-    <div class="footer-custom-links__column">
-      <h3>Shop</h3>
-      <ul>
-        <li><a href="/collections/new-arrivals">New Arrivals</a></li>
-        <li><a href="/collections/best-sellers">Best Sellers</a></li>
-        <li><a href="/collections/sale">Sale</a></li>
-      </ul>
-    </div>
+    <div class="footer-custom-links" aria-label="Footer quick links">
+      <div class="footer-custom-links__column">
+        <h3>Shop</h3>
+        <ul>
+          <li><a href="/search">Search</a></li>
+          <li><a href="/collections/new-arrivals">New Arrivals</a></li>
+          <li><a href="/collections/best-sellers">Best Sellers</a></li>
+          <li><a href="/collections/sale">Sale</a></li>
+        </ul>
+      </div>
 
-    <div class="footer-custom-links__column">
-      <h3>About Us</h3>
-      <ul>
-        <li><a href="/pages/our-story">Our Story</a></li>
-      </ul>
-    </div>
+      <div class="footer-custom-links__column">
+        <h3>About Us</h3>
+        <ul>
+          <li><a href="/pages/our-story">Our Story</a></li>
+        </ul>
+      </div>
 
-    <div class="footer-custom-links__column">
-      <h3>Connect</h3>
-      <div class="footer-custom-links__social">
-        <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-          <span aria-hidden="true">📸</span> Instagram
-        </a>
-        <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-          <span aria-hidden="true">📘</span> Facebook
-        </a>
+      <div class="footer-custom-links__column">
+        <h3>Connect</h3>
+        <ul>
+          <li><a href="https://www.instagram.com/kynstudiomx" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+          <li><a href="https://www.tiktok.com/@kynstudiomx" target="_blank" rel="noopener noreferrer">TikTok</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-custom-links__column footer-custom-links__column--newsletter">
+        <h3>Sign up for our newsletter</h3>
+        {% form 'customer', class: 'footer-newsletter-form' %}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <label class="visually-hidden" for="FooterEmail">Dirección de correo electrónico</label>
+          <div class="footer-newsletter-form__row">
+            <input
+              id="FooterEmail"
+              type="email"
+              name="contact[email]"
+              value="{% if customer %}{{ customer.email }}{% endif %}"
+              placeholder="Dirección de correo electrónico"
+              autocorrect="off"
+              autocapitalize="off"
+              autocomplete="email"
+              required
+            >
+            <button type="submit" aria-label="Suscribirme">→</button>
+          </div>
+          {% if form.errors %}
+            <small>{{ form.errors | default_errors }}</small>
+          {% endif %}
+          {% if form.posted_successfully? %}
+            <small>¡Gracias por suscribirte!</small>
+          {% endif %}
+        {% endform %}
       </div>
     </div>
-
-    <div class="footer-custom-links__column">
-      <h3>Search</h3>
-      <form action="/search" method="get">
-        <input name="q" type="text" placeholder="Buscar" />
-      </form>
-    </div>
-
-    <div class="footer-custom-links__column">
-      <h3>Newsletter</h3>
-      <form class="footer-newsletter-form" action="/contact#contact_form" method="post" accept-charset="UTF-8">
-        <input type="hidden" name="form_type" value="customer">
-        <input type="hidden" name="utf8" value="✓">
-        <input type="hidden" name="contact[tags]" value="newsletter">
-        <input type="email" name="contact[email]" placeholder="Dirección de correo electrónico" required>
-        <button type="submit">Suscribirme</button>
-      </form>
-    </div>
-  </div>
   </div>
 </div>
 
@@ -102,100 +73,66 @@
     gap: var(--footer-gap);
   }
 
-  @media screen and (min-width: 750px) and (max-width: 989px) {
-    .footer-content {
-      grid-template-columns: repeat(min(var(--grid-columns), 3), 1fr);
-      grid-auto-flow: row;
-    }
-
-    .footer-content[style*='--grid-columns: 4'] {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    .footer-content--isolated-grid-item-tablet > :last-child {
-      grid-column: 1 / -1;
-    }
-  }
-
-  @media screen and (min-width: 990px) {
-    .footer-content {
-      grid-template-columns: repeat(var(--grid-columns), 1fr);
-    }
-
-    /* Single item centered */
-    .footer-content[style*='--grid-columns: 1'] {
-      justify-items: center;
-    }
-
-    .footer-content--isolated-grid-item-desktop > :last-child {
-      grid-column: 1 / -1;
-    }
-  }
-
-
   .footer-custom-links {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 1.25rem;
-    margin-top: 1.5rem;
+    gap: 2rem;
+    grid-template-columns: 1fr;
   }
 
   .footer-custom-links__column h3 {
-    margin: 0 0 0.5rem;
+    margin: 0 0 1rem;
   }
 
   .footer-custom-links__column ul {
     margin: 0;
     padding: 0;
     list-style: none;
-  }
-
-  .footer-custom-links__column li + li {
-    margin-top: 0.35rem;
-  }
-
-  .footer-custom-links__social {
     display: grid;
-    gap: 0.35rem;
+    gap: 0.6rem;
   }
 
-  .footer-custom-links form input {
-    width: 100%;
+  .footer-custom-links__column a {
+    text-decoration: none;
   }
 
-  .footer-newsletter-form {
+  .footer-newsletter-form__row {
     display: grid;
-    gap: 0.5rem;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 0.4rem;
+    gap: 0.6rem;
   }
 
-  .footer-newsletter-form input[type='email'] {
-    width: 100%;
-    padding: 0.65rem 0.75rem;
-    border: 1px solid currentColor;
-    border-radius: 0.25rem;
+  .footer-newsletter-form__row input {
     background: transparent;
+    border: 0;
     color: inherit;
+    padding: 0;
+    width: 100%;
   }
 
-  .footer-newsletter-form button {
-    width: fit-content;
-    padding: 0.65rem 1rem;
-    border: 1px solid currentColor;
-    border-radius: 0.25rem;
+  .footer-newsletter-form__row button {
+    border: 0;
     background: transparent;
     color: inherit;
     cursor: pointer;
-    transition: opacity 0.2s ease;
+    padding: 0;
+    font-size: 1.3rem;
+    line-height: 1;
   }
 
-  .footer-newsletter-form button:hover {
-    opacity: 0.8;
+  .footer-newsletter-form__row input:focus,
+  .footer-newsletter-form__row button:focus {
+    outline: none;
   }
 
-  .footer-newsletter-form button:focus-visible,
-  .footer-newsletter-form input[type='email']:focus-visible {
-    outline: 2px solid currentColor;
-    outline-offset: 2px;
+  @media screen and (min-width: 990px) {
+    .footer-custom-links {
+      grid-template-columns: minmax(120px, 1fr) minmax(120px, 1fr) minmax(120px, 1fr) minmax(300px, 2fr);
+      align-items: start;
+      gap: 3rem;
+    }
   }
 {% endstylesheet %}
 
