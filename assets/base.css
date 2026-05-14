@@ -5027,3 +5027,27 @@ product-recommendations:has([data-has-recommendations='false']) {
 .site-nav a {
   color: #1a1a1a;
 }
+
+.headline-letter-reveal {
+  display: inline-block;
+  opacity: 0;
+  filter: blur(12px);
+  transform: translateY(0.7em);
+  animation: headline-letter-reveal 620ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: var(--letter-reveal-delay, 0ms);
+  will-change: transform, opacity, filter;
+}
+
+@keyframes headline-letter-reveal {
+  from {
+    opacity: 0;
+    filter: blur(12px);
+    transform: translateY(0.7em);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
