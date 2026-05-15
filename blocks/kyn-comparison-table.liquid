@@ -1,0 +1,344 @@
+{% assign bid = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .kyn-compare-{{ bid }} {
+    width: 100%;
+    margin: {{ block.settings.margin_top }}px 0 {{ block.settings.margin_bottom }}px;
+  }
+
+  .kyn-compare-{{ bid }} table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: {{ block.settings.font_size }}px;
+    line-height: 1.4;
+  }
+
+  .kyn-compare-{{ bid }} thead th {
+    padding: 12px 14px;
+    text-align: left;
+    font-weight: 700;
+    font-size: {{ block.settings.font_size | plus: 1 }}px;
+    border-bottom: 2px solid {{ block.settings.border_color }};
+  }
+
+  .kyn-compare-{{ bid }} thead th:first-child {
+    color: transparent;
+    width: 30%;
+  }
+
+  .kyn-compare-{{ bid }} thead th.kyn-col-kyn {
+    color: {{ block.settings.kyn_header_color }};
+    background: {{ block.settings.kyn_header_bg }};
+    border-radius: {{ block.settings.border_radius }}px {{ block.settings.border_radius }}px 0 0;
+    text-align: center;
+    width: 35%;
+  }
+
+  .kyn-compare-{{ bid }} thead th.kyn-col-generic {
+    color: {{ block.settings.generic_header_color }};
+    text-align: center;
+    width: 35%;
+  }
+
+  .kyn-compare-{{ bid }} tbody td {
+    padding: 11px 14px;
+    border-bottom: 1px solid {{ block.settings.border_color }};
+    vertical-align: middle;
+  }
+
+  .kyn-compare-{{ bid }} tbody td:first-child {
+    font-weight: 600;
+    color: {{ block.settings.label_color }};
+  }
+
+  .kyn-compare-{{ bid }} tbody td.kyn-col-kyn {
+    text-align: center;
+    color: {{ block.settings.kyn_text_color }};
+    background: {{ block.settings.kyn_col_bg }};
+    font-weight: 600;
+  }
+
+  .kyn-compare-{{ bid }} tbody td.kyn-col-generic {
+    text-align: center;
+    color: {{ block.settings.generic_text_color }};
+  }
+
+  .kyn-compare-{{ bid }} tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .kyn-compare-{{ bid }} tbody tr:last-child td.kyn-col-kyn {
+    border-radius: 0 0 {{ block.settings.border_radius }}px {{ block.settings.border_radius }}px;
+  }
+
+  .kyn-compare-{{ bid }} .kyn-cost-highlight {
+    font-weight: 700;
+    font-size: {{ block.settings.font_size | plus: 2 }}px;
+    color: {{ block.settings.kyn_header_bg }};
+  }
+
+  .kyn-compare-{{ bid }} .kyn-cost-generic {
+    text-decoration: line-through;
+    opacity: 0.7;
+  }
+
+  @media screen and (max-width: 749px) {
+    .kyn-compare-{{ bid }} table {
+      font-size: {{ block.settings.font_size | minus: 1 }}px;
+    }
+    .kyn-compare-{{ bid }} thead th,
+    .kyn-compare-{{ bid }} tbody td {
+      padding: 9px 10px;
+    }
+  }
+{% endstyle %}
+
+<div class="kyn-compare-{{ bid }}" {{ block.shopify_attributes }}>
+  <table role="table" aria-label="{{ block.settings.table_label }}">
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col" class="kyn-col-kyn">{{ block.settings.col_kyn_header }}</th>
+        <th scope="col" class="kyn-col-generic">{{ block.settings.col_generic_header }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ block.settings.row_1_label }}</td>
+        <td class="kyn-col-kyn">{{ block.settings.row_1_kyn }}</td>
+        <td class="kyn-col-generic">{{ block.settings.row_1_generic }}</td>
+      </tr>
+      <tr>
+        <td>{{ block.settings.row_2_label }}</td>
+        <td class="kyn-col-kyn">{{ block.settings.row_2_kyn }}</td>
+        <td class="kyn-col-generic">{{ block.settings.row_2_generic }}</td>
+      </tr>
+      <tr>
+        <td>{{ block.settings.row_3_label }}</td>
+        <td class="kyn-col-kyn">{{ block.settings.row_3_kyn }}</td>
+        <td class="kyn-col-generic">{{ block.settings.row_3_generic }}</td>
+      </tr>
+      <tr>
+        <td>{{ block.settings.row_4_label }}</td>
+        <td class="kyn-col-kyn"><span class="kyn-cost-highlight">{{ block.settings.row_4_kyn }}</span></td>
+        <td class="kyn-col-generic"><span class="kyn-cost-generic">{{ block.settings.row_4_generic }}</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+{% schema %}
+{
+  "name": "KYN Comparativa",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "table_label",
+      "label": "Accessible table label",
+      "default": "Comparativa KYN vs correa genérica"
+    },
+    {
+      "type": "header",
+      "content": "Encabezados"
+    },
+    {
+      "type": "text",
+      "id": "col_kyn_header",
+      "label": "Columna KYN",
+      "default": "KYN"
+    },
+    {
+      "type": "text",
+      "id": "col_generic_header",
+      "label": "Columna genérica",
+      "default": "Correa de pet shop"
+    },
+    {
+      "type": "header",
+      "content": "Fila 1"
+    },
+    {
+      "type": "text",
+      "id": "row_1_label",
+      "label": "Etiqueta",
+      "default": "Material"
+    },
+    {
+      "type": "text",
+      "id": "row_1_kyn",
+      "label": "KYN",
+      "default": "Biothane® cert."
+    },
+    {
+      "type": "text",
+      "id": "row_1_generic",
+      "label": "Genérico",
+      "default": "PVC / nylon"
+    },
+    {
+      "type": "header",
+      "content": "Fila 2"
+    },
+    {
+      "type": "text",
+      "id": "row_2_label",
+      "label": "Etiqueta",
+      "default": "Herrajes"
+    },
+    {
+      "type": "text",
+      "id": "row_2_kyn",
+      "label": "KYN",
+      "default": "Latón sólido"
+    },
+    {
+      "type": "text",
+      "id": "row_2_generic",
+      "label": "Genérico",
+      "default": "Zinc / plástico"
+    },
+    {
+      "type": "header",
+      "content": "Fila 3"
+    },
+    {
+      "type": "text",
+      "id": "row_3_label",
+      "label": "Etiqueta",
+      "default": "Vida útil"
+    },
+    {
+      "type": "text",
+      "id": "row_3_kyn",
+      "label": "KYN",
+      "default": "+10 años"
+    },
+    {
+      "type": "text",
+      "id": "row_3_generic",
+      "label": "Genérico",
+      "default": "1–2 años"
+    },
+    {
+      "type": "header",
+      "content": "Fila 4 (Costo/año)"
+    },
+    {
+      "type": "text",
+      "id": "row_4_label",
+      "label": "Etiqueta",
+      "default": "Costo/año"
+    },
+    {
+      "type": "text",
+      "id": "row_4_kyn",
+      "label": "KYN",
+      "default": "~$138"
+    },
+    {
+      "type": "text",
+      "id": "row_4_generic",
+      "label": "Genérico",
+      "default": "~$300+"
+    },
+    {
+      "type": "header",
+      "content": "Estilo"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Font size",
+      "min": 12,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border radius columna KYN",
+      "min": 0,
+      "max": 16,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#e5e7eb"
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Row label color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "kyn_header_color",
+      "label": "KYN header text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "kyn_header_bg",
+      "label": "KYN header background",
+      "default": "#9b7a0f"
+    },
+    {
+      "type": "color",
+      "id": "kyn_col_bg",
+      "label": "KYN column background",
+      "default": "#faf8f1"
+    },
+    {
+      "type": "color",
+      "id": "kyn_text_color",
+      "label": "KYN text color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "generic_header_color",
+      "label": "Generic header text",
+      "default": "#6b7280"
+    },
+    {
+      "type": "color",
+      "id": "generic_text_color",
+      "label": "Generic text color",
+      "default": "#6b7280"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Margin top",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Margin bottom",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    }
+  ],
+  "presets": [
+    {
+      "name": "KYN Comparativa"
+    }
+  ]
+}
+{% endschema %}
