@@ -1,0 +1,135 @@
+{%- liquid
+  assign bid = block.id | replace: '_', '' | downcase
+  assign product_resource = closest.product
+  assign selected_variant = product_resource.selected_or_first_available_variant
+  assign price_cents = selected_variant.price | default: product_resource.price
+  assign years = block.settings.lifespan_years
+  assign yearly_cost_cents = price_cents | divided_by: years
+-%}
+
+{% style %}
+  .kyn-cost-year-{{ bid }} {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: {{ block.settings.padding_top }}px 0 {{ block.settings.padding_bottom }}px;
+    font-size: {{ block.settings.font_size }}px;
+    line-height: 1.5;
+    color: {{ block.settings.text_color }};
+  }
+
+  .kyn-cost-year-{{ bid }} .kyn-cy-icon {
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .kyn-cost-year-{{ bid }} .kyn-cy-amount {
+    font-weight: 700;
+    color: {{ block.settings.highlight_color }};
+  }
+{% endstyle %}
+
+<div
+  class="kyn-cost-year-{{ bid }}"
+  {{ block.shopify_attributes }}
+>
+  <span class="kyn-cy-icon" aria-hidden="true">💡</span>
+  <span>
+    Equivale a
+    <span class="kyn-cy-amount">{{ yearly_cost_cents | money }}</span>/año
+    por {{ years }} años de uso
+  </span>
+</div>
+
+<script>
+  (function() {
+    var block = document.querySelector('[data-block-id="{{ block.id }}"]') ||
+                document.querySelector('.kyn-cost-year-{{ bid }}');
+    if (!block) return;
+
+    function updateCost(variant) {
+      if (!variant || !variant.price) return;
+      var years = {{ years }};
+      var yearly = Math.round(variant.price / years);
+      var formatted = (yearly / 100).toLocaleString('es-MX', { style: 'currency', currency: '{{ cart.currency.iso_code | default: "MXN" }}' });
+      var amount = block.querySelector('.kyn-cy-amount');
+      if (amount) amount.textContent = formatted;
+    }
+
+    document.addEventListener('variant:changed', function(e) {
+      if (e.detail && e.detail.variant) updateCost(e.detail.variant);
+    });
+    document.addEventListener('variant-change', function(e) {
+      if (e.detail && e.detail.variant) updateCost(e.detail.variant);
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "KYN Costo por año",
+  "tag": null,
+  "settings": [
+    {
+      "type": "range",
+      "id": "lifespan_years",
+      "label": "Años de vida útil",
+      "min": 1,
+      "max": 20,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Estilo"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Font size",
+      "min": 11,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#4b5563"
+    },
+    {
+      "type": "color",
+      "id": "highlight_color",
+      "label": "Highlight color (amount)",
+      "default": "#9b7a0f"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "KYN Costo por año"
+    }
+  ]
+}
+{% endschema %}
