@@ -1,0 +1,245 @@
+{% assign bid = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .kyn-price-why-{{ bid }} {
+    border: 1px solid {{ block.settings.border_color }};
+    border-radius: {{ block.settings.border_radius }}px;
+    overflow: hidden;
+    margin: {{ block.settings.margin_top }}px 0 {{ block.settings.margin_bottom }}px;
+  }
+
+  .kyn-price-why-{{ bid }} details {
+    margin: 0;
+  }
+
+  .kyn-price-why-{{ bid }} summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    cursor: pointer;
+    font-size: {{ block.settings.title_font_size }}px;
+    font-weight: 600;
+    color: {{ block.settings.title_color }};
+    list-style: none;
+    user-select: none;
+    transition: background 0.2s;
+  }
+
+  .kyn-price-why-{{ bid }} summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .kyn-price-why-{{ bid }} summary:hover {
+    background: {{ block.settings.hover_bg }};
+  }
+
+  .kyn-price-why-{{ bid }} summary .kyn-pw-icon {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.25s ease;
+    flex-shrink: 0;
+    color: {{ block.settings.title_color }};
+  }
+
+  .kyn-price-why-{{ bid }} details[open] summary .kyn-pw-icon {
+    transform: rotate(180deg);
+  }
+
+  .kyn-price-why-{{ bid }} .kyn-pw-content {
+    padding: 0 16px 16px;
+  }
+
+  .kyn-price-why-{{ bid }} .kyn-pw-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px 0;
+    border-top: 1px solid {{ block.settings.border_color }};
+    font-size: {{ block.settings.body_font_size }}px;
+    line-height: 1.5;
+    color: {{ block.settings.body_color }};
+  }
+
+  .kyn-price-why-{{ bid }} .kyn-pw-item:first-child {
+    border-top: none;
+    padding-top: 0;
+  }
+
+  .kyn-price-why-{{ bid }} .kyn-pw-label {
+    font-weight: 600;
+    color: {{ block.settings.title_color }};
+    white-space: nowrap;
+    min-width: 80px;
+  }
+{% endstyle %}
+
+<div class="kyn-price-why-{{ bid }}" {{ block.shopify_attributes }}>
+  <details>
+    <summary>
+      <span>{{ block.settings.heading }}</span>
+      <svg class="kyn-pw-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+    </summary>
+    <div class="kyn-pw-content">
+      <div class="kyn-pw-item">
+        <span class="kyn-pw-label">{{ block.settings.item_1_label }}</span>
+        <span>{{ block.settings.item_1_text }}</span>
+      </div>
+      <div class="kyn-pw-item">
+        <span class="kyn-pw-label">{{ block.settings.item_2_label }}</span>
+        <span>{{ block.settings.item_2_text }}</span>
+      </div>
+      <div class="kyn-pw-item">
+        <span class="kyn-pw-label">{{ block.settings.item_3_label }}</span>
+        <span>{{ block.settings.item_3_text }}</span>
+      </div>
+    </div>
+  </details>
+</div>
+
+{% schema %}
+{
+  "name": "KYN ¿Por qué este precio?",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "¿Por qué cuesta lo que cuesta?"
+    },
+    {
+      "type": "header",
+      "content": "Punto 1"
+    },
+    {
+      "type": "text",
+      "id": "item_1_label",
+      "label": "Etiqueta",
+      "default": "Material"
+    },
+    {
+      "type": "text",
+      "id": "item_1_text",
+      "label": "Descripción",
+      "default": "Biothane® certificado vs imitaciones de PVC"
+    },
+    {
+      "type": "header",
+      "content": "Punto 2"
+    },
+    {
+      "type": "text",
+      "id": "item_2_label",
+      "label": "Etiqueta",
+      "default": "Herrajes"
+    },
+    {
+      "type": "text",
+      "id": "item_2_text",
+      "label": "Descripción",
+      "default": "Latón sólido vs zinc que se oxida en 6 meses"
+    },
+    {
+      "type": "header",
+      "content": "Punto 3"
+    },
+    {
+      "type": "text",
+      "id": "item_3_label",
+      "label": "Etiqueta",
+      "default": "Ensamble"
+    },
+    {
+      "type": "text",
+      "id": "item_3_text",
+      "label": "Descripción",
+      "default": "Hecho a mano en México, no en fábrica masiva"
+    },
+    {
+      "type": "header",
+      "content": "Estilo"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "label": "Title font size",
+      "min": 12,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "body_font_size",
+      "label": "Body font size",
+      "min": 11,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "body_color",
+      "label": "Body color",
+      "default": "#4b5563"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#e5e7eb"
+    },
+    {
+      "type": "color",
+      "id": "hover_bg",
+      "label": "Hover background",
+      "default": "#f9fafb"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 16,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Margin top",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Margin bottom",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    }
+  ],
+  "presets": [
+    {
+      "name": "KYN ¿Por qué este precio?"
+    }
+  ]
+}
+{% endschema %}
