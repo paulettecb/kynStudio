@@ -1,0 +1,109 @@
+{% assign bid = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .kyn-value-props-{{ bid }} {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: {{ block.settings.font_size }}px;
+    color: {{ block.settings.text_color }};
+    letter-spacing: 0.02em;
+    line-height: 1.4;
+    padding: {{ block.settings.padding_top }}px 0 {{ block.settings.padding_bottom }}px;
+  }
+
+  .kyn-value-props-{{ bid }} .kyn-vp-dot {
+    color: {{ block.settings.dot_color }};
+    font-size: 0.5em;
+    vertical-align: middle;
+  }
+
+  @media screen and (max-width: 749px) {
+    .kyn-value-props-{{ bid }} {
+      font-size: {{ block.settings.font_size | minus: 1 }}px;
+      flex-wrap: wrap;
+    }
+  }
+{% endstyle %}
+
+<div class="kyn-value-props-{{ bid }}" {{ block.shopify_attributes }}>
+  <span>{{ block.settings.prop_1 }}</span>
+  <span class="kyn-vp-dot" aria-hidden="true">&#9679;</span>
+  <span>{{ block.settings.prop_2 }}</span>
+  <span class="kyn-vp-dot" aria-hidden="true">&#9679;</span>
+  <span>{{ block.settings.prop_3 }}</span>
+</div>
+
+{% schema %}
+{
+  "name": "KYN Value Props",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "prop_1",
+      "label": "Diferenciador 1",
+      "default": "Hecho en México"
+    },
+    {
+      "type": "text",
+      "id": "prop_2",
+      "label": "Diferenciador 2",
+      "default": "Latón sólido"
+    },
+    {
+      "type": "text",
+      "id": "prop_3",
+      "label": "Diferenciador 3",
+      "default": "Dura más de 10 años"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Font size",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#6b7280"
+    },
+    {
+      "type": "color",
+      "id": "dot_color",
+      "label": "Dot color",
+      "default": "#9b7a0f"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    }
+  ],
+  "presets": [
+    {
+      "name": "KYN Value Props"
+    }
+  ]
+}
+{% endschema %}
