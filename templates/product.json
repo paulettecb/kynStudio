@@ -100,7 +100,7 @@
                 "show_sale_price_first": true,
                 "show_installments": true,
                 "show_tax_info": true,
-                "type_preset": "h5",
+                "type_preset": "custom",
                 "width": "100%",
                 "alignment": "left",
                 "font": "var(--font-body--family)",
@@ -109,8 +109,22 @@
                 "letter_spacing": "normal",
                 "case": "none",
                 "color": "var(--color-foreground)",
-                "padding-block-start": 20,
-                "padding-block-end": 20,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "variant_picker_DWMfdY": {
+              "type": "variant-picker",
+              "name": "t:names.product_variant_picker",
+              "settings": {
+                "variant_style": "buttons",
+                "show_swatches": true,
+                "alignment": "left",
+                "padding-block-start": 10,
+                "padding-block-end": 8,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
               },
@@ -122,33 +136,11 @@
                 "prop_1": "Hecho en México",
                 "prop_2": "Latón sólido",
                 "prop_3": "Dura más de 10 años",
-                "font_size": 13,
+                "font_size": 15,
                 "text_color": "#6b7280",
                 "dot_color": "#9b7a0f",
-                "padding_top": 0,
+                "padding_top": 6,
                 "padding_bottom": 8
-              },
-              "blocks": {}
-            },
-            "kyn_price_why_1": {
-              "type": "kyn-price-justification",
-              "settings": {
-                "heading": "¿Por qué cuesta lo que cuesta?",
-                "item_1_label": "Material",
-                "item_1_text": "Biothane® certificado vs imitaciones de PVC",
-                "item_2_label": "Herrajes",
-                "item_2_text": "Latón sólido vs zinc que se oxida en 6 meses",
-                "item_3_label": "Ensamble",
-                "item_3_text": "Hecho a mano en México, no en fábrica masiva",
-                "title_font_size": 14,
-                "body_font_size": 13,
-                "title_color": "#1a1a1a",
-                "body_color": "#4b5563",
-                "border_color": "#e5e7eb",
-                "hover_bg": "#f9fafb",
-                "border_radius": 8,
-                "margin_top": 4,
-                "margin_bottom": 8
               },
               "blocks": {}
             },
@@ -216,17 +208,25 @@
               },
               "blocks": {}
             },
-            "variant_picker_DWMfdY": {
-              "type": "variant-picker",
-              "name": "t:names.product_variant_picker",
+            "kyn_price_why_1": {
+              "type": "kyn-price-justification",
               "settings": {
-                "variant_style": "buttons",
-                "show_swatches": true,
-                "alignment": "left",
-                "padding-block-start": 0,
-                "padding-block-end": 8,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "heading": "¿Por qué cuesta lo que cuesta?",
+                "item_1_label": "Material",
+                "item_1_text": "Biothane® certificado vs imitaciones de PVC",
+                "item_2_label": "Herrajes",
+                "item_2_text": "Latón sólido vs zinc que se oxida en 6 meses",
+                "item_3_label": "Ensamble",
+                "item_3_text": "Hecho a mano en México, no en fábrica masiva",
+                "title_font_size": 14,
+                "body_font_size": 13,
+                "title_color": "#1a1a1a",
+                "body_color": "#4b5563",
+                "border_color": "#e5e7eb",
+                "hover_bg": "#f9fafb",
+                "border_radius": 8,
+                "margin_top": 4,
+                "margin_bottom": 8
               },
               "blocks": {}
             },
@@ -268,7 +268,7 @@
               "name": "Product tabs",
               "settings": {
                 "tab_1_label": "Uso previsto",
-                "tab_1_content": "<p>El Traffic Handle está diseñado para momentos donde necesitas mantener a tu perro cerca de forma inmediata.</p><p>Cruzar calles, moverte entre gente, entrar o salir del coche, o simplemente recuperar control rápido durante el paseo.</p><p>Su longitud corta permite una conexión directa con tu perro sin enrollar la correa ni reducir una correa larga.</p><p>Simple, inmediato y siempre listo.</p>",
+                "tab_1_content": "<p>El Crossbody está diseñado para momentos donde necesitas mantener tus manos libres, ya sea por un momento o como apoyo para caminar con un poco más de libertad, es compatible con The Urban Leash y nuestras Long Lines.</p>",
                 "tab_2_label": "Materiales",
                 "tab_2_content": "<p><strong>Biothane® impermeable</strong><br/>Cinta técnica de poliéster recubierta con polímero sellado. No absorbe humedad, no retiene olores y se limpia en segundos.</p><p><strong>Latón sólido</strong><br/>Herrajes fabricados en latón macizo. No dependen de recubrimientos y desarrollan una pátina natural con el uso.</p><p>Diseñado para durar años en uso real.</p>",
                 "tab_3_label": "Construcción",
@@ -337,12 +337,12 @@
           "block_order": [
             "text_9WaLn7",
             "price_a7krng",
+            "variant_picker_DWMfdY",
             "kyn_value_props_1",
-            "kyn_price_why_1",
             "text_g6NmDq",
             "text_gYk6wE",
             "divider_HrJgFt",
-            "variant_picker_DWMfdY",
+            "kyn_price_why_1",
             "kyn_comparison_1",
             "accordion_NKWPiW",
             "buy_buttons_eYQEYi",
