@@ -38,6 +38,7 @@
       "block_order": [
         "ai_gen_block_f3d2311_xYfkp8"
       ],
+      "disabled": true,
       "name": "Scrolling marquee banner",
       "settings": {
         "content_direction": "row",
