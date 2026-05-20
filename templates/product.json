@@ -130,6 +130,11 @@
               },
               "blocks": {}
             },
+            "judge_me_reviews_all_reviews_text_Th8gyT": {
+              "type": "shopify://apps/judge-me-reviews/blocks/all_reviews_text/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+              "disabled": true,
+              "settings": {}
+            },
             "price_a7krng": {
               "type": "price",
               "settings": {
@@ -373,6 +378,7 @@
           },
           "block_order": [
             "text_9WaLn7",
+            "judge_me_reviews_all_reviews_text_Th8gyT",
             "price_a7krng",
             "variant_picker_DWMfdY",
             "buy_buttons_eYQEYi",
