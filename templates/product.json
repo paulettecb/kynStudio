@@ -31,8 +31,8 @@
             "verified_badge_style": "icon",
             "card_height": "compact",
             "text_size": "small",
-            "stars_size": "medium",
-            "arrows_position": "bottom",
+            "stars_size": "small",
+            "arrows_position": "sides",
             "max_width": 600,
             "corner_styling": "extra_round",
             "quote_marks_style": "serif",
@@ -43,8 +43,8 @@
             "show_border": false,
             "border_color": "#108474",
             "show_drop_shadow": true,
-            "transition_speed": 5,
-            "header_text": "Customers are saying",
+            "transition_speed": 2,
+            "header_text": "Lo que dicen nuestros clientes",
             "show_average_rating": true
           }
         },
