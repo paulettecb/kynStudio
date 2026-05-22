@@ -1073,7 +1073,7 @@
         "text_hzq6cM": {
           "type": "text",
           "settings": {
-            "text": "<p><a href=\"/collections/all\" title=\"All products\">Próximamente</a></p>",
+            "text": "<p><a href=\"/collections/all\" title=\"All products\">Ver productos</a></p>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "right",
