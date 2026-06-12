@@ -13,10 +13,7 @@
         href="{{ settings.favicon | image_url: width: 32, height: 32 }}"
       >
     {%- endif -%}
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ settings.applelogo }}">
-    <link rel="apple-touch-icon" sizes="152x152" href="{{ settings.applelogo }}">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ settings.applelogo }}">
-    <link rel="apple-touch-icon" sizes="167x167" href="{{ settings.applelogo }}">
+    <link rel="apple-touch-icon" type="image/png" href="{{ settings.applelogo | image_url: width: 180, height:180 }}">
     <link rel="apple-touch-icon-precomposed" sizes="180x180" href="{{ settings.applelogo }}">
 
     {% comment %} This a way to wait for main content to load when navigating to a new page so that the view transitions can work consistently {% endcomment %}
