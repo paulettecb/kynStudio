@@ -53,6 +53,12 @@
         "type": "image_picker",
         "id": "favicon",
         "label": "t:settings.favicon"
+      },
+      {
+        "type": "image_picker",
+        "id": "applelogo",
+        "label": "Apple touch icon",
+        "info": "Used when customers add the store to the iOS Home Screen. Shopify crops it to 180 x 180 px."
       }
     ]
   },
