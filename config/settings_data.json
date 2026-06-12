@@ -9,7 +9,7 @@
  */
 {
   "current": {
-    "applelogo": "shopify://shop_images/apple-logo.png",
+    "applelogo": "shopify://shop_images/apple_logo.png",
     "logo": "shopify://shop_images/logo.png",
     "logo_inverse": "shopify://shop_images/logo_inv.png",
     "logo_height": 100,
