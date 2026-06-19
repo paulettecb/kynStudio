@@ -158,17 +158,25 @@
     endif
   %}
 
-  {%- if custom_font_family != blank -%}
-    @font-face {
-      font-family: {{ custom_font_family | remove: ', ' }};
-      src:
-        url({{ custom_font_woff2 | asset_url }}) format('woff2'),
-        url({{ custom_font_woff | asset_url }}) format('woff');
-      font-weight: 500;
-      font-style: normal;
-      font-display: swap;
-    }
-  {%- endif -%}
+  @font-face {
+    font-family: 'Friendship';
+    src:
+      url({{ 'Friendship-Medium.woff2' | asset_url }}) format('woff2'),
+      url({{ 'Friendship-Medium.woff' | asset_url }}) format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Farmhouse';
+    src:
+      url({{ 'Farmhouse.woff2' | asset_url }}) format('woff2'),
+      url({{ 'Farmhouse.woff' | asset_url }}) format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
 
   :root {
     /* Page Layout */
@@ -214,6 +222,12 @@
     --font-accent--family: {% if use_custom_font_accent %}{{ custom_font_family }}{% endif %}{{ settings.type_accent_font.family }}, {{ settings.type_accent_font.fallback_families }};
     --font-accent--style: {{ settings.type_accent_font.style }};
     --font-accent--weight: {{ settings.type_accent_font.weight }};
+    --font-friendship--family: 'Friendship', {{ settings.type_body_font.fallback_families }};
+    --font-friendship--style: normal;
+    --font-friendship--weight: 500;
+    --font-farmhouse--family: 'Farmhouse', {{ settings.type_body_font.fallback_families }};
+    --font-farmhouse--style: normal;
+    --font-farmhouse--weight: 500;
 
     /* Margin sizes */
     --font-heading--spacing: 0.25em;
