@@ -121,6 +121,41 @@
       echo accent_font_bold_italic | font_face: font_display: 'swap'
       assign rendered_fonts = rendered_fonts | append: accent_font_bold_italic_face_id
     endunless
+    assign custom_font_family = blank
+    assign custom_font_woff2 = blank
+    assign custom_font_woff = blank
+    assign use_custom_font_body = false
+    assign use_custom_font_subheading = false
+    assign use_custom_font_heading = false
+    assign use_custom_font_accent = false
+
+    case settings.custom_font_family
+      when 'friendship'
+        assign custom_font_family = "'Friendship', "
+        assign custom_font_woff2 = 'Friendship-Medium.woff2'
+        assign custom_font_woff = 'Friendship-Medium.woff'
+      when 'farmhouse'
+        assign custom_font_family = "'Farmhouse', "
+        assign custom_font_woff2 = 'Farmhouse.woff2'
+        assign custom_font_woff = 'Farmhouse.woff'
+    endcase
+
+    if custom_font_family != blank
+      case settings.custom_font_target
+        when 'body'
+          assign use_custom_font_body = true
+          assign use_custom_font_subheading = true
+        when 'headings'
+          assign use_custom_font_heading = true
+        when 'accents'
+          assign use_custom_font_accent = true
+        when 'all'
+          assign use_custom_font_body = true
+          assign use_custom_font_subheading = true
+          assign use_custom_font_heading = true
+          assign use_custom_font_accent = true
+      endcase
+    endif
   %}
 
   @font-face {
@@ -175,16 +210,16 @@
     --letter-spacing-md: 0.13em;
 
     /* Font families */
-    --font-body--family: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
+    --font-body--family: {% if use_custom_font_body %}{{ custom_font_family }}{% endif %}{{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
     --font-body--style: {{ settings.type_body_font.style }};
     --font-body--weight: {{ settings.type_body_font.weight }};
-    --font-subheading--family: {{ settings.type_subheading_font.family }}, {{ settings.type_subheading_font.fallback_families }};
+    --font-subheading--family: {% if use_custom_font_subheading %}{{ custom_font_family }}{% endif %}{{ settings.type_subheading_font.family }}, {{ settings.type_subheading_font.fallback_families }};
     --font-subheading--style: {{ settings.type_subheading_font.style }};
     --font-subheading--weight: {{ settings.type_subheading_font.weight }};
-    --font-heading--family: {{ settings.type_heading_font.family }}, {{ settings.type_heading_font.fallback_families }};
+    --font-heading--family: {% if use_custom_font_heading %}{{ custom_font_family }}{% endif %}{{ settings.type_heading_font.family }}, {{ settings.type_heading_font.fallback_families }};
     --font-heading--style: {{ settings.type_heading_font.style }};
     --font-heading--weight: {{ settings.type_heading_font.weight }};
-    --font-accent--family: {{ settings.type_accent_font.family }}, {{ settings.type_accent_font.fallback_families }};
+    --font-accent--family: {% if use_custom_font_accent %}{{ custom_font_family }}{% endif %}{{ settings.type_accent_font.family }}, {{ settings.type_accent_font.fallback_families }};
     --font-accent--style: {{ settings.type_accent_font.style }};
     --font-accent--weight: {{ settings.type_accent_font.weight }};
     --font-friendship--family: 'Friendship', {{ settings.type_body_font.fallback_families }};
