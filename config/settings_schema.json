@@ -383,6 +383,54 @@
       },
       {
         "type": "header",
+        "content": "Custom font preview"
+      },
+      {
+        "type": "select",
+        "id": "custom_font_family",
+        "label": "Custom font",
+        "default": "none",
+        "options": [
+          {
+            "value": "none",
+            "label": "Off"
+          },
+          {
+            "value": "friendship",
+            "label": "Friendship"
+          },
+          {
+            "value": "farmhouse",
+            "label": "Farmhouse"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "custom_font_target",
+        "label": "Apply custom font to",
+        "default": "all",
+        "options": [
+          {
+            "value": "body",
+            "label": "Body only"
+          },
+          {
+            "value": "headings",
+            "label": "Headings only"
+          },
+          {
+            "value": "accents",
+            "label": "Accent only"
+          },
+          {
+            "value": "all",
+            "label": "Entire site"
+          }
+        ]
+      },
+      {
+        "type": "header",
         "content": "t:content.text_presets"
       },
       {

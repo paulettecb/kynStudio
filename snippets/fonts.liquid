@@ -1,4 +1,24 @@
 {% # theme-check-disable %}
+{%- liquid
+  assign custom_font_woff2 = blank
+
+  case settings.custom_font_family
+    when 'friendship'
+      assign custom_font_woff2 = 'Friendship-Medium.woff2'
+    when 'farmhouse'
+      assign custom_font_woff2 = 'Farmhouse.woff2'
+  endcase
+-%}
+{%- if custom_font_woff2 != blank -%}
+  <link
+    rel="preload"
+    as="font"
+    href="{{ custom_font_woff2 | asset_url }}"
+    type="font/woff2"
+    crossorigin
+    fetchpriority="low"
+  >
+{%- endif -%}
 {%- unless settings.type_body_font.system? -%}
   <link
     rel="preload"
