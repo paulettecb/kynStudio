@@ -1,4 +1,20 @@
 {% # theme-check-disable %}
+<link
+  rel="preload"
+  as="font"
+  href="{{ 'Friendship-Medium.woff2' | asset_url }}"
+  type="font/woff2"
+  crossorigin
+  fetchpriority="low"
+>
+<link
+  rel="preload"
+  as="font"
+  href="{{ 'Farmhouse.woff2' | asset_url }}"
+  type="font/woff2"
+  crossorigin
+  fetchpriority="low"
+>
 {%- unless settings.type_body_font.system? -%}
   <link
     rel="preload"

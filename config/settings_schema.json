@@ -457,6 +457,14 @@
           {
             "value": "accent",
             "label": "t:options.accent"
+          },
+          {
+            "value": "friendship",
+            "label": "Friendship"
+          },
+          {
+            "value": "farmhouse",
+            "label": "Farmhouse"
           }
         ],
         "default": "heading"
@@ -605,6 +613,14 @@
           {
             "value": "accent",
             "label": "t:options.accent"
+          },
+          {
+            "value": "friendship",
+            "label": "Friendship"
+          },
+          {
+            "value": "farmhouse",
+            "label": "Farmhouse"
           }
         ],
         "default": "heading"
@@ -753,6 +769,14 @@
           {
             "value": "accent",
             "label": "t:options.accent"
+          },
+          {
+            "value": "friendship",
+            "label": "Friendship"
+          },
+          {
+            "value": "farmhouse",
+            "label": "Farmhouse"
           },
           {
             "value": "subheading",
@@ -911,6 +935,14 @@
             "label": "t:options.accent"
           },
           {
+            "value": "friendship",
+            "label": "Friendship"
+          },
+          {
+            "value": "farmhouse",
+            "label": "Farmhouse"
+          },
+          {
             "value": "subheading",
             "label": "t:options.subheading"
           },
@@ -1067,6 +1099,14 @@
             "label": "t:options.accent"
           },
           {
+            "value": "friendship",
+            "label": "Friendship"
+          },
+          {
+            "value": "farmhouse",
+            "label": "Farmhouse"
+          },
+          {
             "value": "subheading",
             "label": "t:options.subheading"
           },
@@ -1221,6 +1261,14 @@
           {
             "value": "accent",
             "label": "t:options.accent"
+          },
+          {
+            "value": "friendship",
+            "label": "Friendship"
+          },
+          {
+            "value": "farmhouse",
+            "label": "Farmhouse"
           },
           {
             "value": "subheading",
@@ -1509,6 +1557,14 @@
           {
             "value": "accent",
             "label": "t:options.accent"
+          },
+          {
+            "value": "friendship",
+            "label": "Friendship"
+          },
+          {
+            "value": "farmhouse",
+            "label": "Farmhouse"
           }
         ],
         "default": "body"
@@ -1570,6 +1626,14 @@
           {
             "value": "accent",
             "label": "t:options.accent"
+          },
+          {
+            "value": "friendship",
+            "label": "Friendship"
+          },
+          {
+            "value": "farmhouse",
+            "label": "Farmhouse"
           }
         ],
         "default": "body"
@@ -1626,6 +1690,14 @@
           {
             "value": "accent",
             "label": "t:options.accent"
+          },
+          {
+            "value": "friendship",
+            "label": "Friendship"
+          },
+          {
+            "value": "farmhouse",
+            "label": "Farmhouse"
           }
         ],
         "default": "body"
@@ -1721,6 +1793,14 @@
           {
             "value": "accent",
             "label": "t:options.accent"
+          },
+          {
+            "value": "friendship",
+            "label": "Friendship"
+          },
+          {
+            "value": "farmhouse",
+            "label": "Farmhouse"
           }
         ],
         "default": "subheading"
